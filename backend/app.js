@@ -24,8 +24,12 @@ app.use((req, res, next) => { // middleware permettant l'accès à l'api, contou
   app.get('/', function(req, res) {
       res.setHeader('Content-Type', 'text/html');
       res.status(200).send('<h1>Groupomania API launched</h1>');
-
   });
+  // route testing //
+  app.get('/test-route', function(req, res) {
+    res.setHeader('Content-Type', 'text/html');
+    res.status(200).send('<h1>Groupomania API - First route created</h1>')
+});
 
 app.use('/images', express.static(path.join(__dirname, 'images'))); // indique à express qu'il faut gérer la ressources images comme un dossier statique
 

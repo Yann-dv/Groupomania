@@ -15,8 +15,7 @@ const normalizePort = val => { // renvoie un port valide
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);  // on set le port sur laquelle l'app doit tourner
 
-const errorHandler = error => { // recherche les différentes erreurs et les gère de manière appropriée.
-// Elle est ensuite enregistrée dans le serveur ;
+const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -36,11 +35,11 @@ const errorHandler = error => { // recherche les différentes erreurs et les gè
   }
 };
 
-const server = http.createServer(app); // -> fonction qui créer le server, prend la fonction app en argument
+const server = http.createServer(app); // création du server à partir des données de app.js
 
 server.on('error', errorHandler);
-server.on('listening', () => { //écouteur d'évènements est enregistré, 
-    //consignant le port ou le canal nommé sur lequel le serveur s'exécute dans la console.
+server.on('listening', () => { //écouteur d'évènements
+    //consigne le port ou le canal nommé sur lequel le serveur s'exécute dans la console.
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
