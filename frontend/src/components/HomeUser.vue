@@ -6,16 +6,6 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
-    <h3>À propos</h3>
-    <ul>
-      <li><a href="#" target="_blank" rel="noopener">À propos</a></li>
-      <li><a href="#" target="_blank" rel="noopener">Carrières</a></li>
-      <li><a href="#" target="_blank" rel="noopener">Conditions d'utilisation</a></li>
-      <li><a href="#" target="_blank" rel="noopener">Politique de Contenu</a></li>
-      <li><a href="#" target="_blank" rel="noopener">Politique de Confidentialité</a></li>
-      <li><a href="#" target="_blank" rel="noopener">Politique de Modération</a></li>
-    </ul>
-  <footer>Groupomania Inc © 2021 . Tous droits réservés</footer>
   </div>
 </template>
 
