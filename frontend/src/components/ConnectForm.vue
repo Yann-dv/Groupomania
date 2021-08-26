@@ -16,6 +16,8 @@
           <input type="reset" id="refresh" aria-label="Effacer ma saisie" value="Effacer"/>
         </div>
     </form>
+    <h3>{{ subscrib }}</h3>
+    <button class="inscription-btn">INSCRIPTION</button>
   </div>
 </template>
 
@@ -24,7 +26,8 @@ export default {
   name: 'ConnectForm',
   props: {
     homemsg: String,
-    msgconnect: String
+    msgconnect: String,
+    subscrib: String
   }
 }
 </script>
@@ -34,5 +37,14 @@ export default {
     display: flex;
     flex-direction:  column;
     justify-content: space-around;
+}
+
+.inscription-btn {
+  font-size: 1rem;
+  padding: .2rem .5rem;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>
