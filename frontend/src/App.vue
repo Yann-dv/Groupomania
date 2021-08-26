@@ -4,6 +4,7 @@
     <img class="banner-logo" src="./assets/banner_logo.png">
     </div>
     <router-link to="/">Accueil</router-link> |
+    <router-link to="/subscribe">Inscription</router-link> |
     <router-link to="/about">À propos</router-link>
   </div>
   <router-view/>
