@@ -23,6 +23,7 @@ export default {
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
+  text-decoration: underline;
 }
 ul {
   list-style-type: none;
