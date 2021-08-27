@@ -15,5 +15,11 @@ export default {
     Footer
   }
 }
-
 </script>
+
+<style scoped lang="scss">
+h1 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+</style>

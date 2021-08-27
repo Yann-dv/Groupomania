@@ -1,6 +1,8 @@
 <template>
   <div class="general-footer">
-<h3>À propos</h3>
+  <router-link to="/about">
+    <h3>À propos</h3>
+  </router-link>
     <ul>
       <li><a href="#" target="_blank" rel="noopener">À propos</a></li>
       <li><a href="#" target="_blank" rel="noopener">Carrières</a></li>
