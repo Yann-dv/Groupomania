@@ -1,18 +1,23 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/header_logo.png">  Passé avant les onglets de vues-->
-    <HelloWorld msg="Bienvenue sur le réseau social interne de Groupomania !"/>
+    <ConnectForm homemsg="Bienvenue sur le réseau social interne de Groupomania !" 
+    msgconnect="Entrez votre identifiant et votre mot de passe pour accéder à la plateforme" 
+    subscrib="Si vous ne possédez pas encore de compte, inscrivez-vous pour en créer un :"/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import ConnectForm from '@/components/ConnectForm.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    ConnectForm,
+    Footer
   }
 }
 </script>
