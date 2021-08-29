@@ -1,66 +1,93 @@
-const http = require('http'); // package http de node -> permet de créer le server
-const app = require('./app'); // import app
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-const normalizePort = val => { // renvoie un port valide
-  const port = parseInt(val, 10);
+const app = express();
 
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);  // on set le port sur laquelle l'app doit tourner
-
-const errorHandler = error => {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges.');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use.');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+var corsOptions = {
+  origin: "http://localhost:8081"
 };
 
-const server = http.createServer(app); // création du server à partir des données de app.js
+app.use(cors(corsOptions));
 
-server.on('error', errorHandler);
-server.on('listening', () => { //écouteur d'évènements
-    //consigne le port ou le canal nommé sur lequel le serveur s'exécute dans la console.
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-  console.log('Listening on ' + bind);
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// simple route
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Groupomania API" });
 });
 
-server.listen(port);
-
-/* Connection to mysql -> to define
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'example.org',
-  user     : 'bob',
-  password : 'secret'
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
+
+const db = require("./app/models");
+const userRoutes = require("./app/routes/user.routes");
+const Role = db.role;
+const Users = db.user;
+
+db.sequelize.sync({force: true}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
+  console.log('Drop and Resync Db');
+  initial();
+});
+
+// function for initialize test-dev mysql db - to delete for production
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
  
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
  
-  console.log('connected as id ' + connection.threadId);
-}); 
-*/
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+  var bcrypt = require("bcryptjs");
+
+  Users.create({
+    id: 1,
+    username: "administrator",
+    email: "admin@groupo.fr",
+    password: bcrypt.hashSync("administrator", 8),
+    roles: ["admin"]
+  });
+
+  Users.create({
+    id: 2,
+    username: "johndoe",
+    email: "john@groupo.fr",
+    password: bcrypt.hashSync("jonhdoe99", 8),
+    roles: ["user"]
+  });
+
+  Users.create({
+    id: 3,
+    username: "moderator",
+    email: "modo@groupo.fr",
+    password: bcrypt.hashSync("moderator", 8),
+    roles: ["moderator", "user"]
+  });
+
+  Users.create({
+    id: 4,
+    username: "usertest",
+    email: "test@test.com",
+    password: bcrypt.hashSync("testing", 8),
+    roles: ["user"]
+  });
+}
+
+// to delete for production

@@ -5,6 +5,7 @@
     </div>
     <router-link to="/">Accueil</router-link> |
     <router-link to="/subscribe">Inscription</router-link> |
+    <router-link to="/forum">Forum</router-link> |
     <router-link to="/about">À propos</router-link>
   </div>
   <router-view/>
