@@ -9,6 +9,7 @@
 
 <script>
 import UserService from "../services/user.service";
+import Footer from "./components/Footer";
 
 export default {
   name: "Home",
@@ -17,7 +18,7 @@ export default {
       content: "",
     };
   },
-  
+
   mounted() {
     UserService.getPublicContent().then(
       (response) => {

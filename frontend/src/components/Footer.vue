@@ -1,6 +1,6 @@
 <template>
   <div class="general-footer">
-  <router-link to="/home">
+  <router-link to="/about">
     <h3>À propos</h3>
   </router-link>
     <ul>
