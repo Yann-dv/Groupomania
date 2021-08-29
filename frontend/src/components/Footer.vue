@@ -1,6 +1,6 @@
 <template>
   <div class="general-footer">
-  <router-link to="/about">
+  <router-link to="/home">
     <h3>À propos</h3>
   </router-link>
     <ul>
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<!--<style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
   text-decoration: underline;
@@ -39,4 +39,4 @@ li {
 a {
   color: #D1515A;
 }
-</style>
+</style>-->
