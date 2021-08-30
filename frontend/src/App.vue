@@ -56,6 +56,7 @@
 <script>
 import EventBus from "./common/EventBus";
 
+
 export default {
   computed: {
     currentUser() {
