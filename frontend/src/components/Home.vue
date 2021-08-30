@@ -9,7 +9,7 @@
 
 <script>
 import UserService from "../services/user.service";
-//import Footer from "../components/Footer.vue";
+import Footer from "../components/Footer.vue";
 
 export default {
   name: "Home",
@@ -18,7 +18,7 @@ export default {
       content: "",
     };
   },
-  //component: Footer,
+  component: Footer,
 
   mounted() {
     UserService.getPublicContent().then(
@@ -37,3 +37,4 @@ export default {
   },
 };
 </script>
+
