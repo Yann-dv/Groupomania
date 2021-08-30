@@ -9,7 +9,6 @@
 
 <script>
 import UserService from "../services/user.service";
-import Footer from "./components/Footer";
 
 export default {
   name: "Home",

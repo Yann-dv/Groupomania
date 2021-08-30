@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+      <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="username">Identifiant</label>
