@@ -2,8 +2,11 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3 class="fw-bold">{{ content }}</h3>
-    </header>   
+      <h2 class="fw-bold title-content">{{ content }}</h2>
+    </header>
+      <div>
+      <p>Contenu principal</p>
+      </div>
   </div>
 </template>
 
@@ -38,3 +41,9 @@ export default {
 };
 </script>
 
+<style scoped>
+.title-content {
+  text-align: center;
+  margin-top: 1rem;
+}
+</style>
