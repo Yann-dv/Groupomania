@@ -9,37 +9,37 @@
           <label for="Homme" class="fs-5 ms-1">Homme</label>
           <Field name="sexe" class="ms-2" type="radio" value="Femme"></Field>
           <label for="Femme" class="fs-5 ms-1">Femme</label>
-            <ErrorMessage name="sexe" class="error-feedback fw-bold ms-3" style="color:red" />
+            <ErrorMessage name="sexe" class="error-feedback ms-3" style="color:red" />
         </div>
         <div class="form-group">
           <label for="firstName" class="fs-4 fw-bold">Prénom :</label>
           <Field name="firstname" type="text" class="form-control" />
-          <ErrorMessage name="firstname" class="error-feedback fw-bold" style="color:red" />
+          <ErrorMessage name="firstname" class="error-feedback" style="color:red" />
         </div>
         <div class="form-group">
           <label for="lastName" class="fs-4 fw-bold">Nom :</label> 
           <Field name="lastname" type="text" class="form-control" />
-          <ErrorMessage name="lastname" class="error-feedback fw-bold" style="color:red" />
+          <ErrorMessage name="lastname" class="error-feedback" style="color:red" />
         </div>
         <div class="form-group">
           <label for="birthday" class="fs-4 fw-bold">Date de naissance :</label> 
           <Field name="birthday" type="text" class="form-control" />
-          <ErrorMessage name="birthday" class="error-feedback fw-bold" style="color:red" />
+          <ErrorMessage name="birthday" class="error-feedback" style="color:red" />
         </div>
           <div class="form-group">
             <label for="username" class="fs-4 fw-bold">Identifiant</label>
             <Field name="username" type="text" class="form-control" />
-            <ErrorMessage name="username" class="error-feedback fw-bold" style="color:red" />
+            <ErrorMessage name="username" class="error-feedback" style="color:red" />
           </div>
           <div class="form-group">
             <label for="email" class="fs-4 fw-bold">Email</label>
             <Field name="email" type="email" class="form-control" />
-            <ErrorMessage name="email" class="error-feedback fw-bold" style="color:red" />
+            <ErrorMessage name="email" class="error-feedback" style="color:red" />
           </div>
           <div class="form-group">
             <label for="password" class="fs-4 fw-bold">Mot de passe</label>
             <Field name="password" type="password" class="form-control" />
-            <ErrorMessage name="password" class="error-feedback fw-bold" style="color:red" />
+            <ErrorMessage name="password" class="error-feedback" style="color:red" />
           </div>
 
           <div class="form-group my-3">

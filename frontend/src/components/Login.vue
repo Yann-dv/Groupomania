@@ -6,12 +6,12 @@
         <div class="form-group">
           <label for="username" class="fs-4 fw-bold">Identifiant</label>
           <Field name="username" type="text" class="form-control" />
-          <ErrorMessage name="username" class="error-feedback" />
+          <ErrorMessage name="username" class="error-feedback" style="color:red" />
         </div>
         <div class="form-group">
           <label for="password" class="fs-4 fw-bold">Mot de passe</label>
           <Field name="password" type="password" class="form-control" />
-          <ErrorMessage name="password" class="error-feedback" />
+          <ErrorMessage name="password" class="error-feedback" style="color:red" />
         </div>
 
         <div class="form-group">
