@@ -1,7 +1,7 @@
 <template>
-  <footer class="general-footer">
+  <div class="footer container-fluid footer-background py-2 mt-3 mb-2">
     <router-link to="/login">
-      <h3 class="text-center">À propos</h3>
+      <h5 class="text-center">À propos</h5>
     </router-link>
     <ul class="text-center mb-1">
       <li><a href="#" target="_blank" rel="noopener">À propos</a></li>
@@ -11,24 +11,27 @@
       <li><a href="#" target="_blank" rel="noopener">Politique de Confidentialité</a></li>
       <li><a href="#" target="_blank" rel="noopener">Politique de Modération</a></li>
     </ul>
-    <span>{{ copyright }}</span>
-  </footer>
+    <p class="text-center my-0">{{ copyright() }}</p>
+  </div>
 </template>
 
 <script>
 export default {
  name: "Footer",
- copyright() {
+ methods: {
+    copyright() {
 			const currentYear = new Date().getFullYear()
-
-			return `Copyright Groupomania Inc © ${currentYear}. Tous droits réservés`
-		}
+			return `Copyright: Groupomania Inc © ${currentYear}. Tous droits réservés`
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.general-footer {
+.footer-background {
+  width: 100%;
+  color: white;
   background-color: #122442;
 }
 h3 {

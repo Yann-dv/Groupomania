@@ -48,10 +48,10 @@
         </li>
       </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
       <router-view />
-    </div>
-    <Footer class="footer"/>
+      <Footer />
+    </div> 
   </div>
 </template>
 
@@ -102,13 +102,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+}
  .navbar {
     background-color: #122442;
-}
-.footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  
 }
 </style>

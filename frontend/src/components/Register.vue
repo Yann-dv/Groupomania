@@ -50,7 +50,8 @@
               ></span>
               S'inscrire
             </button>
-            <button type="reset" id="refresh-inscription" class="mx-3" aria-label="Effacer ma saisie" value="Effacer ma saisie">Effacer ma saisie</button>
+            <button type="reset" id="refresh-inscription" class="mx-3 btn btn-secondary btn-block"
+            aria-label="Effacer ma saisie" value="Effacer ma saisie">Effacer ma saisie</button>
           </div>
         </div>
       </Form>
