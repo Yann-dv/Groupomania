@@ -4,41 +4,42 @@
       <img id="profile-img" class="mx-auto profile-img-card" style="max-height: 20rem; max-width: 18rem" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
       <Form @submit="handleRegister" :validation-schema="schema" id="register-form">
         <div v-if="!successful">
-        <div class="sexe my-2 form-group" required>
-            <input type="radio" class="me-1" value="male" name="sexe" id="male" autocomplete="off">
-            <label for="male" class="fs-5">Homme</label>
-            <input type="radio" class="ms-3 me-1" value="female" name="sexe" id="female" autocomplete="off">
-            <label for="female" class="fs-5">Femme</label> 
+        <div class="my-2 form-group gender-radios">
+          <Field name="sexe" type="radio" value="Homme"></Field>
+          <label for="Homme" class="fs-5 ms-1">Homme</label>
+          <Field name="sexe" class="ms-2" type="radio" value="Femme"></Field>
+          <label for="Femme" class="fs-5 ms-1">Femme</label>
+            <ErrorMessage name="sexe" class="error-feedback fw-bold ms-3" style="color:red" />
         </div>
         <div class="form-group">
           <label for="firstName" class="fs-4 fw-bold">Prénom :</label>
           <Field name="firstname" type="text" class="form-control" />
-          <ErrorMessage name="firstname" class="error-feedback" />
+          <ErrorMessage name="firstname" class="error-feedback fw-bold" style="color:red" />
         </div>
         <div class="form-group">
           <label for="lastName" class="fs-4 fw-bold">Nom :</label> 
           <Field name="lastname" type="text" class="form-control" />
-          <ErrorMessage name="lastname" class="error-feedback" />
+          <ErrorMessage name="lastname" class="error-feedback fw-bold" style="color:red" />
         </div>
         <div class="form-group">
           <label for="birthday" class="fs-4 fw-bold">Date de naissance :</label> 
           <Field name="birthday" type="text" class="form-control" />
-          <ErrorMessage name="birthday" class="error-feedback" />
+          <ErrorMessage name="birthday" class="error-feedback fw-bold" style="color:red" />
         </div>
           <div class="form-group">
             <label for="username" class="fs-4 fw-bold">Identifiant</label>
             <Field name="username" type="text" class="form-control" />
-            <ErrorMessage name="username" class="error-feedback" />
+            <ErrorMessage name="username" class="error-feedback fw-bold" style="color:red" />
           </div>
           <div class="form-group">
             <label for="email" class="fs-4 fw-bold">Email</label>
             <Field name="email" type="email" class="form-control" />
-            <ErrorMessage name="email" class="error-feedback" />
+            <ErrorMessage name="email" class="error-feedback fw-bold" style="color:red" />
           </div>
           <div class="form-group">
             <label for="password" class="fs-4 fw-bold">Mot de passe</label>
             <Field name="password" type="password" class="form-control" />
-            <ErrorMessage name="password" class="error-feedback" />
+            <ErrorMessage name="password" class="error-feedback fw-bold" style="color:red" />
           </div>
 
           <div class="form-group my-3">
@@ -78,19 +79,20 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
+      sexe:yup
+      .string()
+      .required("Veuillez choisir une option"),
       firstname:yup
         .string()
-        .required("Vous devez entrer votre Nom")
+        .required("Veuillez entrer votre Nom")
         .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
       lastname:yup
         .string()
-        .required("Vous devez entrer votre Prénom")
+        .required("Veuillez entrer votre Prénom")
         .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
       birthday:yup
         .date()
-        .required("Veuillez entrez une date au format AAAA-MM-JJ")
-        .min(6, "Le mot de passe doit contenir au moins 6 caractères !")
-        .max(10, "La date de naissance ne doit pas dépasser 10 caractères!"),
+        .required("Veuillez entrez une date au format AAAA-MM-JJ"),
       username: yup
         .string()
         .required("Un identifiant est requis !")
@@ -114,11 +116,6 @@ export default {
       message: "",
       schema,
     };
-  },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
   },
   mounted() {
     if (this.loggedIn) {
