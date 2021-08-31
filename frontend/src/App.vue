@@ -48,19 +48,22 @@
         </li>
       </div>
     </nav>
-
     <div class="container">
       <router-view />
     </div>
+    <Footer class="footer"/>
   </div>
 </template>
 
 <script>
-//import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import EventBus from "./common/EventBus";
 
 
 export default {
+  components: {
+    Footer
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -101,5 +104,11 @@ export default {
 <style scoped>
  .navbar {
     background-color: #122442;
+}
+.footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  
 }
 </style>

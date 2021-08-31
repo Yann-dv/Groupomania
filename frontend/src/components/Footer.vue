@@ -1,5 +1,5 @@
 <template>
-  <div class="general-footer">
+  <footer class="general-footer">
     <router-link to="/login">
       <h3 class="text-center">À propos</h3>
     </router-link>
@@ -11,13 +11,18 @@
       <li><a href="#" target="_blank" rel="noopener">Politique de Confidentialité</a></li>
       <li><a href="#" target="_blank" rel="noopener">Politique de Modération</a></li>
     </ul>
-    <copyright class="text-center">Groupomania Inc © 2021 . Tous droits réservés</copyright>
-  </div>
+    <span>{{ copyright }}</span>
+  </footer>
 </template>
 
 <script>
 export default {
  name: "Footer",
+ copyright() {
+			const currentYear = new Date().getFullYear()
+
+			return `Copyright Groupomania Inc © ${currentYear}. Tous droits réservés`
+		}
 }
 </script>
 
@@ -25,11 +30,8 @@ export default {
 <style scoped>
 .general-footer {
   background-color: #122442;
-  margin: 0;
-  width: 100%;
 }
 h3 {
-  margin: 40px 0 0;
   text-decoration: underline;
 }
 ul {
