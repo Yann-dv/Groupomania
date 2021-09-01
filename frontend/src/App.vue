@@ -6,29 +6,29 @@
       </a>
       <div class="navbar-nav me-auto">
         <li class="nav-item">
-          <router-link to="/home" class="nav-link fs-3">
+          <router-link to="/home" class="nav-link fs-4">
             <font-awesome-icon icon="home" />Accueil
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link fs-3">Administrateur</router-link>
+          <router-link to="/admin" class="nav-link fs-4">Administrateur</router-link>
         </li>
         <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link fs-3">Moderateur</router-link>
+          <router-link to="/mod" class="nav-link fs-4">Moderateur</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link fs-3">Utilisateur</router-link>
+          <router-link v-if="currentUser" to="/user" class="nav-link fs-4">Utilisateur</router-link>
         </li>
       </div>
 
       <div v-if="!currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link to="/register" class="nav-link fs-3">
+          <router-link to="/register" class="nav-link fs-4">
             <font-awesome-icon icon="user-plus" /> Inscription
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/login" class="nav-link fs-3">
+          <router-link to="/login" class="nav-link fs-4">
             <font-awesome-icon icon="sign-in-alt" /> Connection
           </router-link>
         </li>
@@ -36,30 +36,34 @@
 
       <div v-if="currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link fs-3">
+          <router-link to="/profile" class="nav-link fs-4">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
           </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-3" @click.prevent="logOut">
+          <a class="nav-link fs-4" @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" /> Déconnection
           </a>
         </li>
       </div>
     </nav>
-
-    <div class="container">
+    <div class="container-fluid">
       <router-view />
-    </div>
+      <Footer />
+    </div> 
   </div>
 </template>
 
 <script>
+import Footer from "./components/Footer";
 import EventBus from "./common/EventBus";
 
 
 export default {
+  components: {
+    Footer
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -98,6 +102,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+}
  .navbar {
     background-color: #122442;
 }

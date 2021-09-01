@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config(); // Env variables
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -31,14 +32,18 @@ app.listen(PORT, () => {
 
 const db = require("./app/models");
 const userRoutes = require("./app/routes/user.routes");
-const Role = db.role;
-const Users = db.user;
+
 
 db.sequelize.sync({force: true}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
   initial();
 });
 
+if (process.env.NODE_ENV == "development") {
+
+const Role = db.role;
+const Users = db.user;
+const UserRoles = db.user_roles;
 ////////////////////////////////////// function for initialize test-dev mysql db - TO DELETE for production ////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function initial() {
@@ -89,6 +94,12 @@ function initial() {
     password: bcrypt.hashSync("testing", 8),
     roles: ["user"]
   });
-}
 
-////////////////////////////////////////////////// to delete for production //////////////////////////////////////////////////////////////////////////////
+  UserRoles.create({
+    createdAt: "2021-09-01",
+    updatedAt: "2021-09-01",
+    roleId: 3,
+    userId: 1,
+    });
+  }
+}
