@@ -39,21 +39,14 @@ db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production :
   initial();
 });
 
-if (process.env.NODE_ENV == "development") {
-
 const Role = db.role;
 const Users = db.user;
 const UserRoles = db.user_roles;
-////////////////////////////////////// function for initialize test-dev mysql db - TO DELETE for production ////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function initial() {
+const Medias = db.medias;
 
-  /*UserRoles.create({
-    createdAt: "2021-09-01",
-    updatedAt: "2021-09-01",
-    roleId: 3,
-    userId: 1,
-    });*/
+if (process.env.NODE_ENV == "development") {
+
+function initial() {
 
   Role.create({
     id: 1,
@@ -103,4 +96,12 @@ function initial() {
     roles: ["user"]
   });
   }
+
+  Medias.create({
+    id: 1,
+    author: "usertest",
+    contain: "https://pixabay.com/get/g2dfffed41e8b9072c09402301d43f10c4b4f0f73e811c7580756b590cdf0182983298493cad0abe667c904024b1b3432_640.jpg",
+    category: "hollidays",
+    archived: 0
+  });
 }

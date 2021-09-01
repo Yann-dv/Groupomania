@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Medias = sequelize.define("Medias", {
+    const Media = sequelize.define("medias", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true
@@ -20,5 +20,5 @@ module.exports = (sequelize, Sequelize) => {
       },
     });
   
-    return Medias;
+    return Media;
   };

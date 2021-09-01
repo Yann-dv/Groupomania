@@ -19,7 +19,6 @@ const sequelize = new Sequelize(
   }
 );
 
-// DATABASE creation //
 const db = {};
 
 db.Sequelize = Sequelize;
