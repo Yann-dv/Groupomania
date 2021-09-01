@@ -96,10 +96,10 @@ function initial() {
   });
 
   UserRoles.create({
-    createdAt: Datetime(),
-    updatedAt: Datetime(),
-    roleId: 8,
-    userId: 10,
+    createdAt: "2021-09-01",
+    updatedAt: "2021-09-01",
+    roleId: 3,
+    userId: 1,
     });
   }
 }
