@@ -5,10 +5,10 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true
       },
       author: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
-      contain: {
+      content: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
       archived: {
         type: Sequelize.INTEGER,
       },
+      likes: {
+        type: Sequelize.INTEGER,
+      }
     });
   
     return Media;

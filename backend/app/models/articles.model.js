@@ -5,10 +5,14 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true
       },
       author: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
-      contain: {
+      content: {
         type: Sequelize.TEXT,
         allowNull: false
       },
@@ -18,6 +22,9 @@ module.exports = (sequelize, Sequelize) => {
       archived: {
         type: Sequelize.INTEGER,
       },
+      likes: {
+        type: Sequelize.INTEGER,
+      }
     });
   
     return Article;
