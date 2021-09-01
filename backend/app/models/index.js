@@ -19,6 +19,7 @@ const sequelize = new Sequelize(
   }
 );
 
+// DATABASE creation //
 const db = {};
 
 db.Sequelize = Sequelize;
@@ -26,6 +27,8 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
+db.articles = require("../models/articles.model.js")(sequelize, Sequelize);
+db.medias = require("../models/medias.model.js")(sequelize, Sequelize);
 db.refreshToken = require("../models/refreshToken.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {

@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Article = sequelize.define("articles", {
+    const Medias = sequelize.define("Medias", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true
@@ -9,16 +9,16 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       },
       contain: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       category: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
       },
       archived: {
         type: Sequelize.INTEGER,
       },
     });
   
-    return Article;
+    return Medias;
   };

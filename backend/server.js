@@ -34,7 +34,7 @@ const db = require("./app/models");
 const userRoutes = require("./app/routes/user.routes");
 
 
-db.sequelize.sync({force: true}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
+db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
   initial();
 });
@@ -47,6 +47,14 @@ const UserRoles = db.user_roles;
 ////////////////////////////////////// function for initialize test-dev mysql db - TO DELETE for production ////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function initial() {
+
+  /*UserRoles.create({
+    createdAt: "2021-09-01",
+    updatedAt: "2021-09-01",
+    roleId: 3,
+    userId: 1,
+    });*/
+
   Role.create({
     id: 1,
     name: "user"
@@ -94,12 +102,5 @@ function initial() {
     password: bcrypt.hashSync("testing", 8),
     roles: ["user"]
   });
-
-  UserRoles.create({
-    createdAt: "2021-09-01",
-    updatedAt: "2021-09-01",
-    roleId: 3,
-    userId: 1,
-    });
   }
 }

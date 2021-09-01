@@ -5,11 +5,11 @@
       <Form @submit="handleRegister" :validation-schema="schema" id="register-form">
         <div v-if="!successful">
         <div class="my-2 form-group gender-radios">
-          <Field name="sexe" type="radio" value="Homme"></Field>
+          <Field name="gender" type="radio" value="Homme"></Field>
           <label for="Homme" class="fs-5 ms-1">Homme</label>
-          <Field name="sexe" class="ms-2" type="radio" value="Femme"></Field>
+          <Field name="gender" class="ms-2" type="radio" value="Femme"></Field>
           <label for="Femme" class="fs-5 ms-1">Femme</label>
-            <ErrorMessage name="sexe" class="error-feedback ms-3" style="color:red" />
+            <ErrorMessage name="gender" class="error-feedback ms-3" style="color:red" />
         </div>
         <div class="form-group">
           <label for="firstName" class="fs-4 fw-bold">Prénom :</label>
@@ -80,7 +80,7 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      sexe:yup
+      gender:yup
       .string()
       .required("Veuillez choisir une option"),
       firstname:yup
@@ -93,7 +93,7 @@ export default {
         .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
       birthday:yup
         .date()
-        .required("Veuillez entrez une date au format AAAA-MM-JJ"),
+        .required("Veuillez entrez une date au format AAAA-MM-JJ, ex: 1979-12-31"),
       username: yup
         .string()
         .required("Un identifiant est requis !")
