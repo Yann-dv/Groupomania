@@ -9,8 +9,7 @@ const User = db.user;
           allUsers= user.username + '-' + user.id;
           return allUsers;
         });
-        res.status(200).send(`Voici une liste des différents utilisateurs de la db : ` + `${mappedUsers}`
-      )
+        res.status(200).json(`Utilisateurs : ` + `${mappedUsers}`)
         .catch(
       () => {
         res.status(500).send(new Error('Database error!'));
