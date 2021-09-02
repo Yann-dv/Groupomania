@@ -8,6 +8,7 @@
 
 <script>
 import UserService from '../services/user.service';
+import EventBus from "../common/EventBus";
 
 export default {
   name: "User",

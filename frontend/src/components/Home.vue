@@ -2,14 +2,16 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{ content }}</h3>
+      <h2 id="vueTitle" class="fw-bold title-content">{{ content }}</h2>
     </header>
+      <div>
+      <p>Contenu principal</p>
+      </div>
   </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
-import Footer from "./components/Footer";
 
 export default {
   name: "Home",
@@ -36,3 +38,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.title-content {
+  text-align: center;
+  margin-top: 1rem;
+}
+</style>

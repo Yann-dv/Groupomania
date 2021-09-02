@@ -1,62 +1,69 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/" class="navbar-brand">Groupomania</a>
-      <div class="navbar-nav mr-auto">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a href="/home">
+      <img src="./assets/banner_logo_w.png" alt="Logo Groupomania" class="px-2">
+      </a>
+      <div class="navbar-nav me-auto">
         <li class="nav-item">
-          <router-link to="/home" class="nav-link">
+          <router-link to="/home" class="nav-link fs-4">
             <font-awesome-icon icon="home" />Accueil
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Administrateur</router-link>
+          <router-link to="/admin" class="nav-link fs-4">Administrateur</router-link>
         </li>
         <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderateur</router-link>
+          <router-link to="/mod" class="nav-link fs-4">Moderateur</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">Utilisateur</router-link>
+          <router-link v-if="currentUser" to="/user" class="nav-link fs-4">Utilisateur</router-link>
         </li>
       </div>
 
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
+      <div v-if="!currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link to="/register" class="nav-link">
+          <router-link to="/register" class="nav-link fs-4">
             <font-awesome-icon icon="user-plus" /> Inscription
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/login" class="nav-link">
+          <router-link to="/login" class="nav-link fs-4">
             <font-awesome-icon icon="sign-in-alt" /> Connection
           </router-link>
         </li>
       </div>
 
-      <div v-if="currentUser" class="navbar-nav ml-auto">
+      <div v-if="currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
+          <router-link to="/profile" class="nav-link fs-4">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
           </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" @click.prevent="logOut">
+          <a class="nav-link fs-4" @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" /> Déconnection
           </a>
         </li>
       </div>
     </nav>
-
-    <div class="container">
+    <div class="container-fluid">
       <router-view />
-    </div>
+      <Footer />
+    </div> 
   </div>
 </template>
 
 <script>
+import Footer from "./components/Footer";
 import EventBus from "./common/EventBus";
 
+
 export default {
+  components: {
+    Footer
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -92,3 +99,16 @@ export default {
   }
 };
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+}
+ .navbar {
+    background-color: #122442;
+}
+</style>

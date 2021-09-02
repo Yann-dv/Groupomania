@@ -1,5 +1,5 @@
 module.exports = {
-    secret: "groupomania-secret-key",
+    secret: process.env.TOKEN_SECRET_NAME,
     //jwtExpiration: 3600,           // 1 hour
     //jwtRefreshExpiration: 86400,   // 24 hours
 
