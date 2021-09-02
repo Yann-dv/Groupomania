@@ -1,4 +1,3 @@
-const Media = require('../models/medias.model.js');
 const db = require("../models");
 const User = db.user;
 

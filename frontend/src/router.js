@@ -47,8 +47,8 @@ const routes = [
     component: BoardModerator,
   },
   {
-    path: "/user",
-    name: "user",
+    path: "/forum",
+    name: "forum",
     // lazy-loaded
     component: BoardUser,
   },
@@ -68,7 +68,8 @@ router.beforeEach((to, from, next) => {
     // redirect to login page
     if (authRequired && !loggedIn) {
       next('/login');
-    } else {
+    }
+     else {
       next();
     }
   });

@@ -3,16 +3,16 @@
   <div class="container">
     <header class="jumbotron">
       <h2 id="vueTitle" class="mt-5 fw-bold title-content">Bienvenu sur le réseau social de Groupomania</h2>
-      <div class="home-links mt-3 text-center d-flex flex-column">
-          <router-link to="/login">
-            <button class="btn btn-primary btn-block fs-3 mt-5 connection mt-2">Connexion</button>
-          </router-link>
-          <router-link to="/register">
-            <button class="btn btn-secondary btn-block fs-3 mt-5 connection mt-2">Inscription</button>
-          </router-link>
-      </div>
     </header>
-      <div>
+      <div class="text-center">
+        <ul class="list-group">
+          <li class="list-group-item"><router-link to="/login">
+            <button class="btn btn-primary btn-block fs-3 btn-lg mt-5 connection mt-2">Connexion</button>
+          </router-link></li>
+          <li class="list-group-item"><router-link to="/register">
+            <button class="btn btn-secondary btn-block fs-3 mt-5 btn-lg connection mt-2">Inscription</button>
+          </router-link></li>
+          </ul>
       <!--<p>Contenu principal : {{ content }}</p>-->
       </div>
   </div>
@@ -52,4 +52,9 @@ export default {
   text-align: center;
   margin-top: 1rem;
 }
+li {
+  border: none;
+}
+
+
 </style>
