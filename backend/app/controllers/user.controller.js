@@ -6,7 +6,7 @@ const User = db.user;
     User.findAll().then(
       (users) => {
         const mappedUsers = users.map((user) => {
-          allUsers= user.username + user.id;
+          allUsers= user.username + '-' + user.id;
           return allUsers;
         });
         res.status(200).send(`Voici une liste des différents utilisateurs de la db : ` + `${mappedUsers}`

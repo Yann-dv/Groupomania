@@ -100,8 +100,8 @@ function initial() {
   });
 
   Media.create({
-    id: NULL,
-    author: 4,
+    id: 1,
+    author: 3,
     content: "https://pixabay.com/get/g2dfffed41e8b9072c09402301d43f10c4b4f0f73e811c7580756b590cdf0182983298493cad0abe667c904024b1b3432_640.jpg",
     category: "hollidays",
     archived: 0
