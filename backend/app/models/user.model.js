@@ -5,21 +5,12 @@ module.exports = (sequelize, Sequelize) => {
       },
       birthday: {
         type: Sequelize.DATEONLY,
-        validate: {
-          not: ["[a-z]",'i'],       // will not allow letters
-        }
       },
       firstname: {
         type: Sequelize.STRING,
-        validate: {
-          is: ["^[a-z]+$",'i'],     // will only allow letters
-        }
       },
       lastname: {
         type: Sequelize.STRING,
-        validate: {
-          is: ["^[a-z]+$",'i'],     // will only allow letters
-        }
       },
       username: {
         type: Sequelize.STRING,

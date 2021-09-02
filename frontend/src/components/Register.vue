@@ -86,13 +86,18 @@ export default {
       firstname:yup
         .string()
         .required("Veuillez entrer votre Nom")
-        .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
+        .max(50, "Le nom ne doit pas dépasser 50 caractères!")
+        .matches(/^[aA-zZ\s]+$/, 
+        "Veuillez n'utiliser que des lettres."),
       lastname:yup
         .string()
         .required("Veuillez entrer votre Prénom")
-        .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
+        .max(50, "Le nom ne doit pas dépasser 50 caractères!")
+        .matches(/^[aA-zZ\s]+$/, 
+        "Veuillez n'utiliser que des lettres."),
       birthday:yup
         .date()
+        .max(new Date(), "Date impossible car située dans le futur")
         .required("Veuillez entrez une date au format AAAA-MM-JJ, ex: 1979-12-31"),
       username: yup
         .string()
