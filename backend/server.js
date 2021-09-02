@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config(); // Env variables
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const db = require("./app/models");
 
 const app = express();
 
@@ -24,15 +25,16 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
 });
 
+app.get("/testingApi", (req, res, next) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.status(200).send(`${ User }`);
+});
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
-
-const db = require("./app/models");
-const userRoutes = require("./app/routes/user.routes");
-
 
 db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
