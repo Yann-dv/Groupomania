@@ -7,17 +7,17 @@ module.exports = (sequelize, Sequelize) => {
       author: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
+        /*references: {
           model: 'Users',
           key: 'id'
-        }
+        }*/
       },
       content: {
         type: Sequelize.TEXT,
         allowNull: false
       },
       category: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
       },
       archived: {
         type: Sequelize.INTEGER,
