@@ -10,6 +10,10 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
+    gender: req.body.gender,
+    birthday: req.body.birthday,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
@@ -61,8 +65,8 @@ exports.signin = (req, res) => {
           message: "Invalid Password!"
         });
       }
-
-      const token = jwt.sign({ id: user.id }, config.secret, {
+      // Token datas
+      const token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
         expiresIn: config.jwtExpiration
       });
 

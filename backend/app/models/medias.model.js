@@ -1,19 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
-    const Article = sequelize.define("articles", {
+    const Media = sequelize.define("medias", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
       author: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        /*references: {
-          model: 'Users',
-          key: 'id'
-        }*/
+        allowNull: false
       },
       content: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false
       },
       category: {
@@ -27,5 +23,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Article;
+    return Media;
   };

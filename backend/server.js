@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config(); // Env variables
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const db = require("./app/models");
 
 const app = express();
 
@@ -24,29 +25,32 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
 });
 
+app.get("/testingApi", (req, res, next) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.status(200).send(`${ User }`);
+});
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-const db = require("./app/models");
-const userRoutes = require("./app/routes/user.routes");
-
-
-db.sequelize.sync({force: true}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
+db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
   initial();
 });
 
+const Role = db.role;
+const User = db.user;
+const UserRoles = db.user_roles;
+const Media = db.media;
+const Article = db.article;
+
 if (process.env.NODE_ENV == "development") {
 
-const Role = db.role;
-const Users = db.user;
-const UserRoles = db.user_roles;
-////////////////////////////////////// function for initialize test-dev mysql db - TO DELETE for production ////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function initial() {
+
   Role.create({
     id: 1,
     name: "user"
@@ -63,7 +67,7 @@ function initial() {
   });
   var bcrypt = require("bcryptjs");
 
-  Users.create({
+  User.create({
     id: 1,
     username: "administrator",
     email: "admin@groupo.fr",
@@ -71,7 +75,7 @@ function initial() {
     roles: ["admin"]
   });
 
-  Users.create({
+  User.create({
     id: 2,
     username: "johndoe",
     email: "john@groupo.fr",
@@ -79,7 +83,7 @@ function initial() {
     roles: ["user"]
   });
 
-  Users.create({
+  User.create({
     id: 3,
     username: "moderator",
     email: "modo@groupo.fr",
@@ -87,7 +91,7 @@ function initial() {
     roles: ["moderator", "user"]
   });
 
-  Users.create({
+  User.create({
     id: 4,
     username: "usertest",
     email: "test@test.com",
@@ -95,11 +99,23 @@ function initial() {
     roles: ["user"]
   });
 
-  UserRoles.create({
-    createdAt: "2021-09-01",
-    updatedAt: "2021-09-01",
-    roleId: 3,
-    userId: 1,
-    });
-  }
-}
+  Media.create({
+    id: 1,
+    author: 3,
+    content: "https://pixabay.com/get/g2dfffed41e8b9072c09402301d43f10c4b4f0f73e811c7580756b590cdf0182983298493cad0abe667c904024b1b3432_640.jpg",
+    category: "hollidays",
+    archived: 0
+  });
+
+  Article.create({
+    id: 1,
+    author: 4,
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
+    category: "Article lorem ipsum",
+    archived: 0,
+    likes: 0,
+    createdAt: new Date(),
+    updatedAt: new Date()
+    })
+  }//initial end
+} // if end

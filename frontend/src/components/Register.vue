@@ -5,11 +5,11 @@
       <Form @submit="handleRegister" :validation-schema="schema" id="register-form">
         <div v-if="!successful">
         <div class="my-2 form-group gender-radios">
-          <Field name="sexe" type="radio" value="Homme"></Field>
+          <Field name="gender" type="radio" value="Homme"></Field>
           <label for="Homme" class="fs-5 ms-1">Homme</label>
-          <Field name="sexe" class="ms-2" type="radio" value="Femme"></Field>
+          <Field name="gender" class="ms-2" type="radio" value="Femme"></Field>
           <label for="Femme" class="fs-5 ms-1">Femme</label>
-            <ErrorMessage name="sexe" class="error-feedback ms-3" style="color:red" />
+            <ErrorMessage name="gender" class="error-feedback ms-3" style="color:red" />
         </div>
         <div class="form-group">
           <label for="firstName" class="fs-4 fw-bold">Prénom :</label>
@@ -80,20 +80,25 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      sexe:yup
+      gender:yup
       .string()
       .required("Veuillez choisir une option"),
       firstname:yup
         .string()
         .required("Veuillez entrer votre Nom")
-        .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
+        .max(50, "Le nom ne doit pas dépasser 50 caractères!")
+        .matches(/^[aA-zZ\s]+$/, 
+        "Veuillez n'utiliser que des lettres."),
       lastname:yup
         .string()
         .required("Veuillez entrer votre Prénom")
-        .max(50, "Le nom ne doit pas dépasser 50 caractères!"),
+        .max(50, "Le nom ne doit pas dépasser 50 caractères!")
+        .matches(/^[aA-zZ\s]+$/, 
+        "Veuillez n'utiliser que des lettres."),
       birthday:yup
         .date()
-        .required("Veuillez entrez une date au format AAAA-MM-JJ"),
+        .max(new Date(), "Date impossible car située dans le futur")
+        .required("Veuillez entrez une date au format AAAA-MM-JJ, ex: 1979-12-31"),
       username: yup
         .string()
         .required("Un identifiant est requis !")
@@ -108,7 +113,9 @@ export default {
         .string()
         .required("Un mot de passe est requis !")
         .min(6, "Le mot de passe doit contenir au moins 6 caractères !")
-        .max(40, "L'email ne doit pas dépasser 50 caractères !"),
+        .max(40, "L'email ne doit pas dépasser 50 caractères !")
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Le mot de passe doit contenir au moins 8 caractères, 1 lettre majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"),
     });
 
     return {
