@@ -3,7 +3,6 @@ import api from './api';
 class UserService {
   getPublicContent() {
     return api.get('/test/all'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
-    
   }
 
   getUserBoard() {

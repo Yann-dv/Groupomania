@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h2 class="fw-bold title-content">{{ content }}</h2>
+      <h2 id="vueTitle" class="fw-bold title-content">{{ content }}</h2>
     </header>
       <div>
       <p>Contenu principal</p>
@@ -12,7 +12,6 @@
 
 <script>
 import UserService from "../services/user.service";
-//import Footer from "../components/Footer.vue";
 
 export default {
   name: "Home",
@@ -21,9 +20,7 @@ export default {
       content: "",
     };
   },
-  /*components: { 
-    Footer
-  },*/
+
   mounted() {
     UserService.getPublicContent().then(
       (response) => {
