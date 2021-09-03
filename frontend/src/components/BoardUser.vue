@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{ content }}</h3>
+      <h3>{{ apiResponse }}</h3>
       <div class="text-center">
         <ul class="list-group">
           <li class="list-group-item"><router-link to="/">
@@ -11,7 +11,7 @@
             <button class="btn btn-secondary btn-block fs-3 mt-5 btn-lg connection mt-2">Inscription</button>
           </router-link></li>
           </ul>
-      <p>Contenu principal : {{this.content}}</p>
+      <p>Contenu principal : {{ apiResponse }}</p>
       </div>
     </header>
   </div>
@@ -25,17 +25,16 @@ export default {
   name: "User",
   data() {
     return {
-      content: "",
-      
+      apiResponse: "",
     };
   },
   mounted() {
     UserService.getUserBoard().then(
       (response) => {
-        this.content = response.data;
+        this.apiResponse = response.data;
       },
       (error) => {
-        this.content =
+        this.apiResponse =
           (error.response &&
             error.response.data &&
             error.response.data.message) ||

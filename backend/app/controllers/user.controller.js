@@ -1,8 +1,8 @@
+const { user } = require("../models");
 const db = require("../models");
 const User = db.user;
 
   exports.allAccess = (req, res, next) => {
-  
     res.status(200).send("Public Content - Successfully accessed");
   };
   
@@ -14,7 +14,7 @@ const User = db.user;
           allUsers= user.username + '-' + user.id;
           return allUsers;
         });
-        res.status(200).json(`Utilisateurs : ` + `${mappedUsers}`)
+        res.status(200).parse(mappedUsers)
         .catch(
       () => {
         res.status(500).send(new Error('Database error!'));
