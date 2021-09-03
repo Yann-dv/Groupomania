@@ -13,7 +13,6 @@
             <button class="btn btn-secondary btn-block fs-3 mt-5 btn-lg connection mt-2">Inscription</button>
           </router-link></li>
           </ul>
-      <!--<p>Contenu principal : {{ content }}</p>-->
       </div>
   </div>
 </template>

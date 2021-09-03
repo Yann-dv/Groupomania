@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark">
-      <router-link to="/home" class="nav-link fs-4" v-if="!this.$store.state.auth.status.loggedIn">
+      <router-link to="/home" class="nav-link fs-4" v-if="!currentUser">
       <img src="./assets/banner_logo_w.png" alt="Logo Groupomania" class="px-2">
       </router-link>
-      <router-link to="/forum" class="nav-link fs-4" v-if="this.$store.state.auth.status.loggedIn">
+      <router-link to="/forum" class="nav-link fs-4" v-if="currentUser">
       <img src="./assets/banner_logo_w.png" alt="Logo Groupomania" class="px-2">
       </router-link>
       
