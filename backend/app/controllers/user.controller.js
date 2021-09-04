@@ -7,7 +7,7 @@ const Media = db.media;
 const Article = db.article;
 
 
-  exports.allAccess = (req, res, next) => {
+  exports.publicContent = (req, res, next) => {
     res.status(200).send("Public Content - Successfully accessed");
   };
   
@@ -16,8 +16,7 @@ const Article = db.article;
     Article.findAll().then(
       (articles) => {
         const mappedArticles = articles.map((article) => {
-          allArticles= articles;
-          return allArticles;
+          return article;
         });
         res.status(200).json(mappedArticles);
       }

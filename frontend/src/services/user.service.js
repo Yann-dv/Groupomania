@@ -2,19 +2,19 @@ import api from './api';
 
 class UserService {
   getPublicContent() {
-    return api.get('/test/all'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+    return api.get('/public'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
   }
 
   getUserBoard() {
-    return api.get('/test/user');
+    return api.get('/user');
   }
 
   getModeratorBoard() {
-    return api.get('/test/mod');
+    return api.get('/mod');
   }
 
   getAdminBoard() {
-    return api.get('/test/admin');
+    return api.get('/admin');
   }
 }
 

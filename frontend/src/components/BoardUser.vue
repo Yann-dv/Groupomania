@@ -2,7 +2,7 @@
   <div class="container">
     <header class="jumbotron">
     <a href="">
-      <h3> {{ apiResponse.category }}</h3>
+      <h3> {{ apiResponse[1].category }}</h3>
       </a>
       <div class="text-center">
         <ul class="list-group">

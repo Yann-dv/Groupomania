@@ -10,19 +10,19 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
+  app.get("/api/public", controller.publicContent);
 
-  app.get("/api/test/user",
+  app.get("/api/user",
     [authJwt.verifyToken],
     controller.userBoard
   );
 
-  app.get("/api/test/mod",
+  app.get("/api/mod",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );
 
-  app.get("/api/test/admin",
+  app.get("/api/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
