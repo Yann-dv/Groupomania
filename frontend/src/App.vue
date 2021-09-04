@@ -65,6 +65,11 @@ import EventBus from "./common/EventBus";
 
 
 export default {
+  data() {
+    return {
+    mainColor: "#122442",
+    }
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -110,6 +115,6 @@ export default {
   height: 100vh;
 }
  .navbar {
-    background-color: #122442;
+    background-color: v-bind(mainColor);
 }
 </style>

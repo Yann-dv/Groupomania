@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-    <a href="">
-      <h3> {{ apiResponse.category }}</h3>
-      </a>
       <div class="text-center">
-      <h3>Bienvenue sur le forum de discussion de Groupomania !</h3>
+      <h2 class="fw-bold py-5">Bienvenue sur le forum de discussion de Groupomania !</h2>
         <ul class="list-group">
           </ul>
       </div>
     </header>
     <!--Main Dynamic content-->
-    <ul>
-        <li v-for="item in apiResponse" :key="item" class="item">
+    <ul class="items-list">
+        <li v-for="item in apiResponse" :key="item" class="py-3">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{item.authorName}}</h5>
+              <div class="card-header bg-mainColored">
+                <h5 class="card-title fw-bold">{{item.authorName}}</h5>
+                <span class="card-subtitle text-underline fw-bold secondColored">{{ item.title }}</span>
+              </div>
               <p class="card-text">{{item.content}}</p>
             </div>
            </div>
@@ -37,6 +37,8 @@ export default {
   },
   data() {
     return {
+      mainColor: "#122442",
+      secondColor: "#D1515A",
       apiResponse: "",
     };
   },
@@ -61,3 +63,16 @@ export default {
   },
 };
 </script>
+
+<style>
+li {
+  list-style-type: none;
+}
+.bg-mainColored{
+  background-color: v-bind(mainColor);
+}
+
+.secondColored {
+  color: v-bind(secondColor);
+}
+</style>
