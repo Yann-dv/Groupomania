@@ -5,30 +5,36 @@
       <h3> {{ apiResponse.category }}</h3>
       </a>
       <div class="text-center">
+      <h3>Bienvenue sur le forum de discussion de Groupomania !</h3>
         <ul class="list-group">
-          <li class="list-group-item"><router-link to="/">
-            <button class="btn btn-primary btn-block fs-3 btn-lg mt-5 connection mt-2">Connexion</button>
-          </router-link></li>
-          <li class="list-group-item"><router-link to="/">
-            <button class="btn btn-secondary btn-block fs-3 mt-5 btn-lg connection mt-2">Inscription</button>
-          </router-link></li>
           </ul>
-      <ul>
-      <li v-for="item in apiResponse" :key="item">
-      <p v-for="item in apiResponse" :key="item">{{item.content}}</p>
-      </li>
-      </ul>
       </div>
     </header>
+    <!--Main Dynamic content-->
+    <ul>
+        <li v-for="item in apiResponse" :key="item" class="item">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{item.authorName}}</h5>
+              <p class="card-text">{{item.content}}</p>
+            </div>
+           </div>
+        </li>
+      </ul>
+    <Footer />
   </div>
 </template>
 
 <script>
 import UserService from '../services/user.service';
 import EventBus from "../common/EventBus";
+import Footer from "../components/Footer";
 
 export default {
   name: "User",
+  components: {
+    Footer,
+  },
   data() {
     return {
       apiResponse: "",

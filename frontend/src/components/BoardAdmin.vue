@@ -3,15 +3,23 @@
     <header class="jumbotron">
       <h3>{{ content }}</h3>
     </header>
+      <div>
+        <!--Main content-->
+      </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
+import Footer from "../components/Footer";
 
 export default {
   name: "User",
+  components: {
+    Footer,
+  },
   data() {
     return {
       content: "",

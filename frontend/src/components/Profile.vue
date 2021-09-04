@@ -21,12 +21,18 @@
     <ul>
       <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
     </ul>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from "../components/Footer";
+
 export default {
   name: 'Profile',
+  components: {
+    Footer,
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

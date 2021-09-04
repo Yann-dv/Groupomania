@@ -79,7 +79,7 @@ function initial() {
     id: 2,
     username: "johndoe",
     email: "john@groupo.fr",
-    password: bcrypt.hashSync("jonhdoe99", 8),
+    password: bcrypt.hashSync("johndoe99", 8),
     roles: ["user"]
   });
 
@@ -109,7 +109,8 @@ function initial() {
 
   Article.create({
     id: 1,
-    author: 4,
+    authorId: 4,
+    authorName: "usertest",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
     category: "Article lorem ipsum",
     archived: 0,
@@ -120,7 +121,8 @@ function initial() {
 
     Article.create({
       id: 2,
-      author: 2,
+      authorId: 2,
+      authorName: "johndoe",
       content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
       category: "Article lorem ipsum",
       archived: 0,

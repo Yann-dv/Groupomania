@@ -54,20 +54,17 @@
     </nav>
     <div class="container-fluid">
       <router-view />
-      <Footer />
+      
     </div> 
   </div>
 </template>
 
 <script>
-import Footer from "./components/Footer";
+
 import EventBus from "./common/EventBus";
 
 
 export default {
-  components: {
-    Footer
-  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

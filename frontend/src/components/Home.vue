@@ -14,11 +14,13 @@
           </router-link></li>
           </ul>
       </div>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import UserService from "../services/user.service";
+import Footer from "../components/Footer";
 
 const getUser = () => {
   return JSON.parse(localStorage.getItem(`user`));
@@ -28,6 +30,9 @@ let activeUser = getUser();
 
 export default {
   name: "Home",
+  components: {
+    Footer,
+  },
   data() {
     return {
       content: "",

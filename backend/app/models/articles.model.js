@@ -4,13 +4,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      author: {
+      authorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        /*references: {
-          model: 'Users',
-          key: 'id'
-        }*/
+      },
+      authorName: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       content: {
         type: Sequelize.TEXT,
