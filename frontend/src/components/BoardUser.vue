@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{ apiResponse }}</h3>
+    <a href="">
+      <h3> {{ apiResponse.category }}</h3>
+      </a>
       <div class="text-center">
         <ul class="list-group">
           <li class="list-group-item"><router-link to="/">
