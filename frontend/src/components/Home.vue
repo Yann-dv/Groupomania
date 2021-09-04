@@ -20,6 +20,12 @@
 <script>
 import UserService from "../services/user.service";
 
+const getUser = () => {
+  return JSON.parse(localStorage.getItem(`user`));
+};
+
+let activeUser = getUser();
+
 export default {
   name: "Home",
   data() {
@@ -29,6 +35,7 @@ export default {
   },
 
   mounted() {
+    if (!activeUser) {
     UserService.getPublicContent().then(
       (response) => {
         this.content = response.data;
@@ -42,7 +49,10 @@ export default {
           error.toString();
       }
     );
-  },
+  } else if (activeUser) {
+      this.$router.push("/forum");
+  }
+  }
 };
 </script>
 

@@ -64,7 +64,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/forum");
     }
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
 
       this.$store.dispatch("auth/login", user).then(
         () => {
-          this.$router.push("/profile");
+          this.$router.push("/forum");
         },
         (error) => {
           this.loading = false;

@@ -2,7 +2,7 @@
   <div class="container">
     <header class="jumbotron">
     <a href="">
-      <h3> {{ apiResponse[1].category }}</h3>
+      <h3> {{ apiResponse.category }}</h3>
       </a>
       <div class="text-center">
         <ul class="list-group">
@@ -13,7 +13,11 @@
             <button class="btn btn-secondary btn-block fs-3 mt-5 btn-lg connection mt-2">Inscription</button>
           </router-link></li>
           </ul>
-      <p>Contenu principal : {{ apiResponse }}</p>
+      <ul>
+      <li v-for="item in apiResponse" :key="item">
+      <p v-for="item in apiResponse" :key="item">{{item.content}}</p>
+      </li>
+      </ul>
       </div>
     </header>
   </div>
