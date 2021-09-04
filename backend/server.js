@@ -128,7 +128,7 @@ function initial() {
       category: "Article lorem ipsum",
       archived: 0,
       likes: 1,
-      createdAt: new Date(),
+      createdAt: "2010-10-22",
       updatedAt: new Date()
       });
   }//initial end

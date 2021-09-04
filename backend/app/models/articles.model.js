@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       content: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       category: {
         type: Sequelize.STRING,
@@ -28,7 +28,15 @@ module.exports = (sequelize, Sequelize) => {
       },
       likes: {
         type: Sequelize.INTEGER,
-      }
+      },
+      createdAt: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      },
+      updatedAt: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      },
     });
   
     return Article;
