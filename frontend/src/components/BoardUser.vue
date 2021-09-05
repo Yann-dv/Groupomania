@@ -19,12 +19,12 @@
             <button class="btn btn-primary rounded-pill" type="submit">Poster</button>
           </div>
         </div> <!--Form end-->
-                  <span>{{newArticle}}</span>
+                  <span>{{ this.currentUser.username }}</span>
         <ul class="items-list col-md-8 mx-auto col-12">
         <li v-for="item in apiResponse" :key="item" class="py-3">
           <div class="card rounded">
             <div class="card-body bg-light">
-              <div class="card-headerv mb-3 position-relative">
+              <div class="card-header rounded mb-3 position-relative">
                 <span class="card-title mainColored text-light rounded-pill p-2 fw-bold">
                 <font-awesome-icon icon="user"/>
                 {{item.authorName}}
@@ -32,8 +32,19 @@
                 <span class="ps-2 card-subtitle text-underline fw-bold secondColored">{{ item.title }}</span>
                 <span class="px-5 float-right position-absolute end-0 disabled text-muted">
                 Publié il y a {{ postedSince }} jours</span>
+                <div class="btn-group position-absolute end-0 top-0" role="group">
+                  <button v-if="currentUser.username === item.authorName && currentUser.id === item.authorId" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id ="btnGroupDropClose" aria-label="Close">
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="btnGroupDropClose">
+                  <li v-on:click="modifyPost" class="dropdown-item" href="#">Modifier mon post</li>
+                  <li v-on:click="deletePost" class="dropdown-item" href="#">Supprimer mon post</li>
+                </ul>
+                </div>
+              </div><!--header end-->
+              <div class="articleContent">
+                <p class="card-text px-5 py-2">{{item.content}}</p>
+                <font-awesome-icon icon="fa-signal"/>
               </div>
-              <p class="card-text px-5 py-2">{{item.content}}</p>
             </div>
            </div>
         </li>
@@ -56,16 +67,12 @@ export default {
   },
   data() {
     return {
+      loading: false,
       headerColor: "#8957E5",
       mainColor: "#122442",
       secondColor: "#D1515A",
       postedSince:"",
       apiResponse: "",
-      newArticle: [
-        {
-          author: "{currentUser.username}",
-        }
-      ]
     };
   },
   computed: {
@@ -97,6 +104,14 @@ export default {
         },   
     );
   },    
+  methods: {
+    modifyPost() {
+        // to create
+    },
+    deletePost() {
+        // to create
+    },
+  }
 };//export end
 </script>
 
