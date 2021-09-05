@@ -2,7 +2,7 @@
   <div class="container">
     <header class="jumbotron">
       <div class="text-center">
-      <h2 class="fw-bold py-5">Bienvenue sur le forum de discussion de Groupomania !</h2>
+      <h2 class="fw-bold py-5">Bienvenue sur le forum de discussion de Groupomania, {{ this.currentUser.username }}  !</h2>
         <ul class="list-group">
           </ul>
       </div>
@@ -21,7 +21,7 @@
         </div> <!--Form end-->
                   <span>{{ this.currentUser.username }}</span>
         <ul class="items-list col-md-8 mx-auto col-12">
-        <li v-for="item in apiResponse" :key="item" class="py-3">
+        <li v-for="item in apiAllArticles" :key="item" class="py-3">
           <div class="card rounded">
             <div class="card-body bg-light">
               <div class="card-header rounded mb-3 position-relative">
@@ -43,7 +43,7 @@
               </div><!--header end-->
               <div class="articleContent">
                 <p class="card-text px-5 py-2">{{item.content}}</p>
-                <font-awesome-icon icon="fa-signal"/>
+                <font-awesome-icon icon="home"/>
               </div>
             </div>
            </div>
@@ -57,6 +57,7 @@
 
 <script>
 import UserService from '../services/user.service';
+import ArticleService from '../services/article.service';
 import EventBus from "../common/EventBus";
 import Footer from "../components/Footer";
 
@@ -72,7 +73,8 @@ export default {
       mainColor: "#122442",
       secondColor: "#D1515A",
       postedSince:"",
-      apiResponse: "",
+      apiAllUsers: "",
+      apiAllArticles: "",
     };
   },
   computed: {
@@ -82,16 +84,32 @@ export default {
   },
   mounted() {
     let now = Date.now();
-    UserService.getUserBoard().then(
-
+    ArticleService.getAllArticles().then(
       (response) => {
-        this.apiResponse = response.data;
+        this.apiAllArticles = response.data;
+      },
+      (error) => {
+        this.apiAllArticles =
+          (error.res &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+          if (error.res && error.response.status === 403) {
+          EventBus.dispatch("logout");
+          }
+        },   
+    );
+    UserService.getUserBoard().then(
+      (response) => {
+        this.apiAllUsers = response.data;
         let postedOn = response.data.item.createdAt;
         this.postedSince=  postedOn - now;
         
       },
       (error) => {
-        this.apiResponse =
+        this.apiAllUsers =
           (error.response &&
             error.response.data &&
             error.response.data.message) ||

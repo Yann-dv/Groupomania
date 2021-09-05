@@ -1,20 +1,15 @@
 const db = require("../models");
 
-const User = db.user;
-
-
-  exports.publicContent = (req, res, next) => {
-    res.status(200).send("Public Content - Successfully accessed");
-  };
+const Article = db.article;
   
 
-  exports.userBoard = (req, res, next) => {
-    User.findAll().then(
-      (users) => {
-        const mappedUsers = users.map((user) => {
-          return user;
+  exports.getAllArticles = (req, res, next) => {
+    Article.findAll().then(
+      (articles) => {
+        const mappedArticles = articles.map((article) => {
+          return article;
         });
-        res.status(200).json(mappedUsers);
+        res.status(200).json(mappedArticles);
       }
     ).catch(
       () => {
@@ -46,11 +41,3 @@ const User = db.user;
       }
     );
   });*/
-  
-  exports.adminBoard = (req, res, next) => {
-    res.status(200).send("Admin Content - Successfully accessed");
-  };
-  
-  exports.moderatorBoard = (req, res, next) => {
-    res.status(200).send("Moderator Content - Successfully accessed");
-  };
