@@ -8,8 +8,19 @@
       </div>
     </header>
     <!--Main Dynamic content-->
-    <div class="row">
-    <ul class="items-list col-md-8 mx-auto col-12">
+    <div class="container">
+      <div class="row">
+        <div class="form form-floating mx-auto col-12 col-md-8">
+          <div class="newArticle">
+            <h4>Partagez avec la communauté :</h4>
+            <textarea v-model="article" class="form-control rounded" placeholder="Ecrivez quelque chose" id="floatingTextarea"></textarea>
+          </div>
+          <div class="mb-3 mt-1">
+            <button class="btn btn-primary rounded-pill" type="submit">Poster</button>
+          </div>
+        </div> <!--Form end-->
+                  <span>{{newArticle}}</span>
+        <ul class="items-list col-md-8 mx-auto col-12">
         <li v-for="item in apiResponse" :key="item" class="py-3">
           <div class="card rounded">
             <div class="card-body bg-light">
@@ -22,14 +33,15 @@
                 <span class="px-5 float-right position-absolute end-0 disabled text-muted">
                 Publié il y a {{ postedSince }} jours</span>
               </div>
-              <p class="card-text">{{item.content}}</p>
+              <p class="card-text px-5 py-2">{{item.content}}</p>
             </div>
            </div>
         </li>
-      </ul>
+        </ul>
+        </div> <!--Grid row end-->
       </div>
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -49,7 +61,17 @@ export default {
       secondColor: "#D1515A",
       postedSince:"",
       apiResponse: "",
+      newArticle: [
+        {
+          author: "{currentUser.username}",
+        }
+      ]
     };
+  },
+  computed: {
+  currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   mounted() {
     let now = Date.now();

@@ -6,8 +6,8 @@
       <div>
         <!--Main content-->
       </div>
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script>

@@ -21,8 +21,8 @@
     <ul>
       <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
     </ul>
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script>

@@ -31,8 +31,8 @@
         </div>
       </Form>
     </div>
-    <Footer/>
   </div>
+  <Footer />
 </template>
 
 <script>

@@ -14,8 +14,8 @@
           </router-link></li>
           </ul>
       </div>
-    <Footer/>
   </div>
+  <Footer />
 </template>
 
 <script>
