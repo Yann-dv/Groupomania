@@ -8,12 +8,13 @@
       </div>
     </header>
     <!--Main Dynamic content-->
-    <ul class="items-list">
+    <div class="row">
+    <ul class="items-list col-md-8 mx-auto col-12">
         <li v-for="item in apiResponse" :key="item" class="py-3">
           <div class="card rounded">
             <div class="card-body bg-light">
               <div class="card-headerv mb-3 position-relative">
-                <span class="card-title bg-dark text-light rounded-pill p-2 fw-bold">
+                <span class="card-title mainColored text-light rounded-pill p-2 fw-bold">
                 <font-awesome-icon icon="user"/>
                 {{item.authorName}}
                 </span>
@@ -26,6 +27,7 @@
            </div>
         </li>
       </ul>
+      </div>
     <Footer />
   </div>
 </template>
@@ -43,6 +45,7 @@ export default {
   data() {
     return {
       headerColor: "#8957E5",
+      mainColor: "#122442",
       secondColor: "#D1515A",
       postedSince:"",
       apiResponse: "",
@@ -83,7 +86,7 @@ li {
   background-color: v-bind(headerColor);
 }
 
-.secondColored {
-  color: v-bind(secondColor);
+.mainColored {
+  background-color: v-bind(mainColor);
 }
 </style>
