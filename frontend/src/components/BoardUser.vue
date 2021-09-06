@@ -8,6 +8,17 @@
       </div>
     </header>
     <!--Main Dynamic content-->
+    <div id="articleModal">
+  <button id="show-modal" @click="showModal = true">Show Modal</button>
+  <!-- use the modal component, pass in the prop -->
+  <ModalArticle/>
+  <modal v-if="showModal" @close="showModal = false">
+    <!--you can use custom content here to overwrite default content-->
+    <template v-slot:header>
+      <h3>custom header</h3>
+    </template>
+  </modal>
+</div>
     <div class="container">
       <div class="row">
         <div class="form form-floating mx-auto col-12 col-md-8">
@@ -65,10 +76,12 @@ export default {
   name: "User",
   components: {
     Footer,
+    ModalArticle: { template: "#modal-template"},
   },
   data() {
     return {
       loading: false,
+      showModalArticle : false,
       headerColor: "#8957E5",
       mainColor: "#122442",
       secondColor: "#D1515A",
