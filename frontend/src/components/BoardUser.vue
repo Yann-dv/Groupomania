@@ -10,8 +10,8 @@
       </div>
     </header>
     <!--Main Dynamic content-->
+    
     <div class="container">
-      <!--Modal content-->
       <div class="row">
         <div class="form form-floating mx-auto col-12 col-md-8">
           <div class="newArticle">
@@ -58,7 +58,7 @@
                     <button
                       v-if="
                         currentUser.username === item.authorName &&
-                          currentUser.id === item.authorId
+                          currentUser.id === item.authorId || currentUser.role === admin | mod
                       "
                       type="button"
                       class="btn btn-secondary dropdown-toggle"
@@ -86,15 +86,18 @@
                 <!--header end-->
                 <!--Card article content-->
                 <div class="articleContent">
-                  <p class="card-text px-5 py-2">{{ item.content }}</p>
+                  <p class="card-text px-5 py-2"> {{ item.content }}</p>
                   <font-awesome-icon icon="home" />
                 </div>
               </div>
               <!--Body end-->
             </div>
             <!--Card end-->
-            <!--Modal content for modify user's articles-->
-            <teleport to="#modifyArticles">
+          </li>
+        </ul>
+                    <!--Modal content for modify user's articles-->
+            <teleport to="#modifyArticles" :key="item"> 
+            <transition name="fade">
               <div v-if="modalModifyPost" class="modal">
                 <div class="card rounded mx-auto col-12 col-md-8">
                   <div class="card-body bg-light">
@@ -112,13 +115,13 @@
                           <input
                             type="text"
                             class="newTitle m-3 py-2"
-                            v-model="item.title"
+                            v-model= "test"
                             id="modifyMyTitleTextArea"
                           />
                           <textarea
                             class="form-control rounded"
                             style="min-height:14rem"
-                            v-model="item.content"
+                            v-model="teste"
                             id="modifyMyArticleTextArea"
                           >
                           </textarea>
@@ -144,10 +147,9 @@
                   </div>
                 </div>
               </div>
+              </transition>
             </teleport>
             <!--Modal end-->
-          </li>
-        </ul>
       </div>
       <!--Grid row end-->
     </div>
@@ -167,7 +169,19 @@ export default {
     Footer,
   },
   data() {
-    return {
+    return {   
+        /*item: {
+        id: apiAllArticles.item.id,
+        authorId:"",
+        authorName:"",
+        title:"",
+        content:"",
+        category:"",
+        archived:"",
+        likes:"",
+        createdAt:"",
+        updatedAt:"",
+      },*/
       modifyMyArticleFrom: "",
       modalModifyPost: false,
       loading: false,
@@ -239,6 +253,22 @@ export default {
     );
   },
   methods: {
+    /*getCurrentItemToModify(){
+      apiAllArticles.forEach(el => {
+        let id = el.id;
+        let authorId= el.authorId;
+        authorName:"",
+        title:"",
+        content:"",
+        category:"",
+        archived:"",
+        likes:"",
+        createdAt:"",
+        updatedAt:"",
+        products.push(elementId);
+
+      });
+      },*/
     modifyPost() {
       // to create
     },
@@ -250,6 +280,15 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 textarea {
   overflow: auto;
   resize: none;
@@ -278,14 +317,14 @@ li {
   justify-content: center;
 }
 
-.modal + .card {
+/*.modal.card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
   width: 20vw;
   height: 20vh;
   padding: 5px;
-}
+  background-color: green;
+}*/
 </style>

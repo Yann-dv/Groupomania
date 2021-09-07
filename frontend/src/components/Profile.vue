@@ -17,7 +17,7 @@
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>
-    <strong>Authorities:</strong>
+    <strong v-if="role in currentUser.roles" :key="role">Authorities:</strong>
     <ul>
       <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
     </ul>
