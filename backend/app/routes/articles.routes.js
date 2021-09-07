@@ -16,5 +16,9 @@ module.exports = function(app) {
   [authJwt.verifyToken],
     articlesController.getAllArticles
   );
+  app.put("/api/allArticles/modifyOneArticle",
+  [authJwt.verifyToken],
+    articlesController.modifyOneArticle
+  );
 
 };
