@@ -12,11 +12,11 @@ module.exports = function(app) {
   });
 
   
-  app.get("/api/allArticles",
+  app.get("/api/getAllArticles",
   [authJwt.verifyToken],
     articlesController.getAllArticles
   );
-  app.put("/api/allArticles/modifyOneArticle",
+  app.put("/api/modifyOneArticle",
   [authJwt.verifyToken],
     articlesController.modifyOneArticle
   );

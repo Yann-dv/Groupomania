@@ -105,7 +105,7 @@
                       <span class="card-title rounded-pill p-2 fw-bold"
                         ><font-awesome-icon icon="user" />
                         {{ currentUser.username }}</span
-                      >v-on
+                      >
                       <h5>Modifier ma publication :</h5>
                       <div class="form form-floating mx-auto col-12 col-md-8">
                         <div class="modifyMyArticle">
@@ -116,13 +116,13 @@
                             type="text"
                             class="newTitle m-3 py-2"
                             v-model= "test"
-                            id="modifyMyTitleTextArea"
+                            id="modifiedTitle"
                           />
                           <textarea
                             class="form-control rounded"
                             style="min-height:14rem"
-                            v-model="test"
-                            id="modifyMyArticleTextArea"
+                            v-model="newPost"
+                            id="modifiedContent"
                           >
                           </textarea>
                         </div>
@@ -132,14 +132,14 @@
                       >
                         <button
                           type="button"
-                          v-on:click="modalModifyPost = false"
+                          v-on:click="[deleteLocalModifiedPost(), modalModifyPost = false]"
                           class="btn-close"
                           aria-label="Annuler"
                         ></button>
                         <button
                           class="btn btn-primary rounded-pill"
                           type="submit"
-                          v-on:submit="addModifyingPost()"
+                          v-on:click="addModifyingPost"
                         >
                           Valider
                         </button>
@@ -173,6 +173,7 @@ export default {
     return {   
       test: "Development testin'",
       modifyingPost: [],
+      newPost: null,
       modalModifyPost: false,
       loading: false,
       headerColor: "#8957E5",
@@ -251,17 +252,32 @@ export default {
       }
     );
   },
-  methods() {
+  methods: {
     // <button @click="addCat"Ajouter un chat</button>
-     ArticleService.addModifyingPost().then(
-      (res) => {
-        return res;
-      },
-      (err) => {
-        return err;
-      }
-    );
-
+    addModifyingPost() {
+    // s'assurer que l'utilisateur a entré quelque chose
+    if (!this.newPost) {
+      return;
+    }
+    this.modifyingPost.splice(0, 10, this.newPost);
+    this.newPost = '';
+    this.saveModifyingPost();
+  
+  },
+  deleteLocalModifiedPost() {
+    let postModifying = JSON.parse(localStorage.getItem("modifyingPost"));
+    if(postModifying) {
+      localStorage.removeItem('modifyingPost');
+    }
+  },
+  removeModifyingPost(x) {
+    this.modifyingPost.splice(x, 10);
+    this.saveModifyingPost();
+  },
+  saveModifyingPost() {
+    const parsed = JSON.stringify(this.modifyingPost);
+    localStorage.setItem('modifyingPost', parsed);
+  }
     /*modifyPost().then {
       // to create
     },
