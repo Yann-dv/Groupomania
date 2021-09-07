@@ -8,29 +8,19 @@
       </div>
     </header>
     <!--Main Dynamic content-->
-    <div id="articleModal">
-  <button id="show-modal" @click="showModal = true">Show Modal</button>
-  <!-- use the modal component, pass in the prop -->
-  <ModalArticle/>
-  <modal v-if="showModal" @close="showModal = false">
-    <!--you can use custom content here to overwrite default content-->
-    <template v-slot:header>
-      <h3>custom header</h3>
-    </template>
-  </modal>
-</div>
     <div class="container">
+     <!--Modal content-->
       <div class="row">
         <div class="form form-floating mx-auto col-12 col-md-8">
           <div class="newArticle">
             <h4>Partagez avec la communauté :</h4>
-            <textarea v-model="article" class="form-control rounded" placeholder="Ecrivez quelque chose" id="floatingTextarea"></textarea>
+ <!--v-model="article"--><textarea  class="form-control rounded" placeholder="Ecrivez quelque chose" id="floatingTextarea"></textarea>
           </div>
           <div class="mb-3 mt-1">
             <button class="btn btn-primary rounded-pill" type="submit">Poster</button>
           </div>
         </div> <!--Form end-->
-                  <span>{{ this.currentUser.username }}</span>
+  <!--Articles list-->
         <ul class="items-list col-md-8 mx-auto col-12">
         <li v-for="item in apiAllArticles" :key="item" class="py-3">
           <div class="card rounded">
@@ -38,7 +28,7 @@
               <div class="card-header rounded mb-3 position-relative">
                 <span class="card-title mainColored text-light rounded-pill p-2 fw-bold">
                 <font-awesome-icon icon="user"/>
-                {{item.authorName}}
+                  {{item.authorName}}
                 </span>
                 <span class="ps-2 card-subtitle text-underline fw-bold secondColored">{{ item.title }}</span>
                 <span class="px-5 float-right position-absolute end-0 disabled text-muted">
@@ -47,8 +37,21 @@
                   <button v-if="currentUser.username === item.authorName && currentUser.id === item.authorId" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id ="btnGroupDropClose" aria-label="Close">
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="btnGroupDropClose">
-                  <li v-on:click="modifyPost" class="dropdown-item" href="#">Modifier mon post</li>
-                  <li v-on:click="deletePost" class="dropdown-item" href="#">Supprimer mon post</li>
+                  <li v-on:click="modalModifyPost = true" class="dropdown-item">Modifier mon post</li>
+                  <!--Modal content for modify user's articles-->
+                  <teleport to="#modifyArticles">
+                    <div v-if="modalModifyPost" class="modal">
+                      <div class="card rounded">
+                        <div class="card-body bg-light">
+                          <div class="card-header rounded mb-3 position-relative">
+                            <h3>Modifier ma publication</h3>
+                              <button type="button" v-on:click="modalModifyPost = false" class="btn-close" aria-label="Annuler"></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </teleport>
+                  <li v-on:click="deletePost" class="dropdown-item">Supprimer mon post</li>
                 </ul>
                 </div>
               </div><!--header end-->
@@ -76,12 +79,12 @@ export default {
   name: "User",
   components: {
     Footer,
-    ModalArticle: { template: "#modal-template"},
   },
   data() {
     return {
+      modalModifyPost: false,
+      modal2: false,
       loading: false,
-      showModalArticle : false,
       headerColor: "#8957E5",
       mainColor: "#122442",
       secondColor: "#D1515A",
@@ -96,7 +99,7 @@ export default {
     },
   },
   mounted() {
-    let now = Date.now();
+    //let now = Date.now();
     ArticleService.getAllArticles().then(
       (response) => {
         this.apiAllArticles = response.data;
@@ -117,8 +120,8 @@ export default {
     UserService.getUserBoard().then(
       (response) => {
         this.apiAllUsers = response.data;
-        let postedOn = response.data.item.createdAt;
-        this.postedSince=  postedOn - now;
+        //let postedOn = response.data.item.createdAt;
+        //this.postedSince=  postedOn - now;
         
       },
       (error) => {
@@ -147,6 +150,11 @@ export default {
 </script>
 
 <style>
+
+textarea {
+  overflow:auto;
+  resize: none;
+}
 li {
   list-style-type: none;
 }
@@ -156,5 +164,26 @@ li {
 
 .mainColored {
   background-color: v-bind(mainColor);
+}
+
+.modal {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(0,0,0,.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal + .card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
 }
 </style>
