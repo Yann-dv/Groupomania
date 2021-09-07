@@ -58,7 +58,7 @@
                     <button
                       v-if="
                         currentUser.username === item.authorName &&
-                          currentUser.id === item.authorId || currentUser.role === admin | mod
+                        currentUser.id === item.authorId
                       "
                       type="button"
                       class="btn btn-secondary dropdown-toggle"
@@ -96,7 +96,7 @@
           </li>
         </ul>
                     <!--Modal content for modify user's articles-->
-            <teleport to="#modifyArticles" :key="item"> 
+            <teleport to="#modifyArticles"> 
             <transition name="fade">
               <div v-if="modalModifyPost" class="modal">
                 <div class="card rounded mx-auto col-12 col-md-8">
@@ -105,7 +105,7 @@
                       <span class="card-title rounded-pill p-2 fw-bold"
                         ><font-awesome-icon icon="user" />
                         {{ currentUser.username }}</span
-                      >
+                      >v-on
                       <h5>Modifier ma publication :</h5>
                       <div class="form form-floating mx-auto col-12 col-md-8">
                         <div class="modifyMyArticle">
@@ -121,7 +121,7 @@
                           <textarea
                             class="form-control rounded"
                             style="min-height:14rem"
-                            v-model="teste"
+                            v-model="test"
                             id="modifyMyArticleTextArea"
                           >
                           </textarea>
@@ -139,6 +139,7 @@
                         <button
                           class="btn btn-primary rounded-pill"
                           type="submit"
+                          v-on:submit="addModifyingPost()"
                         >
                           Valider
                         </button>
@@ -170,19 +171,8 @@ export default {
   },
   data() {
     return {   
-        /*item: {
-        id: apiAllArticles.item.id,
-        authorId:"",
-        authorName:"",
-        title:"",
-        content:"",
-        category:"",
-        archived:"",
-        likes:"",
-        createdAt:"",
-        updatedAt:"",
-      },*/
-      modifyMyArticleFrom: "",
+      test: "Development testin'",
+      modifyingPost: [],
       modalModifyPost: false,
       loading: false,
       headerColor: "#8957E5",
@@ -199,6 +189,15 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.getItem('modifyingPost')) {
+      try {
+        this.modifyingPost = JSON.parse(localStorage.getItem('modifyingPost'));
+      } catch(e) {
+        localStorage.removeItem('modifyingPost');
+      }
+    }
+
+
     //let now = Date.now();
     ArticleService.getAllArticles().then(
       (response) => {
@@ -252,29 +251,23 @@ export default {
       }
     );
   },
-  methods: {
-    /*getCurrentItemToModify(){
-      apiAllArticles.forEach(el => {
-        let id = el.id;
-        let authorId= el.authorId;
-        authorName:"",
-        title:"",
-        content:"",
-        category:"",
-        archived:"",
-        likes:"",
-        createdAt:"",
-        updatedAt:"",
-        products.push(elementId);
+  methods() {
+    // <button @click="addCat"Ajouter un chat</button>
+     ArticleService.addModifyingPost().then(
+      (res) => {
+        return res;
+      },
+      (err) => {
+        return err;
+      }
+    );
 
-      });
-      },*/
-    modifyPost() {
+    /*modifyPost().then {
       // to create
     },
-    deletePost() {
+    deletePost().then {
       // to create
-    },
+    },*/
   },
 }; //export end
 </script>
