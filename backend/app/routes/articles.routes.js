@@ -16,9 +16,9 @@ module.exports = function(app) {
   [authJwt.verifyToken],
     articlesController.getAllArticles
   );
-  app.put("/api/modifyOneArticle",
+  app.post("/api/createArticle",
   [authJwt.verifyToken],
-    articlesController.modifyOneArticle
+    articlesController.createArticle
   );
 
 };

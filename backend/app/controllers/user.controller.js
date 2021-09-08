@@ -14,7 +14,7 @@ const User = db.user;
         const mappedUsers = users.map((user) => {
           return user;
         });
-        res.status(200).json(mappedUsers);
+        res.status(200).json(message= {users : mappedUsers.length});
       }
     ).catch(
       () => {
@@ -33,19 +33,6 @@ const User = db.user;
         }
       )*/
 };
-    /*User.findAll().then(
-      (users) => {
-        const mappedUsers = users.map((user) => {
-          allUsers= user.username + '-' + user.id;
-          return allUsers;
-        });
-        res.status(200).parse(mappedUsers)
-        .catch(
-      () => {
-        res.status(500).send(new Error('Database error!'));
-      }
-    );
-  });*/
   
   exports.adminBoard = (req, res, next) => {
     res.status(200).send("Admin Content - Successfully accessed");

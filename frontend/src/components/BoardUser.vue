@@ -10,25 +10,76 @@
       </div>
     </header>
     <!--Main Dynamic content-->
-    
+
     <div class="container">
       <div class="row">
-        <div class="form form-floating mx-auto col-12 col-md-8">
-          <div class="newArticle">
-            <h4>Partagez avec la communauté :</h4>
-            <!--v-model="article"--><textarea
-              class="form-control rounded"
-              placeholder="Ecrivez quelque chose"
-              id="floatingTextarea"
-            ></textarea>
+        <div v-if="!successful">
+        <Form
+          @submit="handlePost"
+          class="mx-auto col-12 col-md-8"
+          id="createArticleForm"
+         >
+          <h4>Partagez avec la communauté :</h4>
+          <!--v-model="article"-->
+          <div class="form-group form-floating">
+            <Field
+              type="text"
+              class="form-control newCategory my-3"
+              name="newTitle"
+            />
+            <label for="newTitle" class="text-decoration-underline"
+              >Titre (facultatif):</label
+            >
           </div>
-          <div class="mb-3 mt-1">
+          <!--<div class="form-group form-floating">
+            <Field
+              type="text"
+              class="form-control newTitle my-3"
+              name="newCategory"
+            />
+            <label for="newCategory" class="text-decoration-underline"
+              >Catégorie (facultatif):</label
+            >
+          </div>-->
+          <div class="form-group form-floating">
+            <Field component="textarea"
+              rows="20"
+              auto-grow
+              class="form-control rounded my-3"
+              name="newContent"  
+              required
+            ></Field>
+            <label for="newContent" class="text-decoration-underline"
+              >Contenu de mon post :</label
+            >
+            <ErrorMessage name="newContent" 
+            class="error-feedback ms-3" 
+            style="color:red" 
+            />
+          </div>
+          <div class="send-btn form-group">
             <button class="btn btn-primary rounded-pill" type="submit">
+            <span
+                v-show="loading"
+                class="spinner-border spinner-border-sm"
+              ></span>
               Poster
             </button>
           </div>
-        </div>
-        <!--Form end-->
+        </Form>
+        </div> <!--Fin v-if successfull-->
+        <div
+        v-if="message"
+        class="alert"
+        :class="successful ? 'alert-success' : 'alert-danger'"
+      >
+        {{ message }}
+      </div>
+      </div>
+    </div>
+    <!--Form end-->
+    <div class="container">
+      <div class="row">
         <!--Articles list-->
         <ul class="items-list col-md-8 mx-auto col-12">
           <li v-for="item in apiAllArticles" :key="item" class="py-3">
@@ -50,7 +101,7 @@
                     class="px-5 float-right position-absolute end-0 disabled text-muted"
                   >
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
-                    >
+                  >
                   <div
                     class="btn-group position-absolute end-0 top-0"
                     role="group"
@@ -58,7 +109,7 @@
                     <button
                       v-if="
                         currentUser.username === item.authorName &&
-                        currentUser.id === item.authorId
+                          currentUser.id === item.authorId
                       "
                       type="button"
                       class="btn btn-secondary dropdown-toggle"
@@ -86,14 +137,21 @@
                 <!--header end-->
                 <!--Card article content-->
                 <div class="articleContent">
-                  <p class="card-text px-5 py-2"> {{ item.content }}</p>
+                  <p class="card-text px-5 py-2">{{ item.content }}</p>
                   <div class="likes_dislikes">
-                    <font-awesome-icon icon="thumbs-up" class="liked" style="color:#3e813e"/>
-                       <span class="nbrOfLikes ms-1"> {{ item.likes }} </span>
-                    <font-awesome-icon icon="thumbs-down" class="ms-2 disliked" style="color:#D1515A"/>
-                       <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
+                    <font-awesome-icon
+                      icon="thumbs-up"
+                      class="liked"
+                      style="color:#3e813e"
+                    />
+                    <span class="nbrOfLikes ms-1"> {{ item.likes }} </span>
+                    <font-awesome-icon
+                      icon="thumbs-down"
+                      class="ms-2 disliked"
+                      style="color:#D1515A"
+                    />
+                    <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
                   </div>
-                 
                 </div>
               </div>
               <!--Body end-->
@@ -101,93 +159,103 @@
             <!--Card end-->
           </li>
         </ul>
-                    <!--Modal content for modify user's articles-->
-            <teleport to="#modifyArticles"> 
-            <transition name="fade">
-              <div v-if="modalModifyPost" class="modal">
-                <div class="card rounded mx-auto col-12 col-md-8">
-                  <div class="card-body bg-light">
-                    <div class="card-header rounded mb-3 position-relative">
-                      <span class="card-title rounded-pill p-2 fw-bold"
-                        ><font-awesome-icon icon="user" />
-                        {{ currentUser.username }}</span
-                      >
-                      <h5>Modifier ma publication :</h5>
-                      <div class="form form-floating mx-auto col-12 col-md-8">
-                        <div class="modifyMyArticle">
-                          <label for="modifyMyArticle"
-                            >Titre (facultatif):</label
-                          >
-                          <input
-                            type="text"
-                            class="newTitle m-3 py-2"
-                            v-model= "test"
-                            id="modifiedTitle"
-                          />
-                          <textarea
-                            class="form-control rounded"
-                            style="min-height:14rem"
-                            v-model="newPost"
-                            id="modifiedContent"
-                          >
-                          </textarea>
-                        </div>
-                      </div>
-                      <div
-                        class="mt-3 card-buttons d-flex justify-content-between"
-                      >
-                        <button
-                          type="button"
-                          v-on:click="[deleteLocalModifiedPost(), modalModifyPost = false]"
-                          class="btn-close"
-                          aria-label="Annuler"
-                        ></button>
-                        <button
-                          class="btn btn-primary rounded-pill"
-                          type="submit"
-                          v-on:click="[addModifyingPost, sendModifiedPost(), modalModifyPost = false]"
+        <!--Modal content for modify user's articles-->
+        <teleport to="#modifyArticles">
+          <transition name="fade">
+            <div v-if="modalModifyPost" class="modal">
+              <div class="card rounded mx-auto col-12 col-md-8">
+                <div class="card-body bg-light">
+                  <div class="card-header rounded mb-3 position-relative">
+                    <span class="card-title rounded-pill p-2 fw-bold"
+                      ><font-awesome-icon icon="user" />
+                      {{ currentUser.username }}</span
+                    >
+                    <h5>Modifier ma publication :</h5>
+                    <div class="form form-floating mx-auto col-12 col-md-8">
+                      <div class="modifyMyArticle">
+                        <label for="modifyMyArticle">Titre (facultatif):</label>
+                        <input
+                          type="text"
+                          class="newTitle m-3 py-2"
+                          v-model="test"
+                          name="modifiedTitle"
+                        />
+                        <textarea
+                          class="form-control rounded"
+                          style="min-height:14rem"
+                          v-model="newPost"
+                          name="modifiedContent"
                         >
-                          Valider
-                        </button>
+                        </textarea>
                       </div>
+                    </div>
+                    <div
+                      class="mt-3 card-buttons d-flex justify-content-between"
+                    >
+                      <button
+                        type="button"
+                        v-on:click="
+                          [deleteLocalModifiedPost(), (modalModifyPost = false)]
+                        "
+                        class="btn-close"
+                        aria-label="Annuler"
+                      ></button>
+                      <button
+                        class="btn btn-primary rounded-pill"
+                        type="submit"
+                        v-on:click="
+                          [
+                            addModifyingPost,
+                            sendModifiedPost(),
+                            (modalModifyPost = false),
+                          ]
+                        "
+                      >
+                        Valider
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-              </transition>
-            </teleport>
-            <!--Modal end-->
+            </div>
+          </transition>
+        </teleport>
+        <!--Modal end-->
       </div>
       <!--Grid row end-->
     </div>
+    <!--Container end-->
   </div>
   <Footer />
 </template>
 
 <script>
-import UserService from "../services/user.service";
-import ArticleService from "../services/article.service";
+import ArticleService from "../services/article-service";
 import EventBus from "../common/EventBus";
 import Footer from "../components/Footer";
+import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
   name: "User",
   components: {
     Footer,
+    Form,
+    Field,
+    ErrorMessage,
   },
   data() {
-    return {   
-      test: "Development testin'",
+    return {
+      successful: false,
+      loading: false,
+      message: "",
       modifyingPost: [],
       newPost: null,
       modalModifyPost: false,
-      loading: false,
       headerColor: "#8957E5",
       mainColor: "#122442",
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: "",
-
     };
   },
   computed: {
@@ -196,14 +264,13 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.getItem('modifyingPost')) {
+    if (localStorage.getItem("modifyingPost")) {
       try {
-        this.modifyingPost = JSON.parse(localStorage.getItem('modifyingPost'));
-      } catch(e) {
-        localStorage.removeItem('modifyingPost');
+        this.modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
+      } catch (e) {
+        localStorage.removeItem("modifyingPost");
       }
     }
-
 
     //let now = Date.now();
     ArticleService.getAllArticles().then(
@@ -221,71 +288,71 @@ export default {
         }
       }
     );
-    UserService.getUserBoard().then(
-      (response) => {
-        this.apiAllUsers = response.data;
-      },
-      (error) => {
-        this.apiAllUsers =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        if (error.response && error.response.status === 403) {
-          EventBus.dispatch("logout");
-        }
-      }
-    );
   },
   methods: {
-  getNumberOfDays(start, end) {
-    const date1 = new Date(start);
-    const date2 = new Date(end);
+    getNumberOfDays(start, end) {
+      const date1 = new Date(start);
+      const date2 = new Date(end);
 
-    // One day in milliseconds
-    const oneDay = 1000 * 60 * 60 * 24;
+      // One day in milliseconds
+      const oneDay = 1000 * 60 * 60 * 24;
 
-    // Calculating the time difference between two dates
-    const diffInTime = date2.getTime() - date1.getTime();
+      // Calculating the time difference between two dates
+      const diffInTime = date2.getTime() - date1.getTime();
 
-    // Calculating the no. of days between two dates
-    const diffInDays = Math.round(diffInTime / oneDay);
-    if (diffInDays < 1) {
-      return "Publié aujourd'hui";
-    }
-    return "Publié il y a " + diffInDays + " jours";
-  },
-  addModifyingPost() {
-        if (!this.newPost) { return ;}
-    this.modifyingPost.splice(0, 10, this.newPost);
-    this.newPost = '';
-    this.saveModifyingPost();
-  },
-  deleteLocalModifiedPost() {
-    let postModifying = JSON.parse(localStorage.getItem("modifyingPost"));
-    if(postModifying) {
-      localStorage.removeItem('modifyingPost');
-    }
-  },
-  removeModifyingPost(x) {
-    this.modifyingPost.splice(x, 10);
-    this.saveModifyingPost();
-  },
-  saveModifyingPost() {
-    const parsed = JSON.stringify(this.modifyingPost);
-    localStorage.setItem('modifyingPost', parsed);
-  },
-    /*sendModifiedPost() {
+      // Calculating the no. of days between two dates
+      const diffInDays = Math.round(diffInTime / oneDay);
+      if (diffInDays < 1) {
+        return "Publié aujourd'hui";
+      }
+      return "Publié il y a " + diffInDays + " jours";
+    },
+    addModifyingPost() {
+      if (!this.newPost) {
+        return;
+      }
+      this.modifyingPost.splice(0, 10, this.newPost);
+      this.newPost = "";
+      this.saveModifyingPost();
+    },
+    deleteLocalModifiedPost() {
+      let postModifying = JSON.parse(localStorage.getItem("modifyingPost"));
+      if (postModifying) {
+        localStorage.removeItem("modifyingPost");
+      }
+    },
+    removeModifyingPost(x) {
+      this.modifyingPost.splice(x, 10);
+      this.saveModifyingPost();
+    },
+    saveModifyingPost() {
+      const parsed = JSON.stringify(this.modifyingPost);
+      localStorage.setItem("modifyingPost", parsed);
+    },
+    handlePost() {
+      this.message = "";
+      this.successful = false;
       this.loading = true;
-      const newPost = new Article();
-      newPost.title = document.querySelector('#modifiedTitle').value;
-      newPost.content = document.querySelector('#modifiedContent').value;
-      newPost.updatedAt = new Date();
-    },*/
-  },// methods end
 
+      this.$store.dispatch("article/creation").then(
+        (data) => {
+          this.message = data.message;
+          this.successful = true;
+          this.loading = false;
+        },
+        (error) => {
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          this.successful = false;
+          this.loading = false;
+        }
+      );
+    },
+  },
 }; //export end
 </script>
 

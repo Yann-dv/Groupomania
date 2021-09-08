@@ -1,4 +1,5 @@
 const db = require("../models");
+const { user: User, role: Role, refreshToken: RefreshToken } = db;
 
 const Article = db.article;
   
@@ -18,21 +19,23 @@ const Article = db.article;
     );
 };
 
-exports.createArticle= (req, res, next) => {
-  return new Promise((resolve, reject) => {
-    const formData = new FormData();
-    formData.append('article', JSON.stringify(article));
-    formData.append('image', image);
-    this.http.post('http://localhost:3000/api/articles', formData).subscribe(
-      (res) => {
-        resolve(res);
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
-};
+exports.createArticle = (req, res, next) => {
+  Article.create({
+    id: null,
+    authorId: req.currentUser.id,
+    authorName: req.currentUser.username,
+    title: req.body.title,
+    content: req.body.content,
+    category: req.body.category,
+    archived: 0,
+    likes: 0,
+    dislikes: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  })
+  .then(() => res.status(201).json({message : `Article publié dans la base de données`}))
+  .catch(error => res.status(500).json({ error }));
+}
 
 exports.modifyOneArticle = (req, res, next) => { // route pour la modification de l'objet, en fonction de son _id
   const articleObject = req.file ? // on vérifie qu'il existe un req.file et donc un fichier envoyé
