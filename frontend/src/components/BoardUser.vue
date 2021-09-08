@@ -87,15 +87,13 @@
                 <!--Card article content-->
                 <div class="articleContent">
                   <p class="card-text px-5 py-2"> {{ item.content }}</p>
-                  <i class="like fa-thumbs-up fa-lg far liked">
-                    <span class="nbrOfLikes">
-                    </span>
-                  </i>
-                  <i class="dislike fa-thumbs-down fa-lg fas liked">
-                    <span class="nbrOfDislikes">
-                    </span>
-                  </i>
-                  <font-awesome-icon icon="faSoap" />
+                  <div class="likes_dislikes">
+                    <font-awesome-icon icon="thumbs-up" class="liked"/>
+                       <span class="nbrOfLikes"> 0 </span>
+                    <font-awesome-icon icon="thumbs-down" class="ms-2 disliked"/>
+                       <span class="nbrOfLikes"> 0 </span>
+                  </div>
+                 
                 </div>
               </div>
               <!--Body end-->
@@ -298,6 +296,10 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.likes_dislikes {
+  cursor: pointer;
 }
 
 textarea {

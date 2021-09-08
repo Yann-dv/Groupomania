@@ -41,7 +41,8 @@
       <div v-if="currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link fs-4">
-            <font-awesome-icon icon="user" />
+            <font-awesome-icon icon="user"/>
+
             {{ currentUser.username }}
           </router-link>
         </li>
