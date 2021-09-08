@@ -110,6 +110,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+a {
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
   min-height: 100vh;

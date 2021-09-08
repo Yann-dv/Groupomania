@@ -88,10 +88,10 @@
                 <div class="articleContent">
                   <p class="card-text px-5 py-2"> {{ item.content }}</p>
                   <div class="likes_dislikes">
-                    <font-awesome-icon icon="thumbs-up" class="liked"/>
-                       <span class="nbrOfLikes"> 0 </span>
-                    <font-awesome-icon icon="thumbs-down" class="ms-2 disliked"/>
-                       <span class="nbrOfLikes"> 0 </span>
+                    <font-awesome-icon icon="thumbs-up" class="liked" style="color:#3e813e"/>
+                       <span class="nbrOfLikes ms-1"> {{ item.likes }} </span>
+                    <font-awesome-icon icon="thumbs-down" class="ms-2 disliked" style="color:#D1515A"/>
+                       <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
                   </div>
                  
                 </div>
@@ -187,6 +187,7 @@ export default {
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: "",
+
     };
   },
   computed: {
