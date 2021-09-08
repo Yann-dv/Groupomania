@@ -49,8 +49,8 @@
                   <span
                     class="px-5 float-right position-absolute end-0 disabled text-muted"
                   >
-                    Publié il y a {{ postedSince }} jours</span
-                  >
+                    {{ getNumberOfDays(item.createdAt, new Date()) }}</span
+                    >
                   <div
                     class="btn-group position-absolute end-0 top-0"
                     role="group"
@@ -139,7 +139,7 @@
                         <button
                           class="btn btn-primary rounded-pill"
                           type="submit"
-                          v-on:click="addModifyingPost"
+                          v-on:click="[addModifyingPost, sendModifiedPost(), modalModifyPost = false]"
                         >
                           Valider
                         </button>
@@ -179,7 +179,6 @@ export default {
       headerColor: "#8957E5",
       mainColor: "#122442",
       secondColor: "#D1515A",
-      postedSince: "",
       apiAllUsers: "",
       apiAllArticles: "",
     };
@@ -215,28 +214,9 @@ export default {
         }
       }
     );
-    /*ArticleService.modifyOneArticle().then(
-      (response) => {
-        this.apiAllArticles = response.data;
-      },
-      (error) => {
-        this.apiAllArticles =
-          (error.res &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-          if (error.res && error.response.status === 403) {
-          EventBus.dispatch("logout");
-          }
-        },   
-    );*/
     UserService.getUserBoard().then(
       (response) => {
         this.apiAllUsers = response.data;
-        //let postedOn = response.data.item.createdAt;
-        //this.postedSince=  postedOn - now;
       },
       (error) => {
         this.apiAllUsers =
@@ -253,16 +233,28 @@ export default {
     );
   },
   methods: {
-    // <button @click="addCat"Ajouter un chat</button>
-    addModifyingPost() {
-    // s'assurer que l'utilisateur a entré quelque chose
-    if (!this.newPost) {
-      return;
+  getNumberOfDays(start, end) {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / oneDay);
+    if (diffInDays < 1) {
+      return "Publié aujourd'hui";
     }
+    return "Publié il y a " + diffInDays + " jours";
+  },
+  addModifyingPost() {
+        if (!this.newPost) { return ;}
     this.modifyingPost.splice(0, 10, this.newPost);
     this.newPost = '';
     this.saveModifyingPost();
-  
   },
   deleteLocalModifiedPost() {
     let postModifying = JSON.parse(localStorage.getItem("modifyingPost"));
@@ -277,14 +269,16 @@ export default {
   saveModifyingPost() {
     const parsed = JSON.stringify(this.modifyingPost);
     localStorage.setItem('modifyingPost', parsed);
-  }
-    /*modifyPost().then {
-      // to create
-    },
-    deletePost().then {
-      // to create
-    },*/
   },
+    /*sendModifiedPost() {
+      this.loading = true;
+      const newPost = new Article();
+      newPost.title = document.querySelector('#modifiedTitle').value;
+      newPost.content = document.querySelector('#modifiedContent').value;
+      newPost.updatedAt = new Date();
+    },*/
+  },// methods end
+
 }; //export end
 </script>
 

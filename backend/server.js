@@ -117,8 +117,8 @@ function initial() {
     category: "Article lorem ipsum",
     archived: 0,
     likes: 1,
-    createdAt: "2010-10-22",
-    updatedAt: new Date()
+    createdAt: "2021-06-22",
+    updatedAt: "2021-06-22"
     });
 
   Article.create({
@@ -129,8 +129,8 @@ function initial() {
     category: "Article lorem ipsum",
     archived: 0,
     likes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: "2021-08-10",
+    updatedAt: "2021-08-10",
     });
 
     Article.create({

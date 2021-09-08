@@ -18,6 +18,22 @@ const Article = db.article;
     );
 };
 
+exports.createArticle= (req, res, next) => {
+  return new Promise((resolve, reject) => {
+    const formData = new FormData();
+    formData.append('article', JSON.stringify(article));
+    formData.append('image', image);
+    this.http.post('http://localhost:3000/api/articles', formData).subscribe(
+      (res) => {
+        resolve(res);
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  });
+};
+
 exports.modifyOneArticle = (req, res, next) => { // route pour la modification de l'objet, en fonction de son _id
   const articleObject = req.file ? // on vérifie qu'il existe un req.file et donc un fichier envoyé
   {// Si on trouve un file, on parse le body, et on l'utilise pour créer une nouvelle image et son url
