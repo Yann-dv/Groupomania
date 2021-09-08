@@ -87,7 +87,15 @@
                 <!--Card article content-->
                 <div class="articleContent">
                   <p class="card-text px-5 py-2"> {{ item.content }}</p>
-                  <font-awesome-icon icon="home" />
+                  <i class="like fa-thumbs-up fa-lg far liked">
+                    <span class="nbrOfLikes">
+                    </span>
+                  </i>
+                  <i class="dislike fa-thumbs-down fa-lg fas liked">
+                    <span class="nbrOfDislikes">
+                    </span>
+                  </i>
+                  <font-awesome-icon icon="faSoap" />
                 </div>
               </div>
               <!--Body end-->
