@@ -9,6 +9,10 @@ class UserService {
     return api.get('/user');
   }
 
+  getUserProfile() {
+    return api.get('/profile');
+  }
+
   getModeratorBoard() {
     return api.get('/mod');
   }

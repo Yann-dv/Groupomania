@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import UserService from "../services/user.service";
+import UserService from "../services/user-service";
 import EventBus from "../common/EventBus";
 import Footer from "../components/Footer";
 

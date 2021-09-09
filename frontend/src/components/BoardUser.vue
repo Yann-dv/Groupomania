@@ -53,9 +53,7 @@
             />
           </div>
           <div class="form-group form-floating">
-            <Field component="textarea"
-              rows="20"
-              auto-grow
+            <Field
               class="form-control rounded my-3"
               name="newContent"  
               v-model="content"
@@ -98,7 +96,7 @@
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
-                <div class="card-header d-flex justify-content-between rounded mb-3 position-relative flex-wrap">
+                <div class="card-header d-flex justify-content-between rounded flex-wrap">
                   <span
                     class="card-title mainColored text-light rounded-pill p-2 fw-bold"
                   >
@@ -110,21 +108,18 @@
                     >{{ item.title }}</span
                   >
                   <span
-                    class="disabled text-muted"
+                    class="disabled text-muted px-3"
                   >
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
                   >
                   <div
-                    class="btn-group position-absolute end-0 top-0"
+                    class="btn-group btn-resize"
                     role="group"
-                  >
+                   >
                     <button
-                      v-if="
-                        currentUser.username === item.authorName &&
-                        currentUser.id === item.authorId
-                      "
+                      v-if="currentUser.username === item.authorName"
                       type="button"
-                      class="btn btn-secondary dropdown-toggle"
+                      class="btn py-1 btn-secondary dropdown-toggle my-2"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                       id="btnGroupDropClose"
@@ -364,6 +359,7 @@ export default {
       if(this.content) {
       ArticleService.createArticle({title: this.title, 
       category: this.category, content: this.content})
+      location.reload(); //optionnal
       }
     },
   },

@@ -18,6 +18,11 @@ module.exports = function(app) {
     userController.userBoard
   );
 
+  app.get("/api/profile",
+  [authJwt.verifyToken],
+  userController.getUserProfile
+  );
+
   app.get("/api/mod",
     [authJwt.verifyToken, authJwt.isModerator],
     userController.moderatorBoard

@@ -20,19 +20,20 @@ const User = db.user;
       () => {
         res.status(500).send(new Error('Database error!'));
       }
-    );
-
-     /* Media.findOne({
-        where: { id: 1 }
-      })
-      .then((media) =>
-          res.status(200).json(media)
-      ).catch(
-        () => {
-          res.status(500).send(new Error('Database error!'));
-        }
-      )*/
-};
+    )
+    };
+    
+  exports.getUserProfile = (req, res, next) => {
+     User.findOne({
+        where: { id: req.userId }
+        })
+        .then((user) =>
+          res.status(200).json(user)
+        ).catch(
+          () => {
+            res.status(500).send(new Error('Database error!'));
+          })
+  };
   
   exports.adminBoard = (req, res, next) => {
     res.status(200).send("Admin Content - Successfully accessed");

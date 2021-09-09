@@ -78,6 +78,10 @@ function initial() {
 
   User.create({
     id: 2,
+    gender: "H",
+    birthday: "1986-10-10",
+    firstane: "John",
+    lastname: "Doe",
     username: "johndoe",
     email: "john@groupo.fr",
     password: bcrypt.hashSync("johndoe99", 8),
