@@ -16,6 +16,7 @@
         <div v-if="!successful">
         <Form
           @submit="handlePost"
+          :validation-schema="postSchema" 
           class="mx-auto col-12 col-md-8"
           id="createArticleForm"
          >
@@ -26,12 +27,17 @@
               type="text"
               class="form-control newCategory my-3"
               name="newTitle"
+              id="new"
             />
             <label for="newTitle" class="text-decoration-underline"
               >Titre (facultatif):</label
             >
+            <ErrorMessage name="newTitle" 
+            class="error-feedback ms-3" 
+            style="color:red" 
+            />
           </div>
-          <!--<div class="form-group form-floating">
+          <div class="form-group form-floating">
             <Field
               type="text"
               class="form-control newTitle my-3"
@@ -40,7 +46,11 @@
             <label for="newCategory" class="text-decoration-underline"
               >Catégorie (facultatif):</label
             >
-          </div>-->
+            <ErrorMessage name="newCategory" 
+            class="error-feedback ms-3" 
+            style="color:red" 
+            />
+          </div>
           <div class="form-group form-floating">
             <Field component="textarea"
               rows="20"
@@ -234,6 +244,7 @@ import ArticleService from "../services/article-service";
 import EventBus from "../common/EventBus";
 import Footer from "../components/Footer";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 export default {
   name: "User",
@@ -244,7 +255,21 @@ export default {
     ErrorMessage,
   },
   data() {
+    const postSchema = yup.object().shape({
+      newtTitle:yup
+      .string()
+      .min(3, "Le titre doit faire au moins 3 caractères")
+      .max(20, "Veuillez écrire un titre plus court"),
+      newContent:yup
+      .string()
+      .min(3, "L'article doit faire au moins 3 caractères")
+      .max(300, "L'article ne peut dépasser 300 caractères"),
+    });
     return {
+      postSchema,
+      title: "",
+      content:"",
+      category: "",
       successful: false,
       loading: false,
       message: "",
@@ -330,27 +355,8 @@ export default {
       localStorage.setItem("modifyingPost", parsed);
     },
     handlePost() {
-      this.message = "";
-      this.successful = false;
-      this.loading = true;
-
-      this.$store.dispatch("article/creation").then(
-        (data) => {
-          this.message = data.message;
-          this.successful = true;
-          this.loading = false;
-        },
-        (error) => {
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          this.successful = false;
-          this.loading = false;
-        }
-      );
+      ArticleService.createArticle({title: this.postSchema.newTitle, 
+      content: this.postSchema.newContent})
     },
   },
 }; //export end

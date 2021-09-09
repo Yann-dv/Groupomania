@@ -1,14 +1,26 @@
+
 const db = require("../models");
-const { user: User, role: Role, refreshToken: RefreshToken } = db;
+const authJwt = require ("../middleware/authJwt");
+const asyncLib = require('async');
 
 const Article = db.article;
-  
+const User = db.user;
 
   exports.getAllArticles = (req, res, next) => {
     Article.findAll().then(
       (articles) => {
         const mappedArticles = articles.map((article) => {
-          return article;
+          return { // ne retourne pas authorId
+          authorName: article.authorName,
+          title: article.title, 
+          content: article.content,
+          category: article.category, 
+          archived: article.archived,
+          likes: article.likes,
+          dislikes: article.dislikes,
+          createdAt : article.createdAt,
+          updatedAt: article.updatedAt
+          };
         });
         res.status(200).json(mappedArticles);
       }
@@ -20,10 +32,10 @@ const Article = db.article;
 };
 
 exports.createArticle = (req, res, next) => {
+  console.log(req.userId)
   Article.create({
-    id: null,
-    authorId: req.currentUser.id,
-    authorName: req.currentUser.username,
+    authorId: req.userId,
+    authorName: req.username,
     title: req.body.title,
     content: req.body.content,
     category: req.body.category,

@@ -138,9 +138,9 @@ function initial() {
     Article.create({
       id: 3,
       authorId: 2,
-      title: "Jeux entre nous",
+      title: "Game",
       authorName: "johndoe",
-      content: "C'est encore moi Johny, j'espère que vous allez tous très bien. Je vous donne rdv ce soir vers 17h devant la machine à café pour un petit jeux entre nous ;)",
+      content: "C'est encore moi Johny, j'espère que vous allez tous très bien. Je vous donne rdv ce soir vers 17h devant la machine à café pour un petit game entre nous ;)",
       category: "Jonhy ideas",
       archived: 0,
       likes: 3,
