@@ -27,7 +27,7 @@
               type="text"
               class="form-control newCategory my-3"
               name="newTitle"
-              id="new"
+              v-model="title"
             />
             <label for="newTitle" class="text-decoration-underline"
               >Titre (facultatif):</label
@@ -42,6 +42,7 @@
               type="text"
               class="form-control newTitle my-3"
               name="newCategory"
+              v-model="category"
             />
             <label for="newCategory" class="text-decoration-underline"
               >Catégorie (facultatif):</label
@@ -57,6 +58,7 @@
               auto-grow
               class="form-control rounded my-3"
               name="newContent"  
+              v-model="content"
               required
             ></Field>
             <label for="newContent" class="text-decoration-underline"
@@ -119,7 +121,7 @@
                     <button
                       v-if="
                         currentUser.username === item.authorName &&
-                          currentUser.id === item.authorId
+                        currentUser.id === item.authorId
                       "
                       type="button"
                       class="btn btn-secondary dropdown-toggle"
@@ -260,6 +262,10 @@ export default {
       .string()
       .min(3, "Le titre doit faire au moins 3 caractères")
       .max(20, "Veuillez écrire un titre plus court"),
+      newCategory:yup
+      .string()
+      .min(3, "La catégorie doit faire au moins 3 caractères")
+      .max(20, "Veuillez écrire une catégorie plus courte"),
       newContent:yup
       .string()
       .min(3, "L'article doit faire au moins 3 caractères")
@@ -268,7 +274,7 @@ export default {
     return {
       postSchema,
       title: "",
-      content:"",
+      content: "",
       category: "",
       successful: false,
       loading: false,
@@ -355,8 +361,10 @@ export default {
       localStorage.setItem("modifyingPost", parsed);
     },
     handlePost() {
-      ArticleService.createArticle({title: this.postSchema.newTitle, 
-      content: this.postSchema.newContent})
+      if(this.content) {
+      ArticleService.createArticle({title: this.title, 
+      category: this.category, content: this.content})
+      }
     },
   },
 }; //export end
