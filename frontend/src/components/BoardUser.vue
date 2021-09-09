@@ -98,7 +98,7 @@
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
-                <div class="card-header rounded mb-3 position-relative">
+                <div class="card-header d-flex justify-content-between rounded mb-3 position-relative flex-wrap">
                   <span
                     class="card-title mainColored text-light rounded-pill p-2 fw-bold"
                   >
@@ -106,11 +106,11 @@
                     {{ item.authorName }}
                   </span>
                   <span
-                    class="ps-2 card-subtitle text-underline fw-bold secondColored"
+                    class="card-subtitle py-2 fw-bold secondColored"
                     >{{ item.title }}</span
                   >
                   <span
-                    class="px-5 float-right position-absolute end-0 disabled text-muted"
+                    class="disabled text-muted"
                   >
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
                   >
