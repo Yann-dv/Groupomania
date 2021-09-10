@@ -9,9 +9,6 @@ const BoardAdmin = () => import("./components/BoardAdmin.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
 
-
-window.onbeforeunload = TokenService.removeUser();
-// Remove user to prevent expired sessions
 const routes = [
   {
     path: "/",
@@ -73,12 +70,9 @@ router.beforeEach((to, from, next) => {
       next('/home');
     }
      else {
+      TokenService.getLocalRefreshToken();
       next();
     }
   });
 
-  /*function logOut() {
-    this.$store.dispatch('auth/logout');
-    this.$router.push('/home');
-  }*/
 export default router;

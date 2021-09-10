@@ -18,38 +18,31 @@
               aria-label="Close"
             ></button>
               <ul class="dropdown-menu" aria-labelledby="btnGroupDropClose">
-              <li v-on:click="modalModifyPost = true" class="dropdown-item">
-               Modifier mon post
+              <li v-on:click="modalModifyProfile= true" class="dropdown-item">
+               Modifier mon profile
               </li>
-              <li v-on:click="deletePost" class="dropdown-item">
-                Supprimer mon post
+              <li v-on:click="deleteProfile" class="dropdown-item">
+                Supprimer mon profile
               </li>
             </ul>
           </div>
         </div>
-        <p class="pt-4">
+        <p class="py-2">
           <strong>Nom d'utilisateur:</strong>
           {{ userProfile.username }}
         </p>
-        <p class="pt-4">
+        <p class="py-2">
           <strong>Genre:</strong>
           {{ userProfile.gender }}
         </p>
-        <p class="pt-4">
+        <p class="py-2">
           <strong>Nom :</strong>
           {{ userProfile.lastname }}
         </p>
-        <p class="pt-4">
+        <p class="py-2">
           <strong>Prénom :</strong>
           {{ userProfile.firstname }}
         </p>
-        <!--<p class="py-2">
-          <strong>Token:</strong>
-          {{ userProfile.accessToken.substring(0, 20) }} ...
-          {{
-            userProfile.accessToken.substr(currentUser.accessToken.length - 20)
-          }}
-        </p>-->
         <p class="py-2">
           <strong>Date de naissance :</strong>
           {{ userProfile.birthday }}
@@ -58,13 +51,10 @@
           <strong>Mon adresse email:</strong>
           {{ userProfile.email }}
         </p>
-        <p class="py-3">
+        <p  type="password" class="py-2">
           <strong>Mon mot de passe :</strong>
-          {{ userProfile.password }}
+          ************
         </p>
-        <strong v-if="role in userProfile.roles" :key="role"
-          >Authorities:</strong
-        >
       </div>
     </div>
   </div>
@@ -95,7 +85,7 @@ export default {
       this.$router.push("/home");
     }
       
-      UserService.getuserProfile()
+      UserService.getUserProfile()
       .then(
         (response) => {
         this.userProfile = response.data;

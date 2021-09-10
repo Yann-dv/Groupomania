@@ -80,7 +80,7 @@ function initial() {
     id: 2,
     gender: "H",
     birthday: "1986-10-10",
-    firstane: "John",
+    firstname: "John",
     lastname: "Doe",
     username: "johndoe",
     email: "john@groupo.fr",
