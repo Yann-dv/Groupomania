@@ -91,8 +91,9 @@
     <div class="container">
       <div class="row">
         <!--Articles list-->
-        <ul class="items-list col-md-8 mx-auto col-12">
-          <li v-for="item in apiAllArticles" :key="item" class="py-3">
+        <ul v-if="!apiAllArticles.archived" class="items-list col-md-8 mx-auto col-12">
+          <li v-for="item in apiAllArticles" :key="item" 
+           v-bind:id="item.id" class="py-3">
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
@@ -135,7 +136,7 @@
                       >
                         Modifier mon post
                       </li>
-                      <li v-on:click="deletePost" class="dropdown-item">
+                      <li v-on:click="deletePost({item})" class="dropdown-item">
                         Supprimer mon post
                       </li>
                     </ul>
@@ -391,9 +392,13 @@ export default {
       if(this.content) {
       ArticleService.createArticle({title: this.title, 
       category: this.category, content: this.content})
-      location.reload(); //optionnal
+      //location.reload(); //optionnal
       }
     },
+    deletePost() {
+      ArticleService.deleteArticle({id: this.id});
+      //location.reload();
+    }
   },
 }; //export end
 </script>

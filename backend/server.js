@@ -152,6 +152,19 @@ function initial() {
       createdAt: new Date(),
       updatedAt: new Date()
       });
+
+      Article.create({
+        id: 4,
+        authorId: 1,
+        authorName: "administrator",
+        content: "Article au contenu archivé",
+        category: "Artiché",
+        archived: 1,
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-07-15",
+        updatedAt: "2021-09-16",
+        });
     
   }//initial end
 } // if end

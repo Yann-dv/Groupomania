@@ -7,10 +7,11 @@ const Article = db.article;
 const User = db.user;
 
   exports.getAllArticles = (req, res, next) => {
-    Article.findAll().then(
+    Article.findAll({where: {archived : 0}}).then( // éléments archivés non récupérés
       (articles) => {
         const mappedArticles = articles.map((article) => {
           return { // ne retourne pas authorId
+          id: article.id,
           authorName: article.authorName,
           title: article.title, 
           content: article.content,
@@ -32,7 +33,7 @@ const User = db.user;
 };
 
 exports.createArticle = (req, res, next) => {
-  Article.create({
+    Article.create({
     authorId: req.userId,
     authorName: req.username,
     title: req.body.title,
@@ -46,13 +47,9 @@ exports.createArticle = (req, res, next) => {
   })
   .then(() => res.status(201).json({message : `Article publié dans la base de données`}))
   .catch(error => res.status(500).json({ error }));
+
 }
 
-/*exports.getOneArticle = (req, res, next) => {
-  Article.findOne({ where: { id: req.body.id}}) // objet en 1er argument, modif en 2ème avec un _id correspondant
-  .then(() => res.status('200').json(req))
-  .catch(error => res.status('400').json({ error }))
-}*/
 exports.getOneArticle= (req, res, next) => {
 Article.findOne({ where: { id: req.body.id}}).then(
   (article) => {
@@ -69,11 +66,33 @@ Article.findOne({ where: { id: req.body.id}}).then(
 );
 }
 
-exports.deleteArticle = (req, res, next) => {
-  Article.delete({
-  })
-}
+/*exports.deleteArticle = (req, res, next) => {
+  Article.destroy({ where: { id: req.body.id}}).then(
+    (article) => {
+      if (!article) {
+        return res.status(404).send(new Error('article not found!'));
+      }
+      //article.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + article.imageUrl;
+      res.status(200).json({message: "Article supprimé de la db"});
+    }
+  ).catch(
+    () => {
+      res.status(500).send(new Error('Database error!'));
+    }
+  );
+}*/
 
+exports.deleteArticle = (req, res, next) => {
+  Article.update({ archived: 1}, {
+    where:{ id: req.body.id}})
+    .then(
+    res.status(200).json({message: `Article n°${req.body.id} archivé dans la db`})
+    ).catch(
+      () => {
+        res.status(500).send(new Error('Database error!'));
+      }
+    )
+}
 
 exports.modifyOneArticle = (req, res, next) => { // route pour la modification de l'objet, en fonction de son _id
   const articleObject = req.file ? // on vérifie qu'il existe un req.file et donc un fichier envoyé
