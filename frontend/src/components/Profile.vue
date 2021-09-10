@@ -79,7 +79,7 @@ export default {
   name: "Profile",
   data() {
     return {
-      userProfile: [],
+      userProfile: "",
     }
   },
   components: {

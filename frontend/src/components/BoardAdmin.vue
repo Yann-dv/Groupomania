@@ -26,6 +26,9 @@ export default {
     };
   },
   mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/home");
+    }
     UserService.getUserBoard().then(
       (response) => {
         this.content = response.data;

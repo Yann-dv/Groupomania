@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import TokenService from "./services/token.service";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
@@ -9,7 +10,8 @@ const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
 
 
-
+window.onbeforeunload = TokenService.removeUser();
+// Remove user to prevent expired sessions
 const routes = [
   {
     path: "/",
@@ -67,11 +69,16 @@ router.beforeEach((to, from, next) => {
     // trying to access a restricted page + not logged in
     // redirect to login page
     if (authRequired && !loggedIn) {
-      next('/login');
+      TokenService.removeUser();
+      next('/home');
     }
      else {
       next();
     }
   });
 
+  /*function logOut() {
+    this.$store.dispatch('auth/logout');
+    this.$router.push('/home');
+  }*/
 export default router;

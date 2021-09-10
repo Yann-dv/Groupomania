@@ -237,6 +237,7 @@
 </template>
 
 <script>
+//import TokenService from "../services/token.service";
 import ArticleService from "../services/article-service";
 import EventBus from "../common/EventBus";
 import Footer from "../components/Footer";
@@ -289,7 +290,13 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+  unmount() {
+    EventBus.dispatch("logout");
+  },
   mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/home");
+    }
     if (localStorage.getItem("modifyingPost")) {
       try {
         this.modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
@@ -316,6 +323,10 @@ export default {
     );
   },
   methods: {
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/home');
+    },
     getNumberOfDays(start, end) {
       const date1 = new Date(start);
       const date2 = new Date(end);
