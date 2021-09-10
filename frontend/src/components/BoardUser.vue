@@ -268,6 +268,9 @@ export default {
       .max(300, "L'article ne peut dépasser 300 caractères"),
     });
     return {
+      oldestFirst: false,
+      sortBy: 'updatedAt',
+      sortDirection: 'asc',
       postSchema,
       title: "",
       content: "",
@@ -282,10 +285,25 @@ export default {
       mainColor: "#122442",
       secondColor: "#D1515A",
       apiAllUsers: "",
-      apiAllArticles: "",
+      apiAllArticles: [],
     };
   },
+  filters: {
+    reverse(items) {
+      return items.slice().reverse()
+    }
+  },
   computed: {
+    /*sortedPosts() {
+      var order = this.oldestFirst ? 1 : -1;
+      // `this` points to the vm instance    
+      this.apiAllArticles.sort(function(a, b) {
+        a = new Date(a.updatedAt);
+        b = new Date(b.updatedAt);
+        var results = a > b ? -1 : a < b ? 1 : 0;
+        return results * order;
+      });
+    },  */  
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -323,6 +341,9 @@ export default {
     );
   },
   methods: {
+    toggleSort() {
+      this.oldestFirst = !this.oldestFirst;
+    },
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/home');

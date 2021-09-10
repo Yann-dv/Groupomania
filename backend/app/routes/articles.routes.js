@@ -16,9 +16,20 @@ module.exports = function(app) {
   [authJwt.verifyToken],
     articlesController.getAllArticles
   );
+
+  app.get("/api/getOneArticle",
+  [authJwt.verifyToken],
+    articlesController.getOneArticle
+  );
+
   app.post("/api/createArticle",
   [authJwt.verifyToken],
     articlesController.createArticle
+  );
+
+  app.post("/api/deleteArticle",
+  [authJwt.verifyToken],
+    articlesController.deleteArticle
   );
 
 };

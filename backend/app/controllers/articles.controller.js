@@ -32,7 +32,6 @@ const User = db.user;
 };
 
 exports.createArticle = (req, res, next) => {
-  console.log(req.userId)
   Article.create({
     authorId: req.userId,
     authorName: req.username,
@@ -48,6 +47,33 @@ exports.createArticle = (req, res, next) => {
   .then(() => res.status(201).json({message : `Article publié dans la base de données`}))
   .catch(error => res.status(500).json({ error }));
 }
+
+/*exports.getOneArticle = (req, res, next) => {
+  Article.findOne({ where: { id: req.body.id}}) // objet en 1er argument, modif en 2ème avec un _id correspondant
+  .then(() => res.status('200').json(req))
+  .catch(error => res.status('400').json({ error }))
+}*/
+exports.getOneArticle= (req, res, next) => {
+Article.findOne({ where: { id: req.body.id}}).then(
+  (article) => {
+    if (!article) {
+      return res.status(404).send(new Error('article not found!'));
+    }
+    //article.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + article.imageUrl;
+    res.status(200).json(article);
+  }
+).catch(
+  () => {
+    res.status(500).send(new Error('Database error!'));
+  }
+);
+}
+
+exports.deleteArticle = (req, res, next) => {
+  Article.delete({
+  })
+}
+
 
 exports.modifyOneArticle = (req, res, next) => { // route pour la modification de l'objet, en fonction de son _id
   const articleObject = req.file ? // on vérifie qu'il existe un req.file et donc un fichier envoyé
