@@ -9,9 +9,9 @@ const catchError = (err, res) => {
   if (err instanceof TokenExpiredError) {
     return res.status(401).send({ message: "Unauthorized! Access Token was expired!" });
   }
-
+  this.$router.push("/home");
   return res.sendStatus(401).send({ message: "Unauthorized!" });
-}
+}//
 
 const verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
@@ -25,6 +25,7 @@ const verifyToken = (req, res, next) => {
       return catchError(err, res);
     }
     req.userId = decoded.id;
+    req.username = decoded.username;
     next();
   });
 };

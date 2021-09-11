@@ -1,28 +1,38 @@
-const Media = require('../models/medias.model.js');
 const db = require("../models");
+
 const User = db.user;
 
-  exports.allAccess = (req, res, next) => {
-    User.findAll().then(
-      (users) => {
-        const mappedUsers = users.map((user) => {
-          allUsers= user.username + '-' + user.id;
-          return allUsers;
-        });
-        res.status(200).json(`Utilisateurs : ` + `${mappedUsers}`)
-        .catch(
-      () => {
-        res.status(500).send(new Error('Database error!'));
-      }
-    );
-    //res.status(200).send("Public Content - Successfully accessed");
-  }
-);
-};
+
+  exports.publicContent = (req, res, next) => {
+    res.status(200).send("Public Content - Successfully accessed");
+  };
   
 
   exports.userBoard = (req, res, next) => {
-    res.status(200).send("User Content - Successfully accessed");
+    User.findAll().then(
+      (users) => {
+        const mappedUsers = users.map((user) => {
+          return user;
+        });
+        res.status(200).json(message= {users : mappedUsers.length});
+      }
+    ).catch(
+      () => {
+        res.status(500).send(new Error('Database error!'));
+      }
+    )
+    };
+    
+  exports.getUserProfile = (req, res, next) => {
+     User.findOne({
+        where: { id: req.userId }
+        })
+        .then((user) =>
+          res.status(200).json(user)
+        ).catch(
+          () => {
+            res.status(500).send(new Error('Database error!'));
+          })
   };
   
   exports.adminBoard = (req, res, next) => {

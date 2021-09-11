@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // simple route
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/articles.routes')(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
 });
@@ -77,9 +78,13 @@ function initial() {
 
   User.create({
     id: 2,
+    gender: "H",
+    birthday: "1986-10-10",
+    firstname: "John",
+    lastname: "Doe",
     username: "johndoe",
     email: "john@groupo.fr",
-    password: bcrypt.hashSync("jonhdoe99", 8),
+    password: bcrypt.hashSync("johndoe99", 8),
     roles: ["user"]
   });
 
@@ -109,13 +114,57 @@ function initial() {
 
   Article.create({
     id: 1,
-    author: 4,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
-    category: "Article lorem ipsum",
+    authorId: 2,
+    title: "Moi c'est John, et vous ?",
+    authorName: "johndoe",
+    content: "Salut, moi c'est Johny, du service compta. Je profite de chat pour me présenter : 35ans, marié, 1 enfant et déjà 6 ans de boite ! Pour apprendre à se connaitre un peu mieux, je propose que chacun fasse ici sa petite présentation rapide. Ca vous dit ?",
+    category: "Ma présentation",
     archived: 0,
-    likes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date()
-    })
+    likes: 1,
+    dislikes: 0,
+    createdAt: "2021-06-22",
+    updatedAt: "2021-06-22"
+    });
+
+  Article.create({
+    id: 2,
+    authorId: 4,
+    authorName: "usertest",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
+    category: "Le lorem ipsum",
+    archived: 0,
+    likes: 1,
+    dislikes: 5,
+    createdAt: "2021-08-10",
+    updatedAt: "2021-08-10",
+    });
+
+    Article.create({
+      id: 3,
+      authorId: 2,
+      title: "Game",
+      authorName: "johndoe",
+      content: "C'est encore moi Johny, j'espère que vous allez tous très bien. Je vous donne rdv ce soir vers 17h devant la machine à café pour un petit game entre nous ;)",
+      category: "Jonhy ideas",
+      archived: 0,
+      likes: 3,
+      dislikes: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+      });
+
+      Article.create({
+        id: 4,
+        authorId: 1,
+        authorName: "administrator",
+        content: "Article au contenu archivé",
+        category: "Artiché",
+        archived: 1,
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-07-15",
+        updatedAt: "2021-09-16",
+        });
+    
   }//initial end
 } // if end

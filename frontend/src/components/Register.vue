@@ -65,15 +65,18 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import Footer from "../components/Footer";
 
 export default {
   name: "Register",
   components: {
+    Footer,
     Form,
     Field,
     ErrorMessage,
