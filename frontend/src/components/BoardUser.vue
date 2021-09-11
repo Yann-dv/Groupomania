@@ -136,7 +136,7 @@
                       >
                         Modifier mon post
                       </li>
-                      <li v-on:click="confirmDelete()" class="dropdown-item">
+                      <li v-on:click="confirmDelete(item.id)"  class="dropdown-item">
                         Supprimer mon post
                       </li>
                     </ul>
@@ -269,9 +269,6 @@ export default {
       .max(300, "L'article ne peut dépasser 300 caractères"),
     });
     return {
-      oldestFirst: false,
-      sortBy: 'updatedAt',
-      sortDirection: 'asc',
       postSchema,
       title: "",
       content: "",
@@ -392,14 +389,13 @@ export default {
       if(this.content) {
       ArticleService.createArticle({title: this.title, 
       category: this.category, content: this.content})
-      //location.reload(); //optionnal
       }
     },
-    confirmDelete() {
+    confirmDelete(idToDelete) {
       if (confirm( "Souhaitez-vous vraiment supprimer votre publication et ses commentaires ? (Après confirmation, les données seront archivées et conservées pendant 30 jours avant d'être supprimées)")) 
       {
-        ArticleService.deleteArticle();
-      //location.reload();
+        ArticleService.deleteArticle(idToDelete);
+        //location.reload();
       } else {
       // Code à éxécuter si l'utilisateur clique sur "Annuler" 
       }

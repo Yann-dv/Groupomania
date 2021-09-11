@@ -9,8 +9,9 @@ class ArticleService {
     return api.get('/getOneArticle'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
   }
 
-  deleteArticle() {
-    return api.put('/deleteArticle'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+  deleteArticle(id) {
+    return api.put('/deleteArticle', 
+    { id }); // retourne le contenu renvoyé par l'API -> user.controller allAccess
   }
 
   createArticle({ id, authorId, authorName,
