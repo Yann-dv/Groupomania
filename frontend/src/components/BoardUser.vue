@@ -136,7 +136,7 @@
                       >
                         Modifier mon post
                       </li>
-                      <li v-on:click="deletePost({item})" class="dropdown-item">
+                      <li v-on:click="confirmDelete()" class="dropdown-item">
                         Supprimer mon post
                       </li>
                     </ul>
@@ -395,9 +395,15 @@ export default {
       //location.reload(); //optionnal
       }
     },
-    deletePost() {
-      ArticleService.deleteArticle({id: this.id});
+    confirmDelete() {
+      if (confirm( "Souhaitez-vous vraiment supprimer votre publication et ses commentaires ? (Après confirmation, les données seront archivées et conservées pendant 30 jours avant d'être supprimées)")) 
+      {
+        ArticleService.deleteArticle();
       //location.reload();
+      } else {
+      // Code à éxécuter si l'utilisateur clique sur "Annuler" 
+      }
+
     }
   },
 }; //export end
