@@ -26,20 +26,16 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
 });
 
-app.get("/testingApi", (req, res, next) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.status(200).send(`${ User }`);
-});
-
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
+db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initialize, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
-  initial();
+  initialize();
+  deleteOldArchived();
 });
 
 const Role = db.role;
@@ -49,8 +45,28 @@ const Media = db.media;
 const Article = db.article;
 
 if (process.env.NODE_ENV == "development") {
+  
+  function deleteOldArchived() {
+    const archivedAt = new Date(archivedAt);
+    const today = new Date();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const diffInTime = today.getTime() - archivedAt.getTime();
+    const diffInDays = Math.round(diffInTime / oneDay);
+    const toDestroy= Article.findAll({where: {archived : 1}});
+        if(diffInDays >= 30) {
+          toDestroy.destroy()/*.then(
+            (article) => {
+              if (!article) {
+                return res.status(404).send(new Error('article not found!'));
+              }
+              res.status(200).json({message: "Article définitivement supprimé de la db"});
+            }
+          )*/
+        }
+  };
+    
 
-function initial() {
+function initialize() {
 
   Role.create({
     id: 1,
@@ -158,13 +174,14 @@ function initial() {
         authorId: 1,
         authorName: "administrator",
         content: "Article au contenu archivé",
-        category: "Artiché",
+        category: "Archivé",
         archived: 1,
+        archivedAt: "2021-10-01",
         likes: 0,
         dislikes: 0,
         createdAt: "2021-07-15",
-        updatedAt: "2021-09-16",
+        updatedAt: "2021-07-29",
         });
     
-  }//initial end
+  }//initialize end
 } // if end

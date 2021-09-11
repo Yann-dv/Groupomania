@@ -28,6 +28,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         default: "Sans catégorie"
       },
+      archivedAt: {
+        type: Sequelize.DATE,
+      },
       likes: {
         type: Sequelize.INTEGER,
         default: 0,

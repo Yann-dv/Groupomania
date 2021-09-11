@@ -21,7 +21,7 @@
           <router-link to="/mod" class="nav-link fs-4">Moderateur</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/forum" class="nav-link fs-4">Forum de discussion</router-link>
+          <router-link v-if="currentUser" to="/forum" class="nav-link fs-4 ps-1">Forum de discussion</router-link>
         </li>
       </div>
 
@@ -46,7 +46,7 @@
             {{ currentUser.username }}
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item pe-1">
           <a class="nav-link fs-4" @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" /> Déconnection
           </a>

@@ -14,109 +14,117 @@
     <div class="container">
       <div class="row">
         <div v-if="!successful">
-        <Form
-          @submit="handlePost"
-          :validation-schema="postSchema" 
-          class="mx-auto col-12 col-md-8"
-          id="createArticleForm"
-         >
-          <h4>Partagez avec la communauté :</h4>
-          <!--v-model="article"-->
-          <div class="form-group form-floating">
-            <Field
-              type="text"
-              class="form-control newCategory my-3"
-              name="newTitle"
-              v-model="title"
-            />
-            <label for="newTitle" class="text-decoration-underline"
-              >Titre (facultatif):</label
-            >
-            <ErrorMessage name="newTitle" 
-            class="error-feedback ms-3" 
-            style="color:red" 
-            />
-          </div>
-          <div class="form-group form-floating">
-            <Field
-              type="text"
-              class="form-control newTitle my-3"
-              name="newCategory"
-              v-model="category"
-            />
-            <label for="newCategory" class="text-decoration-underline"
-              >Catégorie (facultatif):</label
-            >
-            <ErrorMessage name="newCategory" 
-            class="error-feedback ms-3" 
-            style="color:red" 
-            />
-          </div>
-          <div class="form-group form-floating">
-            <Field
-              class="form-control rounded my-3"
-              name="newContent"  
-              v-model="content"
-              required
-            ></Field>
-            <label for="newContent" class="text-decoration-underline"
-              >Contenu de mon post :</label
-            >
-            <ErrorMessage name="newContent" 
-            class="error-feedback ms-3" 
-            style="color:red" 
-            />
-          </div>
-          <div class="send-btn form-group">
-            <button class="btn btn-primary rounded-pill" type="submit">
-            <span
-                v-show="loading"
-                class="spinner-border spinner-border-sm"
-              ></span>
-              Poster
-            </button>
-          </div>
-        </Form>
-        </div> <!--Fin v-if successfull-->
+          <Form
+            @submit="handlePost"
+            :validation-schema="postSchema"
+            class="mx-auto col-12 col-md-8"
+            id="createArticleForm"
+          >
+            <h4>Partagez avec la communauté :</h4>
+            <!--v-model="article"-->
+            <div class="form-group form-floating">
+              <Field
+                type="text"
+                class="form-control newCategory my-3"
+                name="newTitle"
+                v-model="title"
+              />
+              <label for="newTitle" class="text-decoration-underline"
+                >Titre (facultatif):</label
+              >
+              <ErrorMessage
+                name="newTitle"
+                class="error-feedback ms-3"
+                style="color:red"
+              />
+            </div>
+            <div class="form-group form-floating">
+              <Field
+                type="text"
+                class="form-control newTitle my-3"
+                name="newCategory"
+                v-model="category"
+              />
+              <label for="newCategory" class="text-decoration-underline"
+                >Catégorie (facultatif):</label
+              >
+              <ErrorMessage
+                name="newCategory"
+                class="error-feedback ms-3"
+                style="color:red"
+              />
+            </div>
+            <div class="form-group form-floating">
+              <Field
+                type="text-area"
+                class="form-control rounded my-3"
+                name="newContent"
+                v-model="content"
+                required
+              ></Field>
+              <label for="newContent" class="text-decoration-underline"
+                >Contenu de mon post :</label
+              >
+              <ErrorMessage
+                name="newContent"
+                class="error-feedback ms-3"
+                style="color:red"
+              />
+            </div>
+            <div class="send-btn form-group">
+              <button class="btn btn-primary rounded-pill" type="submit">
+                <span
+                  v-show="loading"
+                  class="spinner-border spinner-border-sm"
+                ></span>
+                Poster
+              </button>
+            </div>
+          </Form>
+        </div>
+        <!--Fin v-if successfull-->
         <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >
-        {{ message }}
-      </div>
+          v-if="message"
+          class="alert"
+          :class="successful ? 'alert-success' : 'alert-danger'"
+        >
+          {{ message }}
+        </div>
       </div>
     </div>
     <!--Form end-->
     <div class="container">
       <div class="row">
         <!--Articles list-->
-        <ul v-if="!apiAllArticles.archived" class="items-list col-md-8 mx-auto col-12">
-          <li v-for="item in apiAllArticles" :key="item" 
-           v-bind:id="item.id" class="py-3">
+        <ul
+          v-if="!apiAllArticles.archived"
+          class="items-list col-md-8 mx-auto col-12"
+        >
+          <li
+            v-for="item in apiAllArticles"
+            :key="item"
+            v-bind:id="item.id"
+            class="py-3"
+          >
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
-                <div class="card-header d-flex justify-content-between rounded flex-wrap">
+                <div
+                  class="card-header d-flex justify-content-between rounded flex-wrap"
+                >
                   <span
                     class="card-title mainColored text-light rounded-pill p-2 fw-bold"
                   >
                     <font-awesome-icon icon="user" />
                     {{ item.authorName }}
                   </span>
-                  <span
-                    class="card-subtitle py-2 fw-bold secondColored"
-                    >{{ item.title }}</span
-                  >
-                  <span
-                    class="disabled text-muted px-3"
-                  >
+                  <span class="card-subtitle py-2 fw-bold secondColored">{{
+                    item.title
+                  }}</span>
+                  <span class="disabled text-muted px-3">
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
                   >
-                  <div
-                    class="btn-group btn-resize"
-                    role="group"
-                   >
+                  <div class="btn-group btn-resize" role="group">
                     <button
                       v-if="currentUser.username === item.authorName"
                       type="button"
@@ -131,12 +139,15 @@
                       aria-labelledby="btnGroupDropClose"
                     >
                       <li
-                        v-on:click="modalModifyPost = true"
+                        v-on:click="stageToLocal({item}); modalModifyPost = true"
                         class="dropdown-item"
                       >
                         Modifier mon post
                       </li>
-                      <li v-on:click="confirmDelete(item.id)"  class="dropdown-item">
+                      <li
+                        v-on:click="confirmDelete(item.id)"
+                        class="dropdown-item"
+                      >
                         Supprimer mon post
                       </li>
                     </ul>
@@ -174,53 +185,92 @@
               <div class="card rounded mx-auto col-12 col-md-8">
                 <div class="card-body bg-light">
                   <div class="card-header rounded mb-3 position-relative">
+                  <button
+                    type="button"
+                    v-on:click="modalModifyPost = false; deleteLocalStagedPost()"
+                    class="btn-close position-absolute top-0 end-0"
+                    aria-label="Annuler"
+                  ></button>
                     <span class="card-title rounded-pill p-2 fw-bold"
                       ><font-awesome-icon icon="user" />
                       {{ currentUser.username }}</span
                     >
                     <h5>Modifier ma publication :</h5>
-                    <div class="form form-floating mx-auto col-12 col-md-8">
-                      <div class="modifyMyArticle">
-                        <label for="modifyMyArticle">Titre (facultatif):</label>
-                        <input
-                          type="text"
-                          class="newTitle m-3 py-2"
-                          v-model="test"
-                          name="modifiedTitle"
-                        />
-                        <textarea
-                          class="form-control rounded"
-                          style="min-height:14rem"
-                          v-model="newPost"
-                          name="modifiedContent"
-                        >
-                        </textarea>
-                      </div>
-                    </div>
-                    <div
-                      class="mt-3 card-buttons d-flex justify-content-between"
-                    >
-                      <button
-                        type="button"
-                        v-on:click="
-                          [deleteLocalModifiedPost(), (modalModifyPost = false)]
-                        "
-                        class="btn-close"
-                        aria-label="Annuler"
-                      ></button>
-                      <button
-                        class="btn btn-primary rounded-pill"
-                        type="submit"
-                        v-on:click="
-                          [
-                            addModifyingPost,
-                            sendModifiedPost(),
-                            (modalModifyPost = false),
-                          ]
-                        "
+                    <div v-if="!successful">
+                      <Form
+                        @submit="handlePost"
+                        :validation-schema="postSchema"
+                        class="mx-auto col-12 col-md-8"
+                        id="createArticleForm"
                       >
-                        Valider
-                      </button>
+                        <div class="form-group form-floating">
+                          <Field
+                            type="text"
+                            class="form-control newTitle"
+                            name="newTitle"
+                            v-model= "modifyingPost.title"
+                          />
+                          <label
+                            for="newTitle"
+                            class="text-decoration-underline"
+                            >Titre (facultatif):</label
+                          >
+                          <ErrorMessage
+                            name="newTitle"
+                            class="error-feedback ms-3"
+                            style="color:red"
+                          />
+                        </div>
+                        <div class="form-group form-floating">
+                          <Field
+                            type="text"
+                            class="form-control newCategory my-3"
+                            name="newCategory"
+                            v-model= "modifyingPost.category"
+                          />
+                          <label
+                            for="newCategory"
+                            class="text-decoration-underline"
+                            >Catégorie (facultatif):</label
+                          >
+                          <ErrorMessage
+                            name="newCategory"
+                            class="error-feedback ms-3"
+                            style="color:red"
+                          />
+                        </div>
+                        <div class="form-group form-floating">
+                          <Field
+                            type="text-area"
+                            class="form-control rounded"
+                            name="newContent"
+                            v-model= "modifyingPost.content"
+                            required
+                          ></Field>
+                          <label
+                            for="newContent"
+                            class="text-decoration-underline"
+                            >Contenu de mon post :</label
+                          >
+                          <ErrorMessage
+                            name="newContent"
+                            class="error-feedback ms-3"
+                            style="color:red"
+                          />
+                        </div>
+                        <div class="send-btn form-group col-2 position-relative">
+                          <button
+                            class="btn btn-primary rounded-pill"
+                            type="submit"
+                          >
+                            <span
+                              v-show="loading"
+                              class="spinner-border spinner-border-sm"
+                            ></span>
+                            Modifier
+                          </button>
+                        </div>
+                      </Form>
                     </div>
                   </div>
                 </div>
@@ -255,18 +305,18 @@ export default {
   },
   data() {
     const postSchema = yup.object().shape({
-      newtTitle:yup
-      .string()
-      .min(3, "Le titre doit faire au moins 3 caractères")
-      .max(20, "Veuillez écrire un titre plus court"),
-      newCategory:yup
-      .string()
-      .min(3, "La catégorie doit faire au moins 3 caractères")
-      .max(20, "Veuillez écrire une catégorie plus courte"),
-      newContent:yup
-      .string()
-      .min(3, "L'article doit faire au moins 3 caractères")
-      .max(300, "L'article ne peut dépasser 300 caractères"),
+      newtTitle: yup
+        .string()
+        .min(3, "Le titre doit faire au moins 3 caractères")
+        .max(20, "Veuillez écrire un titre plus court"),
+      newCategory: yup
+        .string()
+        .min(3, "La catégorie doit faire au moins 3 caractères")
+        .max(20, "Veuillez écrire une catégorie plus courte"),
+      newContent: yup
+        .string()
+        .min(3, "L'article doit faire au moins 3 caractères")
+        .max(300, "L'article ne peut dépasser 300 caractères"),
     });
     return {
       postSchema,
@@ -276,7 +326,7 @@ export default {
       successful: false,
       loading: false,
       message: "",
-      modifyingPost: [],
+      modifyingPost: "",
       newPost: null,
       modalModifyPost: false,
       headerColor: "#8957E5",
@@ -288,20 +338,10 @@ export default {
   },
   filters: {
     reverse(items) {
-      return items.slice().reverse()
-    }
+      return items.slice().reverse();
+    },
   },
   computed: {
-    /*sortedPosts() {
-      var order = this.oldestFirst ? 1 : -1;
-      // `this` points to the vm instance    
-      this.apiAllArticles.sort(function(a, b) {
-        a = new Date(a.updatedAt);
-        b = new Date(b.updatedAt);
-        var results = a > b ? -1 : a < b ? 1 : 0;
-        return results * order;
-      });
-    },  */  
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -320,8 +360,6 @@ export default {
         localStorage.removeItem("modifyingPost");
       }
     }
-
-    //let now = Date.now();
     ArticleService.getAllArticles().then(
       (response) => {
         this.apiAllArticles = response.data;
@@ -339,68 +377,86 @@ export default {
     );
   },
   methods: {
-    toggleSort() {
-      this.oldestFirst = !this.oldestFirst;
-    },
     logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/home');
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/home");
     },
     getNumberOfDays(start, end) {
       const date1 = new Date(start);
       const date2 = new Date(end);
-
+      const time1 = date1.getHours();
       // One day in milliseconds
       const oneDay = 1000 * 60 * 60 * 24;
-
       // Calculating the time difference between two dates
       const diffInTime = date2.getTime() - date1.getTime();
-
       // Calculating the no. of days between two dates
       const diffInDays = Math.round(diffInTime / oneDay);
       if (diffInDays < 1) {
-        return "Publié aujourd'hui";
+        return "Publié aujourd'hui à " + time1 + "h" + date1.getMinutes();
       }
       return "Publié il y a " + diffInDays + " jours";
     },
-    addModifyingPost() {
-      if (!this.newPost) {
-        return;
-      }
-      this.modifyingPost.splice(0, 10, this.newPost);
-      this.newPost = "";
-      this.saveModifyingPost();
-    },
-    deleteLocalModifiedPost() {
-      let postModifying = JSON.parse(localStorage.getItem("modifyingPost"));
-      if (postModifying) {
+    deleteLocalStagedPost() {
         localStorage.removeItem("modifyingPost");
-      }
+        this.modifyingPost="";
     },
-    removeModifyingPost(x) {
-      this.modifyingPost.splice(x, 10);
-      this.saveModifyingPost();
-    },
-    saveModifyingPost() {
-      const parsed = JSON.stringify(this.modifyingPost);
+    stageToLocal({item}) {
+      const parsed = JSON.stringify(item);
       localStorage.setItem("modifyingPost", parsed);
+      this.modifyingPost= JSON.parse(localStorage.getItem("modifyingPost"));
     },
     handlePost() {
-      if(this.content) {
-      ArticleService.createArticle({title: this.title, 
-      category: this.category, content: this.content})
+      if (this.content) {
+        ArticleService.createArticle({
+          title: this.title,
+          category: this.category,
+          content: this.content,
+        });
       }
+      event.target.reset();
+      ArticleService.getAllArticles().then(
+        (response) => {
+          this.apiAllArticles = response.data;
+        },
+        (error) => {
+          this.apiAllArticles =
+            (error.res && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          if (error.res && error.response.status === 403) {
+            EventBus.dispatch("logout");
+          }
+        }
+      );
     },
     confirmDelete(idToDelete) {
-      if (confirm( "Souhaitez-vous vraiment supprimer votre publication et ses commentaires ? (Après confirmation, les données seront archivées et conservées pendant 30 jours avant d'être supprimées)")) 
-      {
+      if (
+        confirm(
+          "Souhaitez-vous vraiment supprimer votre publication et ses commentaires ? (Après confirmation, les données seront archivées et conservées pendant 30 jours avant d'être supprimées)"
+        )
+      ) {
         ArticleService.deleteArticle(idToDelete);
-        //location.reload();
+        ArticleService.getAllArticles().then(
+          (response) => {
+            this.apiAllArticles = response.data;
+          },
+          (error) => {
+            this.apiAllArticles =
+              (error.res &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            if (error.res && error.response.status === 403) {
+              EventBus.dispatch("logout");
+            }
+          }
+        );
       } else {
-      // Code à éxécuter si l'utilisateur clique sur "Annuler" 
+        // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }
-
-    }
+    },
   },
 }; //export end
 </script>
@@ -446,15 +502,4 @@ li {
   align-items: center;
   justify-content: center;
 }
-
-/*.modal.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 20vw;
-  height: 20vh;
-  padding: 5px;
-  background-color: green;
-}*/
 </style>
