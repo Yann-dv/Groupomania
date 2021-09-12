@@ -130,7 +130,7 @@
                   >
                   <div class="btn-group btn-resize" role="group">
                     <button
-                      v-if="currentUser.username === item.authorName"
+                      v-if="currentUser.id === item.authorId"
                       type="button"
                       class="btn py-1 btn-secondary dropdown-toggle my-2"
                       data-bs-toggle="dropdown"
@@ -202,7 +202,7 @@
                     <h5>Modifier ma publication :</h5>
                     <div v-if="!successful">
                       <Form
-                        @submit="handleModifiedPost(); modalModifyPost = false"
+                        @submit="handleSubmit(); modalModifyPost = false"
                         :validation-schema="postSchema"
                         class="mx-auto col-12 col-md-8"
                         id="modifArticleForm"
@@ -407,17 +407,18 @@ export default {
       localStorage.setItem("modifyingPost", parsed);
       this.modifyingPost= JSON.parse(localStorage.getItem("modifyingPost"));
     },
-    
-    handleModifiedPost(itemToModify) {
+    handleSubmit(item) {
+    //if(this.currentUser.id === item.authorId) {
+      console.log(JSON.parse(item))
       if (
         confirm(
           "Souhaitez-vous vraiment modifier votre publication ?"
         )
       ) {
-        ArticleService.updateArticle({id: itemToModify.id, 
-          title: itemToModify.title,
-          category: itemToModify.category,
-          content: itemToModify.content,
+        ArticleService.updateArticle({id: item.id, 
+          title: item.title,
+          category: item.category,
+          content: item.content,
           updatedAt: new Date()});
         ArticleService.getAllArticles().then(
           (response) => {
@@ -438,6 +439,7 @@ export default {
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }
+    //}
     },
     handlePost() {
       if (this.content) {
@@ -506,8 +508,7 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }*/
-
-.likes_dislikes {
+.likes_dislikes, .dropdown-item {
   cursor: pointer;
 }
 

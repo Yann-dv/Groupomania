@@ -12,6 +12,7 @@ const User = db.user;
         const mappedArticles = articles.map((article) => {
           return { // ne retourne pas authorId
           id: article.id,
+          authorId: article.authorId,
           authorName: article.authorName,
           title: article.title, 
           content: article.content,
@@ -95,10 +96,10 @@ exports.deleteArticle = (req, res, next) => {
 }
 
 exports.updateArticle = (req, res, next) => {
-  Article.update({title : req.body.title, 
+  Article.update({authorId: req.body.authorId, title : req.body.title, 
     category: req.body.category, 
     content : req.body.content, updatedAt: req.body.updatedAt}, 
-    {where:{ id: req.body.id}})
+    {where:{ id: req.body.id }})
     .then(
     res.status(200).json({message: `Article n°${req.body.id} modifié dans la db`})
     ).catch(

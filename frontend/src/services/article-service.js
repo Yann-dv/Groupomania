@@ -14,9 +14,9 @@ class ArticleService {
     { id });
   }
 
-  updateArticle(toModify) {
+  updateArticle(authorId, title, category, content, updatedAt ) {
     return api.put('/updateArticle', 
-    { toModify }); 
+    { authorId, title, category, content, updatedAt }); 
   }
 
   createArticle({ id, authorId, authorName,
