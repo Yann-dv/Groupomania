@@ -11,7 +11,12 @@ class ArticleService {
 
   deleteArticle(id) {
     return api.put('/deleteArticle', 
-    { id }); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+    { id });
+  }
+
+  updateArticle(toModify) {
+    return api.put('/updateArticle', 
+    { toModify }); 
   }
 
   createArticle({ id, authorId, authorName,

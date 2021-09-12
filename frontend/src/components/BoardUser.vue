@@ -118,10 +118,14 @@
                     <font-awesome-icon icon="user" />
                     {{ item.authorName }}
                   </span>
-                  <span class="card-subtitle py-2 fw-bold secondColored">{{
+                  <span class="card-subtitle text-decoration-underline secondColored">{{
                     item.title
                   }}</span>
-                  <span class="disabled text-muted px-3">
+                  <span v-if="item.category" class="card-subtitle
+                  fw-bold">#{{
+                    item.category
+                  }}</span>
+                  <span class="disabled card-subtitle text-muted px-3">
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
                   >
                   <div class="btn-group btn-resize" role="group">
@@ -180,7 +184,7 @@
         </ul>
         <!--Modal content for modify user's articles-->
         <teleport to="#modifyArticles">
-          <transition name="fade">
+          <!--<transition name="fade">-->
             <div v-if="modalModifyPost" class="modal">
               <div class="card rounded mx-auto col-12 col-md-8">
                 <div class="card-body bg-light">
@@ -198,10 +202,10 @@
                     <h5>Modifier ma publication :</h5>
                     <div v-if="!successful">
                       <Form
-                        @submit="handlePost"
+                        @submit="handleModifiedPost(); modalModifyPost = false"
                         :validation-schema="postSchema"
                         class="mx-auto col-12 col-md-8"
-                        id="createArticleForm"
+                        id="modifArticleForm"
                       >
                         <div class="form-group form-floating">
                           <Field
@@ -241,7 +245,7 @@
                         </div>
                         <div class="form-group form-floating">
                           <Field
-                            type="text-area"
+                            
                             class="form-control rounded"
                             name="newContent"
                             v-model= "modifyingPost.content"
@@ -260,7 +264,7 @@
                         </div>
                         <div class="send-btn form-group col-2 position-relative">
                           <button
-                            class="btn btn-primary rounded-pill"
+                            class="btn btn-primary rounded-pill mt-2"
                             type="submit"
                           >
                             <span
@@ -276,7 +280,7 @@
                 </div>
               </div>
             </div>
-          </transition>
+          <!--</transition>-->
         </teleport>
         <!--Modal end-->
       </div>
@@ -307,16 +311,14 @@ export default {
     const postSchema = yup.object().shape({
       newtTitle: yup
         .string()
-        .min(3, "Le titre doit faire au moins 3 caractères")
-        .max(20, "Veuillez écrire un titre plus court"),
+        .max(30, "Veuillez écrire un titre plus court"),
       newCategory: yup
         .string()
-        .min(3, "La catégorie doit faire au moins 3 caractères")
-        .max(20, "Veuillez écrire une catégorie plus courte"),
+        .max(30, "Veuillez écrire une catégorie plus courte"),
       newContent: yup
         .string()
         .min(3, "L'article doit faire au moins 3 caractères")
-        .max(300, "L'article ne peut dépasser 300 caractères"),
+        .max(500, "L'article ne peut dépasser 500 caractères"),
     });
     return {
       postSchema,
@@ -405,6 +407,38 @@ export default {
       localStorage.setItem("modifyingPost", parsed);
       this.modifyingPost= JSON.parse(localStorage.getItem("modifyingPost"));
     },
+    
+    handleModifiedPost(itemToModify) {
+      if (
+        confirm(
+          "Souhaitez-vous vraiment modifier votre publication ?"
+        )
+      ) {
+        ArticleService.updateArticle({id: itemToModify.id, 
+          title: itemToModify.title,
+          category: itemToModify.category,
+          content: itemToModify.content,
+          updatedAt: new Date()});
+        ArticleService.getAllArticles().then(
+          (response) => {
+            this.apiAllArticles = response.data;
+          },
+          (error) => {
+            this.apiAllArticles =
+              (error.res &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            if (error.res && error.response.status === 403) {
+              EventBus.dispatch("logout");
+            }
+          }
+        );
+      } else {
+        // Code à éxécuter si l'utilisateur clique sur "Annuler"
+      }
+    },
     handlePost() {
       if (this.content) {
         ArticleService.createArticle({
@@ -413,7 +447,8 @@ export default {
           content: this.content,
         });
       }
-      event.target.reset();
+      event.target.reset()
+      .then(() => {
       ArticleService.getAllArticles().then(
         (response) => {
           this.apiAllArticles = response.data;
@@ -429,6 +464,7 @@ export default {
           }
         }
       );
+      });
     },
     confirmDelete(idToDelete) {
       if (
@@ -462,14 +498,14 @@ export default {
 </script>
 
 <style>
-.fade-enter-active,
+/*.fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
+}*/
 
 .likes_dislikes {
   cursor: pointer;
