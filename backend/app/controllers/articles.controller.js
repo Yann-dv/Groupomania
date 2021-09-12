@@ -1,10 +1,7 @@
 
 const db = require("../models");
-const authJwt = require ("../middleware/authJwt");
-const asyncLib = require('async');
 
 const Article = db.article;
-const User = db.user;
 
   exports.getAllArticles = (req, res, next) => {
     Article.findAll({where: {archived : 0}}).then( // éléments archivés non récupérés
