@@ -118,13 +118,16 @@
                     <font-awesome-icon icon="user" />
                     {{ item.authorName }}
                   </span>
-                  <span class="card-subtitle text-decoration-underline secondColored">{{
-                    item.title
-                  }}</span>
-                  <span v-if="item.category" class="card-subtitle
-                  fw-bold">#{{
-                    item.category
-                  }}</span>
+                  <span
+                    class="card-subtitle text-decoration-underline secondColored"
+                    >{{ item.title }}</span
+                  >
+                  <span
+                    v-if="item.category"
+                    class="card-subtitle
+                  fw-bold"
+                    >#{{ item.category }}</span
+                  >
                   <span class="disabled card-subtitle text-muted px-3">
                     {{ getNumberOfDays(item.createdAt, new Date()) }}</span
                   >
@@ -143,7 +146,10 @@
                       aria-labelledby="btnGroupDropClose"
                     >
                       <li
-                        v-on:click="stageToLocal({item}); modalModifyPost = true"
+                        v-on:click="
+                          stageToLocal({ item });
+                          modalModifyPost = true;
+                        "
                         class="dropdown-item"
                       >
                         Modifier mon post
@@ -176,6 +182,24 @@
                     <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
                   </div>
                 </div>
+                <div class="messagesContent">
+                    <nav class="navbar navbar-dark bg-secondary">
+                      <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarMessages"
+                        aria-controls="navbarMessages"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                      >
+                        <span class="navbar-toggler-icon"></span>
+                        {{ apiAllArticles.length }} Réponses
+                      </button>
+                    </nav>
+                    <!--Import messages from messages component-->
+                     <Messages/>
+                  </div>
               </div>
               <!--Body end-->
             </div>
@@ -185,101 +209,104 @@
         <!--Modal content for modify user's articles-->
         <teleport to="#modifyArticles">
           <!--<transition name="fade">-->
-            <div v-if="modalModifyPost" class="modal">
-              <div class="card rounded mx-auto col-12 col-md-8">
-                <div class="card-body bg-light">
-                  <div class="card-header rounded mb-3 position-relative">
+          <div v-if="modalModifyPost" class="modal">
+            <div class="card rounded mx-auto col-12 col-md-8">
+              <div class="card-body bg-light">
+                <div class="card-header rounded mb-3 position-relative">
                   <button
                     type="button"
-                    v-on:click="modalModifyPost = false; deleteLocalStagedPost()"
+                    v-on:click="
+                      modalModifyPost = false;
+                      deleteLocalStagedPost();
+                    "
                     class="btn-close position-absolute top-0 end-0"
                     aria-label="Annuler"
                   ></button>
-                    <span class="card-title rounded-pill p-2 fw-bold"
-                      ><font-awesome-icon icon="user" />
-                      {{ currentUser.username }}</span
+                  <span class="card-title rounded-pill p-2 fw-bold"
+                    ><font-awesome-icon icon="user" />
+                    {{ currentUser.username }}</span
+                  >
+                  <h5>Modifier ma publication :</h5>
+                  <div v-if="!successful">
+                    <Form
+                      @submit="
+                        handleSubmit();
+                        modalModifyPost = false;
+                      "
+                      :validation-schema="postSchema"
+                      class="mx-auto col-12 col-md-8"
+                      id="modifArticleForm"
                     >
-                    <h5>Modifier ma publication :</h5>
-                    <div v-if="!successful">
-                      <Form
-                        @submit="handleSubmit(); modalModifyPost = false"
-                        :validation-schema="postSchema"
-                        class="mx-auto col-12 col-md-8"
-                        id="modifArticleForm"
-                      >
-                        <div class="form-group form-floating">
-                          <Field
-                            type="text"
-                            class="form-control newTitle"
-                            name="newTitle"
-                            v-model= "modifyingPost.title"
-                          />
-                          <label
-                            for="newTitle"
-                            class="text-decoration-underline"
-                            >Titre (facultatif):</label
-                          >
-                          <ErrorMessage
-                            name="newTitle"
-                            class="error-feedback ms-3"
-                            style="color:red"
-                          />
-                        </div>
-                        <div class="form-group form-floating">
-                          <Field
-                            type="text"
-                            class="form-control newCategory my-3"
-                            name="newCategory"
-                            v-model= "modifyingPost.category"
-                          />
-                          <label
-                            for="newCategory"
-                            class="text-decoration-underline"
-                            >Catégorie (facultatif):</label
-                          >
-                          <ErrorMessage
-                            name="newCategory"
-                            class="error-feedback ms-3"
-                            style="color:red"
-                          />
-                        </div>
-                        <div class="form-group form-floating">
-                          <Field
-                            
-                            class="form-control rounded"
-                            name="newContent"
-                            v-model= "modifyingPost.content"
-                            required
-                          ></Field>
-                          <label
-                            for="newContent"
-                            class="text-decoration-underline"
-                            >Contenu de mon post :</label
-                          >
-                          <ErrorMessage
-                            name="newContent"
-                            class="error-feedback ms-3"
-                            style="color:red"
-                          />
-                        </div>
-                        <div class="send-btn form-group col-2 position-relative">
-                          <button
-                            class="btn btn-primary rounded-pill mt-2"
-                            type="submit"
-                          >
-                            <span
-                              v-show="loading"
-                              class="spinner-border spinner-border-sm"
-                            ></span>
-                            Modifier
-                          </button>
-                        </div>
-                      </Form>
-                    </div>
+                      <div class="form-group form-floating">
+                        <Field
+                          type="text"
+                          class="form-control newTitle"
+                          name="newTitle"
+                          v-model="modifyingPost.title"
+                        />
+                        <label for="newTitle" class="text-decoration-underline"
+                          >Titre (facultatif):</label
+                        >
+                        <ErrorMessage
+                          name="newTitle"
+                          class="error-feedback ms-3"
+                          style="color:red"
+                        />
+                      </div>
+                      <div class="form-group form-floating">
+                        <Field
+                          type="text"
+                          class="form-control newCategory my-3"
+                          name="newCategory"
+                          v-model="modifyingPost.category"
+                        />
+                        <label
+                          for="newCategory"
+                          class="text-decoration-underline"
+                          >Catégorie (facultatif):</label
+                        >
+                        <ErrorMessage
+                          name="newCategory"
+                          class="error-feedback ms-3"
+                          style="color:red"
+                        />
+                      </div>
+                      <div class="form-group form-floating">
+                        <Field
+                          class="form-control rounded"
+                          name="newContent"
+                          v-model="modifyingPost.content"
+                          required
+                        ></Field>
+                        <label
+                          for="newContent"
+                          class="text-decoration-underline"
+                          >Contenu de mon post :</label
+                        >
+                        <ErrorMessage
+                          name="newContent"
+                          class="error-feedback ms-3"
+                          style="color:red"
+                        />
+                      </div>
+                      <div class="send-btn form-group col-2 position-relative">
+                        <button
+                          class="btn btn-primary rounded-pill mt-2"
+                          type="submit"
+                        >
+                          <span
+                            v-show="loading"
+                            class="spinner-border spinner-border-sm"
+                          ></span>
+                          Modifier
+                        </button>
+                      </div>
+                    </Form>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
           <!--</transition>-->
         </teleport>
         <!--Modal end-->
@@ -295,6 +322,7 @@
 //import TokenService from "../services/token.service";
 import ArticleService from "../services/article-service";
 import EventBus from "../common/EventBus";
+import Messages from "../components/Messages";
 import Footer from "../components/Footer";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
@@ -302,6 +330,7 @@ import * as yup from "yup";
 export default {
   name: "User",
   components: {
+    Messages,
     Footer,
     Form,
     Field,
@@ -309,9 +338,7 @@ export default {
   },
   data() {
     const postSchema = yup.object().shape({
-      newtTitle: yup
-        .string()
-        .max(30, "Veuillez écrire un titre plus court"),
+      newtTitle: yup.string().max(30, "Veuillez écrire un titre plus court"),
       newCategory: yup
         .string()
         .max(30, "Veuillez écrire une catégorie plus courte"),
@@ -399,27 +426,25 @@ export default {
       return "Publié il y a " + diffInDays + " jours";
     },
     deleteLocalStagedPost() {
-        localStorage.removeItem("modifyingPost");
-        this.modifyingPost="";
+      localStorage.removeItem("modifyingPost");
+      this.modifyingPost = "";
     },
-    stageToLocal({item}) {
+    stageToLocal({ item }) {
       const parsed = JSON.stringify(item);
       localStorage.setItem("modifyingPost", parsed);
-      this.modifyingPost= JSON.parse(localStorage.getItem("modifyingPost"));
+      this.modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
     },
     handleSubmit(item) {
-    //if(this.currentUser.id === item.authorId) {
-      console.log(JSON.parse(item))
-      if (
-        confirm(
-          "Souhaitez-vous vraiment modifier votre publication ?"
-        )
-      ) {
-        ArticleService.updateArticle({id: item.id, 
+      //if(this.currentUser.id === item.authorId) {
+      console.log(JSON.parse(item));
+      if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
+        ArticleService.updateArticle({
+          id: item.id,
           title: item.title,
           category: item.category,
           content: item.content,
-          updatedAt: new Date()});
+          updatedAt: new Date(),
+        });
         ArticleService.getAllArticles().then(
           (response) => {
             this.apiAllArticles = response.data;
@@ -439,7 +464,7 @@ export default {
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }
-    //}
+      //}
     },
     handlePost() {
       if (this.content) {
@@ -449,23 +474,24 @@ export default {
           content: this.content,
         });
       }
-      event.target.reset()
-      .then(() => {
-      ArticleService.getAllArticles().then(
-        (response) => {
-          this.apiAllArticles = response.data;
-        },
-        (error) => {
-          this.apiAllArticles =
-            (error.res && error.response.data && error.response.data.message) ||
-            error.message ||
-            error.toString();
+      event.target.reset().then(() => {
+        ArticleService.getAllArticles().then(
+          (response) => {
+            this.apiAllArticles = response.data;
+          },
+          (error) => {
+            this.apiAllArticles =
+              (error.res &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
 
-          if (error.res && error.response.status === 403) {
-            EventBus.dispatch("logout");
+            if (error.res && error.response.status === 403) {
+              EventBus.dispatch("logout");
+            }
           }
-        }
-      );
+        );
       });
     },
     confirmDelete(idToDelete) {
@@ -508,7 +534,8 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }*/
-.likes_dislikes, .dropdown-item {
+.likes_dislikes,
+.dropdown-item {
   cursor: pointer;
 }
 

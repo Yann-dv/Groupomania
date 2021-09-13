@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/articles.routes')(app);
+require('./app/routes/messages.routes')(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
 });
@@ -35,18 +36,18 @@ app.listen(PORT, () => {
 db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initialize, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
   initialize();
-  deleteOldArchived();
+  //deleteOldArchived();
 });
 
 const Role = db.role;
 const User = db.user;
 const UserRoles = db.user_roles;
-const Media = db.media;
 const Article = db.article;
+const Message = db.message;
 
 if (process.env.NODE_ENV == "development") {
   
-  function deleteOldArchived() {
+  /*function deleteOldArchived() {
     const archivedAt = new Date(archivedAt);
     const today = new Date();
     const oneDay = 1000 * 60 * 60 * 24;
@@ -54,16 +55,16 @@ if (process.env.NODE_ENV == "development") {
     const diffInDays = Math.round(diffInTime / oneDay);
     const toDestroy= Article.findAll({where: {archived : 1}});
         if(diffInDays >= 30) {
-          toDestroy.destroy()/*.then(
+          toDestroy.destroy()/.then(
             (article) => {
               if (!article) {
                 return res.status(404).send(new Error('article not found!'));
               }
               res.status(200).json({message: "Article définitivement supprimé de la db"});
             }
-          )*/
+          )
         }
-  };
+  };*/
     
 
 function initialize() {
@@ -120,14 +121,6 @@ function initialize() {
     roles: ["user"]
   });
 
-  Media.create({
-    id: 1,
-    author: 3,
-    content: "https://pixabay.com/get/g2dfffed41e8b9072c09402301d43f10c4b4f0f73e811c7580756b590cdf0182983298493cad0abe667c904024b1b3432_640.jpg",
-    category: "hollidays",
-    archived: 0
-  });
-
   Article.create({
     id: 1,
     authorId: 2,
@@ -182,6 +175,19 @@ function initialize() {
         createdAt: "2021-07-15",
         updatedAt: "2021-07-29",
         });
+
+      Message.create({
+        id: 1,
+        authorId: 2,
+        authorName: "johndoe",
+        content: "Super idée ! :D",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
     
   }//initialize end
 } // if end
