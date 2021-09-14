@@ -18,9 +18,13 @@ module.exports = function(app) {
 
   app.get("/api/getOneMessage",
   [authJwt.verifyToken],
-    articlesController.getOneMessage
+    messagesController.getOneMessage
   );
 
+  app.get("/api/getAndCountMessage",
+  [authJwt.verifyToken],
+    messagesController.getAndCountMessage
+  );
 
   app.put("/api/deleteMessage",
   [authJwt.verifyToken],

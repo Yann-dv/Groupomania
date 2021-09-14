@@ -1,18 +1,6 @@
 <template>
-  <div class="py-2 d-grid gap-2" role="group">
-    <button
-      class="btn btn-primary"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-auto-close="false"
-      data-bs-target="#collapsedMessages"
-      aria-expanded="false"
-      aria-controls="collapsedMessages"
-    >
-      {{ apiAllMessages.length }} Réponse(s)
-    </button>
     <!--Messages list-->
-    <div class="linkedMessageContainer">
+  <div class="linkedMessageContainer">
     <ul class="collapse mx-auto" id="collapsedMessages">
       <li
         v-for="message in apiAllMessages"
@@ -72,12 +60,12 @@
             </div>
         </Form>
     </ul>
-    </div>
   </div>
 </template>
 
 <script>
 import MessageService from "../services/messages-service";
+//import ArticleService from "../services/article-service";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
@@ -98,6 +86,7 @@ export default {
     });
     return {
       apiAllMessages: "",
+      apiAllArticles:"",
       messageSchema,
       loading: false,
     };

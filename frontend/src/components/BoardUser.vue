@@ -105,7 +105,7 @@
             :key="item"
             v-bind:id="item.id"
             class="py-3"
-          >
+           >
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
@@ -182,15 +182,26 @@
                     <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
                   </div>
                 </div>
-                <div class="messagesContent">
+                <div class="messagesContent py-2 d-grid gap-2" role="group">
                     <!--Import messages from messages component-->
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-auto-close="false"
+                      data-bs-target="#collapsedMessages"
+                      aria-expanded="false"
+                      aria-controls="collapsedMessages"
+                    >
+                      {{ counted }} Réponse(s)
+                    </button>
                      <Messages/>
                   </div>
               </div>
               <!--Body end-->
             </div>
             <!--Card end-->
-          </li>
+          </li> <!--List end-->
         </ul>
         <!--Modal content for modify user's articles-->
         <teleport to="#modifyArticles">
@@ -307,6 +318,7 @@
 <script>
 //import TokenService from "../services/token.service";
 import ArticleService from "../services/article-service";
+import MessageService from "../services/messages-service";
 import EventBus from "../common/EventBus";
 import Messages from "../components/Messages";
 import Footer from "../components/Footer";
@@ -335,6 +347,7 @@ export default {
     });
     return {
       postSchema,
+      messagesLength:"",
       title: "",
       content: "",
       category: "",
@@ -349,6 +362,7 @@ export default {
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: [],
+      counted: "",
     };
   },
   filters: {
@@ -365,6 +379,22 @@ export default {
     EventBus.dispatch("logout");
   },
   mounted() {
+
+        // Check du nombre de messages par articles
+    //messagesByArticle(id) {
+      MessageService.getAndCountMessage(this.id).then(
+      (response) => {
+        this.counted = response.data;
+      },
+      (error) => {
+        this.msgByArticle =
+          (error.res && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
+    //},
+    
     if (!this.currentUser) {
       this.$router.push("/home");
     }
@@ -392,6 +422,7 @@ export default {
     );
   },
   methods: {
+
     logOut() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/home");
@@ -421,7 +452,6 @@ export default {
       this.modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
     },
     handleSubmit(item) {
-      //if(this.currentUser.id === item.authorId) {
       console.log(JSON.parse(item));
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
         ArticleService.updateArticle({

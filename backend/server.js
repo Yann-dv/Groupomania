@@ -41,7 +41,7 @@ db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production :
 
 const Role = db.role;
 const User = db.user;
-const UserRoles = db.user_roles;
+const Article_messages = db.article_messages;
 const Article = db.article;
 const Message = db.message;
 
@@ -217,7 +217,6 @@ function initialize() {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-    
     
   }//initialize end
 } // if end

@@ -9,6 +9,11 @@ class MessageService {
     return api.get('/getOneMessage');
   }
 
+  getAndCountMessage(id) {
+    return api.get('/getAndCountMessage', 
+    { id });
+  }
+
   deleteMessage(id) {
     return api.put('/deleteMessage', 
     { id });
