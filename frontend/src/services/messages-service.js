@@ -9,8 +9,8 @@ class MessageService {
     return api.get('/getOneMessage');
   }
 
-  getAndCountMessage(id) {
-    return api.get('/getAndCountMessage', 
+  getLinkedMessages(id) {
+    return api.get('/getLinkedMessages', 
     { id });
   }
 

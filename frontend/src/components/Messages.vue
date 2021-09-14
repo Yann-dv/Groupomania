@@ -139,23 +139,13 @@ export default {
         MessageService.createMessage({
           linkedArticle: this.linkedArticle,
           content: this.newMessage,
-        });
+        })
+        .then(() => {
+          setTimeout(function(){
+            window.location.reload(1);
+          }, 300);
+        })
       }
-      event.target.reset().then(() => {
-        MessageService.getAllMessages().then(
-          (response) => {
-            this.apiAllMessages = response.data;
-          },
-          (error) => {
-            this.apiAllMessages =
-              (error.res &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-          }
-        );
-      });
     },
     messageDelete(messageToDelete) {
       if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {

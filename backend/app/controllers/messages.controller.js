@@ -45,7 +45,7 @@ exports.getOneMessage= (req, res, next) => {
   );
 }; 
 
-  /*exports.getAndCountMessage= (req, res, next) => {
+  /*exports.getLinkedMessages= (req, res, next) => {
     Message.findAndCountAll({linkedArticle: req.body.id, where:{archived: 0}}).then(
     //Message.findAndCountAll({where:{archived: 0, linkedArticle: req.body.id}}).then(  
     (message) => {
@@ -61,8 +61,8 @@ exports.getOneMessage= (req, res, next) => {
     );
   };*/
 
-  exports.getAndCountMessage= (req, res, next) => {
-    Message.findAll({where: { linkedArticle: {[Op.eq]:req.body.id }}}).then(
+  exports.getLinkedMessages= (req, res, next) => {
+    Message.findAll( {where: { linkedArticle: {[Op.eq]: (req.body.id) } } }).then(
     (message) => {
         if (!message) {
           return res.status(404).send(new Error('message not found!'));

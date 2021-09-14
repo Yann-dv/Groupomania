@@ -363,6 +363,7 @@ export default {
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: [],
+      apiAllMessages:[],
       msgByArticle: "",
     };
   },
@@ -404,12 +405,13 @@ export default {
           EventBus.dispatch("logout");
         }
       }
-    );
+    ),
 
     // Check du nombre de messages par articles
-  MessageService.getAndCountMessage(1).then(
+  MessageService.getLinkedMessages(2).then(
       (response) => {
-        return response.data;
+        this.apiAllMessages= response.data;
+        console.log(response.data)
       },
       (error) => {
         this.msgByArticle =
@@ -420,8 +422,8 @@ export default {
     );
   },
   methods: {
-    countMsg(itemId) {
-      MessageService.getAndCountMessage(itemId).then(
+    countMsg() {
+      MessageService.getLinkedMessages().then(
         (response) => {
               this.apiAllMessages= response.data;
         },

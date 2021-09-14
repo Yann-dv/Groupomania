@@ -21,9 +21,9 @@ module.exports = function(app) {
     messagesController.getOneMessage
   );
 
-  app.get("/api/getAndCountMessage",
+  app.get("/api/getLinkedMessages",
   [authJwt.verifyToken],
-    messagesController.getAndCountMessage
+    messagesController.getLinkedMessages
   );
 
   app.put("/api/deleteMessage",
