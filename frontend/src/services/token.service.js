@@ -25,7 +25,8 @@ class TokenService {
     }
   
     removeUser() {
-      localStorage.removeItem("user");
+      localStorage.removeItem("user")
+        window.location = "/home";
     }
   }
   

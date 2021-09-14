@@ -20,6 +20,11 @@ class UserService {
   getAdminBoard() {
     return api.get('/admin');
   }
+
+  deleteUser(id) {
+    return api.put('/deleteUser', 
+    { id });
+  }
 }
 
 export default new UserService();

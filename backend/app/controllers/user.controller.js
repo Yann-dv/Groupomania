@@ -42,3 +42,15 @@ const User = db.user;
   exports.moderatorBoard = (req, res, next) => {
     res.status(200).send("Moderator Content - Successfully accessed");
   };
+
+  exports.deleteUser= (req, res, next) => {
+    User.update({ archived: 1}, {
+      where:{ id: req.body.id}})
+      .then(
+      res.status(200).json({message: `Utilisateur n°${req.body.id} archivé dans la db`})
+      ).catch(
+        () => {
+          res.status(500).send(new Error('Database error!'));
+        }
+      )
+    };

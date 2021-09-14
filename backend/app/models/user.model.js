@@ -27,6 +27,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
+      archived: {
+        type: Sequelize.INTEGER,
+        default: 0,
+      },
+      archivedAt: {
+        type: Sequelize.DATE,
+      },
     });
   
     return User;

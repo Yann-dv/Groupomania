@@ -22,8 +22,8 @@
               <li v-on:click="modifyProfile = true" class="dropdown-item">
                Modifier mon profile
               </li>
-              <li v-on:click="deleteProfile" class="dropdown-item">
-                Supprimer mon profile
+              <li v-on:click="deleteProfile(currentUser.id)" class="dropdown-item">
+                Supprimer mon profil
               </li>
             </ul>
           </div>
@@ -130,6 +130,7 @@
 </template>
 
 <script>
+import TokenService from "../services/token.service";
 import UserService from "../services/user-service";
 import Footer from "../components/Footer";
 import { Form, Field, ErrorMessage } from "vee-validate";
@@ -197,6 +198,16 @@ export default {
     },
   },
   methods: {
+
+    deleteProfile(userToDelete) {
+      if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {
+        UserService.deleteUser(userToDelete)
+        .then(() => TokenService.removeUser())
+      } else {
+        // Code à éxécuter si l'utilisateur clique sur "Annuler"
+      }
+    },
+
     handleRegister(user) {
       this.message = "";
       this.successful = false;

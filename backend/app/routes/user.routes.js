@@ -32,4 +32,9 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     userController.adminBoard
   );
+
+  app.put("/api/deleteUser",
+  [authJwt.verifyToken],
+    userController.deleteUser
+  ); 
 };
