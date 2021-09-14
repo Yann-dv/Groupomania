@@ -193,7 +193,7 @@
                       aria-expanded="false"
                       aria-controls="collapsedMessages"
                     >
-                      {{ counted }} Réponse(s)
+                      {{ msgByArticle }} Réponse(s)
                     </button>
                      <Messages/>
                   </div>
@@ -362,7 +362,7 @@ export default {
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: [],
-      counted: "",
+      msgByArticle: "",
     };
   },
   filters: {
@@ -379,22 +379,6 @@ export default {
     EventBus.dispatch("logout");
   },
   mounted() {
-
-        // Check du nombre de messages par articles
-    //messagesByArticle(id) {
-      MessageService.getAndCountMessage(this.id).then(
-      (response) => {
-        this.counted = response.data;
-      },
-      (error) => {
-        this.msgByArticle =
-          (error.res && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );
-    //},
-    
     if (!this.currentUser) {
       this.$router.push("/home");
     }
@@ -420,6 +404,21 @@ export default {
         }
       }
     );
+    
+    // Check du nombre de messages par articles
+    //messagesByArticle(id) {
+    MessageService.getAndCountMessage(this.id).then(
+      (response) => {
+        this.msgByArticle = response.data;
+      },
+      (error) => {
+        this.msgByArticle =
+          (error.res && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
+    //},
   },
   methods: {
 

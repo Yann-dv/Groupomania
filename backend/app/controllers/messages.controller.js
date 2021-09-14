@@ -59,6 +59,22 @@ exports.getOneMessage= (req, res, next) => {
     );
     };
 
+  exports.createMessage = (req, res, next) => {
+      Message.create({
+      linkedArticle: req.body.linkedArticle,
+      authorId: req.userId,
+      authorName: req.username,
+      content: req.body.content,
+      archived: 0,
+      archivedAt: null,
+      likes: 0,
+      dislikes: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .then(() => res.status(201).json({message : `Message envoyé dans la base de données`}))
+    .catch(error => res.status(500).json({ error }));
+  }
 
 exports.deleteMessage= (req, res, next) => {
   Message.update({ archived: 1}, {

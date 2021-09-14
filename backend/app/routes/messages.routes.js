@@ -29,6 +29,10 @@ module.exports = function(app) {
   app.put("/api/deleteMessage",
   [authJwt.verifyToken],
     messagesController.deleteMessage
-  );
+  ); 
 
+  app.post("/api/createMessage",
+  [authJwt.verifyToken],
+    messagesController.createMessage
+  );
 };

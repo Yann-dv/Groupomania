@@ -15,6 +15,7 @@ const Article = db.article;
           content: article.content,
           category: article.category, 
           archived: article.archived,
+          archivedAt: article.archivedAt,
           likes: article.likes,
           dislikes: article.dislikes,
           createdAt : article.createdAt,
@@ -45,7 +46,6 @@ exports.createArticle = (req, res, next) => {
   })
   .then(() => res.status(201).json({message : `Article publié dans la base de données`}))
   .catch(error => res.status(500).json({ error }));
-
 }
 
 exports.getOneArticle= (req, res, next) => {

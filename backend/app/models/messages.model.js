@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       content: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       archived: {

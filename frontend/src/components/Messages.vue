@@ -38,7 +38,7 @@
               <Field
                 type="text"
                 class="form-control newMessage"
-                name="newTitle"
+                name="newMessage"
               />
               <label for="newMessage" class="text-decoration-underline"
                 >Répondre:</label
@@ -117,7 +117,27 @@ export default {
 
     },
     messageSubmit() {
-          console.log("Hi there");
+         if (this.content) {
+        MessageService.createMessage({
+          linkedArticle: this.linkedArticle,
+          content: this.newMessage,
+        });
+      }
+      event.target.reset().then(() => {
+        MessageService.getAllMessages().then(
+          (response) => {
+            this.apiAllMessages = response.data;
+          },
+          (error) => {
+            this.apiAllMessages =
+              (error.res &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+          }
+        );
+      });
     },
     messageDelete(messageToDelete) {
           if (

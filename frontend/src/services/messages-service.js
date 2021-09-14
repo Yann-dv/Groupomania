@@ -19,6 +19,24 @@ class MessageService {
     { id });
   }
 
+  createMessage({ id, linkedArticle, authorId, authorName,
+    content, archived, archivedAt, likes, 
+    dislikes, createdAt, updatedAt }) {
+    return api.post('/createMessage', {
+      id,
+      linkedArticle,
+      authorId,
+      authorName,
+      content,
+      archived,
+      archivedAt,
+      likes,
+      dislikes,
+      createdAt,
+      updatedAt
+    });
+  }
+
 }
   export default new MessageService();
 
