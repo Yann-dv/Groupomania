@@ -183,20 +183,6 @@
                   </div>
                 </div>
                 <div class="messagesContent">
-                    <nav class="navbar navbar-dark bg-secondary">
-                      <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarMessages"
-                        aria-controls="navbarMessages"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                      >
-                        <span class="navbar-toggler-icon"></span>
-                        {{ apiAllArticles.length }} Réponses
-                      </button>
-                    </nav>
                     <!--Import messages from messages component-->
                      <Messages/>
                   </div>

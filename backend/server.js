@@ -178,6 +178,7 @@ function initialize() {
 
       Message.create({
         id: 1,
+        linkedArticle: 1,
         authorId: 2,
         authorName: "johndoe",
         content: "Super idée ! :D",
@@ -185,9 +186,24 @@ function initialize() {
         archivedAt: null,
         likes: 0,
         dislikes: 0,
+        createdAt: "2021-07-03",
+        updatedAt: new Date(),
+      });
+
+      Message.create({
+        id: 2,
+        linkedArticle: 1,
+        authorId: 4,
+        authorName: "usertest",
+        content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiate !",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+    
     
   }//initialize end
 } // if end

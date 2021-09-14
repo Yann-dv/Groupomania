@@ -1,7 +1,7 @@
 import api from './api';
 
 class MessageService {
-  getAllArticles() {
+  getAllMessages() {
     return api.get('/getAllMessages'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
   }
 

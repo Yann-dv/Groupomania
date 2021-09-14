@@ -9,6 +9,7 @@ exports.getAllMessages = (req, res, next) => {
         const mappedMessages = messages.map((message) => {
           return { // ne retourne pas authorId
           id: message.id,
+          linkedArticle: message.linkedArticle,
           authorId: message.authorId,
           authorName: message.authorName,
           content: message.content,
