@@ -16,4 +16,15 @@ module.exports = function(app) {
     messagesController.getAllMessages
   );
 
+  app.get("/api/getOneMessage",
+  [authJwt.verifyToken],
+    articlesController.getOneMessage
+  );
+
+
+  app.put("/api/deleteMessage",
+  [authJwt.verifyToken],
+    messagesController.deleteMessage
+  );
+
 };

@@ -2,7 +2,16 @@ import api from './api';
 
 class MessageService {
   getAllMessages() {
-    return api.get('/getAllMessages'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+    return api.get('/getAllMessages');
+  }
+
+  getOneMessage() {
+    return api.get('/getOneMessage');
+  }
+
+  deleteMessage(id) {
+    return api.put('/deleteMessage', 
+    { id });
   }
 
 }

@@ -1,18 +1,3 @@
-<!--<template>
-  <div class="collapse py-2 mt-3 mb-2" id="navbarMessages">
-    <div class="bg-light">
-        <ul id="messagesUl">
-          <li v-for="item in apiAllMessages"
-            :key="item"
-            v-bind:id="item.id"
-            class="text-white"
-          >
-            Toggleable via the navbar brand.
-            </li>
-        </ul>
-    </div>
-  </div>
-</template>-->
 <template>
   <div class="py-2 d-grid gap-2" role="group">
     <button
@@ -27,6 +12,7 @@
       {{ apiAllMessages.length }} Réponse(s)
     </button>
     <!--Messages list-->
+    <div class="linkedMessageContainer">
     <ul class="collapse mx-auto" id="collapsedMessages">
       <li
         v-for="message in apiAllMessages"
@@ -34,8 +20,15 @@
         v-bind:id="message.id"
         class="collapsed-item my-2"
        >
-        <div class="collapsed-card card card-body">
+        <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
+        <div
+          class="collapsed-card card card-body">
           <div class="card-header d-flex justify-content-between">
+            <button type="button" class="btn-close" aria-label="Close"
+                v-if="currentUser.id === message.authorId"
+                v-on:click="messageDelete(message.id)"
+              >
+            </button>
             <div><font-awesome-icon icon="user" />
               {{ message.authorName }} :
             </div>
@@ -51,7 +44,7 @@
             @submit="messageSubmit"
             :validation-schema="messageSchema"
             class=""
-            id="createArticleForm"
+            id="messageForm"
           >
             <div class="form-group form-floating">
               <Field
@@ -75,10 +68,11 @@
                   class="spinner-border spinner-border-sm"
                 ></span>
                 Poster
-              </button>
+              </button>             
             </div>
         </Form>
     </ul>
+    </div>
   </div>
 </template>
 
@@ -121,13 +115,32 @@ export default {
       }
     );
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   methods: {
     dateMinify(messageDate) {
       let current_datetime = new Date(messageDate)
       let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
       return formatted_date;
 
-    }
+    },
+    messageSubmit() {
+          console.log("Hi there");
+    },
+    messageDelete(messageToDelete) {
+          if (
+        confirm(
+          "Souhaitez-vous vraiment supprimer ce message ?"
+        )
+      ) {
+        MessageService.deleteMessage(messageToDelete);
+        } else {
+        // Code à éxécuter si l'utilisateur clique sur "Annuler"
+      }
+    },
   },
 };
 </script>

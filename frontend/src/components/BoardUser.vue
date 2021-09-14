@@ -331,7 +331,7 @@ export default {
       newContent: yup
         .string()
         .min(3, "L'article doit faire au moins 3 caractères")
-        .max(500, "L'article ne peut dépasser 500 caractères"),
+        .max(800, "L'article ne peut dépasser 800 caractères"),
     });
     return {
       postSchema,

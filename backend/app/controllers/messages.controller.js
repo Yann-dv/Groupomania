@@ -28,3 +28,31 @@ exports.getAllMessages = (req, res, next) => {
       }
     );
 };
+
+exports.getOneMessage= (req, res, next) => {
+  Message.findOne({ where: { linkedArticle: req.body.linkedArticle}}).then(
+    (message) => {
+      if (!message) {
+        return res.status(404).send(new Error('message not found!'));
+      }
+      res.status(200).json(message);
+    }
+  ).catch(
+    () => {
+      res.status(500).send(new Error('Database error!'));
+    }
+  );
+  }
+
+
+exports.deleteMessage= (req, res, next) => {
+  Message.update({ archived: 1}, {
+    where:{ id: req.body.id}})
+    .then(
+    res.status(200).json({message: `Message n°${req.body.id} archivé dans la db`})
+    ).catch(
+      () => {
+        res.status(500).send(new Error('Database error!'));
+      }
+    )
+};

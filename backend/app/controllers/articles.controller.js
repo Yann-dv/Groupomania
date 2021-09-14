@@ -64,22 +64,6 @@ Article.findOne({ where: { id: req.body.id}}).then(
 );
 }
 
-/*exports.deleteArticle = (req, res, next) => {
-  Article.destroy({ where: { id: req.body.id}}).then(
-    (article) => {
-      if (!article) {
-        return res.status(404).send(new Error('article not found!'));
-      }
-      //article.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + article.imageUrl;
-      res.status(200).json({message: "Article supprimé de la db"});
-    }
-  ).catch(
-    () => {
-      res.status(500).send(new Error('Database error!'));
-    }
-  );
-}*/
-
 exports.deleteArticle = (req, res, next) => {
   Article.update({ archived: 1}, {
     where:{ id: req.body.id}})
