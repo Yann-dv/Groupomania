@@ -1,5 +1,6 @@
 
 const db = require("../models");
+const { Op } = require("sequelize");
 
 const Message = db.message;
 
@@ -44,20 +45,36 @@ exports.getOneMessage= (req, res, next) => {
   );
 }; 
 
-  exports.getAndCountMessage= (req, res, next) => {
+  /*exports.getAndCountMessage= (req, res, next) => {
     Message.findAndCountAll({linkedArticle: req.body.id, where:{archived: 0}}).then(
-      (message) => {
+    //Message.findAndCountAll({where:{archived: 0, linkedArticle: req.body.id}}).then(  
+    (message) => {
         if (!message) {
           return res.status(404).send(new Error('message not found!'));
         }
-        res.status(200).json(message.count); //disabling count for addinw rows details
+        res.status(200).json(message); //disabling count for addinw rows details
       }
     ).catch(
       () => {
         res.status(500).send(new Error('Database error!'));
       }
     );
-    };
+  };*/
+
+  exports.getAndCountMessage= (req, res, next) => {
+    Message.findAll({where: { linkedArticle: {[Op.eq]:req.body.id }}}).then(
+    (message) => {
+        if (!message) {
+          return res.status(404).send(new Error('message not found!'));
+        }
+        res.status(200).json(message);
+      }
+    ).catch(
+      () => {
+        res.status(500).send(new Error('Database error!'));
+      }
+    );
+  };
 
   exports.createMessage = (req, res, next) => {
       Message.create({

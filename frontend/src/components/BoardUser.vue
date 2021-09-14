@@ -105,7 +105,7 @@
             :key="item"
             v-bind:id="item.id"
             class="py-3"
-           >
+          >
             <div class="card rounded">
               <div class="card-body bg-light">
                 <!--Card header-->
@@ -182,26 +182,27 @@
                     <span class="nbrOfLikes ms-1"> {{ item.dislikes }} </span>
                   </div>
                 </div>
-                <div class="messagesContent py-2 d-grid gap-2" role="group">
-                    <!--Import messages from messages component-->
-                    <button
-                      class="btn btn-primary"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-auto-close="false"
-                      data-bs-target="#collapsedMessages"
-                      aria-expanded="false"
-                      aria-controls="collapsedMessages"
-                    >
-                      {{ msgByArticle }} Réponse(s)
-                    </button>
-                     <Messages/>
-                  </div>
+                <div class="messagesImportation py-2 d-grid gap-2" role="group">
+                  <!--Import messages from messages component-->
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-auto-close="false"
+                    data-bs-target="#collapsedMessages"
+                    aria-expanded="false"
+                    aria-controls="collapsedMessages"
+                  >
+                    {{ countMsg(item.id) }} Réponse(s)
+                  </button>
+                  <Messages />
+                </div>
               </div>
               <!--Body end-->
             </div>
             <!--Card end-->
-          </li> <!--List end-->
+          </li>
+          <!--List end-->
         </ul>
         <!--Modal content for modify user's articles-->
         <teleport to="#modifyArticles">
@@ -347,7 +348,7 @@ export default {
     });
     return {
       postSchema,
-      messagesLength:"",
+      messagesLength: "",
       title: "",
       content: "",
       category: "",
@@ -404,12 +405,11 @@ export default {
         }
       }
     );
-    
+
     // Check du nombre de messages par articles
-    //messagesByArticle(id) {
-    MessageService.getAndCountMessage(this.id).then(
+  MessageService.getAndCountMessage(1).then(
       (response) => {
-        this.msgByArticle = response.data;
+        return response.data;
       },
       (error) => {
         this.msgByArticle =
@@ -418,10 +418,21 @@ export default {
           error.toString();
       }
     );
-    //},
   },
   methods: {
-
+    countMsg(itemId) {
+      MessageService.getAndCountMessage(itemId).then(
+        (response) => {
+              this.apiAllMessages= response.data;
+        },
+        (error) => {
+          this.apiAllMessages =
+            (error.res && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      )
+    },
     logOut() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/home");
@@ -459,23 +470,12 @@ export default {
           category: item.category,
           content: item.content,
           updatedAt: new Date(),
-        });
-        ArticleService.getAllArticles().then(
-          (response) => {
-            this.apiAllArticles = response.data;
-          },
-          (error) => {
-            this.apiAllArticles =
-              (error.res &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            if (error.res && error.response.status === 403) {
-              EventBus.dispatch("logout");
-            }
-          }
-        );
+        })
+        .then(() => {
+          setTimeout(function(){
+            window.location.reload(1);
+          }, 300);
+        })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }
@@ -487,27 +487,13 @@ export default {
           title: this.title,
           category: this.category,
           content: this.content,
-        });
+        })
+        .then(() => {
+          setTimeout(function(){
+            window.location.reload(1);
+          }, 300);
+        })
       }
-      event.target.reset().then(() => {
-        ArticleService.getAllArticles().then(
-          (response) => {
-            this.apiAllArticles = response.data;
-          },
-          (error) => {
-            this.apiAllArticles =
-              (error.res &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-
-            if (error.res && error.response.status === 403) {
-              EventBus.dispatch("logout");
-            }
-          }
-        );
-      });
     },
     confirmDelete(idToDelete) {
       if (
@@ -515,23 +501,12 @@ export default {
           "Souhaitez-vous vraiment supprimer votre publication et ses commentaires ? (Après confirmation, les données seront archivées et conservées pendant 30 jours avant d'être supprimées)"
         )
       ) {
-        ArticleService.deleteArticle(idToDelete);
-        ArticleService.getAllArticles().then(
-          (response) => {
-            this.apiAllArticles = response.data;
-          },
-          (error) => {
-            this.apiAllArticles =
-              (error.res &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-            if (error.res && error.response.status === 403) {
-              EventBus.dispatch("logout");
-            }
-          }
-        );
+        ArticleService.deleteArticle(idToDelete)
+        .then(() => {
+          setTimeout(function(){
+            window.location.reload(1);
+          }, 300);
+        })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }

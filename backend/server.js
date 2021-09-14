@@ -217,6 +217,20 @@ function initialize() {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+
+      Message.create({
+        id: 4,
+        linkedArticle: 2,
+        authorId: 2,
+        authorName: "johndoe",
+        content: "Vraiment long ces textes en latin... surtout quand on ne le lit pas !",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
     
   }//initialize end
 } // if end

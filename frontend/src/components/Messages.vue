@@ -1,5 +1,5 @@
 <template>
-    <!--Messages list-->
+  <!--Messages list-->
   <div class="linkedMessageContainer">
     <ul class="collapse mx-auto" id="collapsedMessages">
       <li
@@ -7,58 +7,59 @@
         :key="message"
         v-bind:id="message.id"
         class="collapsed-item my-2"
-       >
+      >
         <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
-        <div
-          class="collapsed-card card card-body">
+        <div class="collapsed-card card card-body">
           <div class="card-header d-flex justify-content-between">
-            <button type="button" class="btn-close" aria-label="Close"
-                v-if="currentUser.id === message.authorId"
-                v-on:click="messageDelete(message.id)"
-              >
-            </button>
-            <div><font-awesome-icon icon="user" />
-              {{ message.authorName }} :
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              v-if="currentUser.id === message.authorId"
+              v-on:click="messageDelete(message.id)"
+            ></button>
+            <div>
+              <font-awesome-icon icon="user" /> {{ message.authorName }} :
             </div>
             <span class="disabled card-subtitle text-muted dateMini">
-             {{ dateMinify(message.createdAt) }}
+              {{ dateMinify(message.createdAt) }}
             </span>
           </div>
-        {{ message.content }}
+          {{ message.content }}
         </div>
       </li>
       <!--Message list end-->
       <Form
-            @submit="messageSubmit"
-            :validation-schema="messageSchema"
-            class=""
-            id="messageForm"
+        @submit="messageSubmit"
+        :validation-schema="messageSchema"
+        class=""
+        id="messageForm"
+      >
+        <div class="form-group form-floating">
+          <Field
+            type="text"
+            class="form-control newMessage"
+            name="newMessage"
+          />
+          <label for="newMessage" class="text-decoration-underline"
+            >Répondre:</label
           >
-            <div class="form-group form-floating">
-              <Field
-                type="text"
-                class="form-control newMessage"
-                name="newMessage"
-              />
-              <label for="newMessage" class="text-decoration-underline"
-                >Répondre:</label
-              >
-              <ErrorMessage
-                name="newMessage"
-                class="error-feedback ms-3"
-                style="color:red"
-              />
-            </div>
-            <div class="send-btn form-group">
-              <button class="btn btn-primary rounded my-1" type="submit">
-                <span
-                  v-show="loading"
-                  class="spinner-border spinner-border-sm"
-                ></span>
-                Poster
-              </button>             
-            </div>
-        </Form>
+          <ErrorMessage
+            name="newMessage"
+            class="error-feedback ms-3"
+            style="color:red"
+          />
+        </div>
+        <div class="send-btn form-group">
+          <button class="btn btn-primary rounded my-1" type="submit">
+            <span
+              v-show="loading"
+              class="spinner-border spinner-border-sm"
+            ></span>
+            Poster
+          </button>
+        </div>
+      </Form>
     </ul>
   </div>
 </template>
@@ -71,7 +72,7 @@ import * as yup from "yup";
 
 export default {
   name: "Messages",
-  components : {
+  components: {
     Form,
     Field,
     ErrorMessage,
@@ -80,15 +81,17 @@ export default {
   data() {
     const messageSchema = yup.object().shape({
       newMessage: yup
-      .string()
-      .min(1, "Veuillez écrire au moins un caractère")
-      .max(60, "Veuillez écrire une réponse plus courte (max 60 caractères"),
+        .string()
+        .min(1, "Veuillez écrire au moins un caractère")
+        .max(60, "Veuillez écrire une réponse plus courte (max 60 caractères"),
     });
     return {
       apiAllMessages: "",
-      apiAllArticles:"",
+      apiAllArticles: "",
       messageSchema,
       loading: false,
+      msgFromApi: "",
+      //msgContentArray: [],
     };
   },
   mounted() {
@@ -103,6 +106,17 @@ export default {
           error.toString();
       }
     );
+    /*MessageService.getAndCountMessage(this.id).then(
+      (response) => {
+        this.msgFromApi = response.data;
+      },
+      (error) => {
+        this.msgFromApi =
+          (error.res && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );*/
   },
   computed: {
     currentUser() {
@@ -111,13 +125,17 @@ export default {
   },
   methods: {
     dateMinify(messageDate) {
-      let current_datetime = new Date(messageDate)
-      let formatted_date = current_datetime.getDate() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getFullYear()
+      let current_datetime = new Date(messageDate);
+      let formatted_date =
+        current_datetime.getDate() +
+        "-" +
+        (current_datetime.getMonth() + 1) +
+        "-" +
+        current_datetime.getFullYear();
       return formatted_date;
-
     },
     messageSubmit() {
-         if (this.content) {
+      if (this.content) {
         MessageService.createMessage({
           linkedArticle: this.linkedArticle,
           content: this.newMessage,
@@ -140,13 +158,9 @@ export default {
       });
     },
     messageDelete(messageToDelete) {
-          if (
-        confirm(
-          "Souhaitez-vous vraiment supprimer ce message ?"
-        )
-      ) {
+      if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {
         MessageService.deleteMessage(messageToDelete);
-        } else {
+      } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
       }
     },
@@ -155,7 +169,6 @@ export default {
 </script>
 
 <style>
-
 .collapsed-item {
   cursor: pointer;
   width: 100%;
@@ -166,8 +179,6 @@ export default {
 }
 
 .dateMini {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
-
-
 </style>
