@@ -69,6 +69,7 @@ export default {
   data() {
     return {
     mainColor: "#122442",
+    modifyProfile: "false",
     }
   },
   computed: {

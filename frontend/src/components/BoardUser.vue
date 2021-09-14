@@ -464,7 +464,6 @@ export default {
       this.modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
     },
     handleSubmit(item) {
-      console.log(JSON.parse(item));
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
         ArticleService.updateArticle({
           id: item.id,
