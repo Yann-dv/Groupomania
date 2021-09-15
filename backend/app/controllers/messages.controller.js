@@ -45,29 +45,17 @@ exports.getOneMessage= (req, res, next) => {
   );
 }; 
 
-  /*exports.getLinkedMessages= (req, res, next) => {
-    Message.findAndCountAll({linkedArticle: req.body.id, where:{archived: 0}}).then(
-    //Message.findAndCountAll({where:{archived: 0, linkedArticle: req.body.id}}).then(  
+  exports.getLinkedMessages= (req, res, next) => {
+    Message.findAndCountAll({
+      where:{
+        archived: 0, 
+        linkedArticle: req.body.id
+      }}).then(  
     (message) => {
         if (!message) {
           return res.status(404).send(new Error('message not found!'));
         }
         res.status(200).json(message); //disabling count for addinw rows details
-      }
-    ).catch(
-      () => {
-        res.status(500).send(new Error('Database error!'));
-      }
-    );
-  };*/
-
-  exports.getLinkedMessages= (req, res, next) => {
-    Message.findAll( {where: { linkedArticle: {[Op.eq]: (req.body.id) } } }).then(
-    (message) => {
-        if (!message) {
-          return res.status(404).send(new Error('message not found!'));
-        }
-        res.status(200).json(message);
       }
     ).catch(
       () => {

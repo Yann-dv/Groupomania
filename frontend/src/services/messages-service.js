@@ -10,7 +10,8 @@ class MessageService {
   }
 
   getLinkedMessages(id) {
-    return api.get('/getLinkedMessages', 
+    debugger;
+    return api.put('/getLinkedMessages', 
     { id });
   }
 

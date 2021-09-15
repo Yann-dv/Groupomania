@@ -6,7 +6,7 @@ class ArticleService {
   }
 
   getOneArticles() {
-    return api.get('/getOneArticle'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+    return api.get('/getOneArticle');
   }
 
   deleteArticle(id) {

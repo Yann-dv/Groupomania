@@ -193,7 +193,7 @@
                     aria-expanded="false"
                     aria-controls="collapsedMessages"
                   >
-                    {{ countMsg(item.id) }} Réponse(s)
+                    {{ nbr }}
                   </button>
                   <Messages />
                 </div>
@@ -363,8 +363,12 @@ export default {
       secondColor: "#D1515A",
       apiAllUsers: "",
       apiAllArticles: [],
+      apiAllArticlesId : [],
       apiAllMessages:[],
-      msgByArticle: "",
+      msgCount: [],
+      msgAuthor: "",
+      msgContent: "",
+      nbr: "",
     };
   },
   filters: {
@@ -394,6 +398,14 @@ export default {
     ArticleService.getAllArticles().then(
       (response) => {
         this.apiAllArticles = response.data;
+          this.apiAllArticles.forEach(element  => {
+            let elementId = element.id;
+              MessageService.getLinkedMessages(elementId).then(
+              (response) => {
+                console.log(this.nbr)
+                return this.nbr = response.data.count + " Réponse(s)";
+              })
+    });
       },
       (error) => {
         this.apiAllArticles =
@@ -404,28 +416,13 @@ export default {
         if (error.res && error.response.status === 403) {
           EventBus.dispatch("logout");
         }
-      }
-    ),
-
-    // Check du nombre de messages par articles
-  MessageService.getLinkedMessages(2).then(
-      (response) => {
-        this.apiAllMessages= response.data;
-        console.log(response.data)
-      },
-      (error) => {
-        this.msgByArticle =
-          (error.res && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
+      } 
     );
-  },
-  methods: {
-    countMsg() {
-      MessageService.getLinkedMessages().then(
+        // Check du nombre de messages par articles
+        /*const id= 2;
+    MessageService.getLinkedMessages({id: id}).then(
         (response) => {
-              this.apiAllMessages= response.data;
+              this.apiAllMessages= response.data.count;
         },
         (error) => {
           this.apiAllMessages =
@@ -433,8 +430,17 @@ export default {
             error.message ||
             error.toString();
         }
-      )
+      );*/
+},
+  methods: {
+    msgLinked(id) {
+      MessageService.getLinkedMessages({id}).then(
+              (response) => {
+                console.log(this.nbr)
+                return this.nbr = response.data.count + " Réponse(s)";
+              })
     },
+
     logOut() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/home");

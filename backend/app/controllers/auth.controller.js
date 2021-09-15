@@ -47,12 +47,12 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
   User.findOne({
-    /*where: {
+    where: {
       username: req.body.username,
       archived: 0
     }
-  })*/
-    where: {
+  })
+    /*where: {
       //username: req.body.username
       [Op.and]: [{
         username: {
@@ -66,7 +66,7 @@ exports.signin = (req, res) => {
       }
       ]
     }//where end
-  })
+  })*/
     .then(async (user) => {
       if (!user) {
         return res.status(404).send({ message: "User Not found." });

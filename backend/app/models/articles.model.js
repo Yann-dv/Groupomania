@@ -23,10 +23,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       category: {
         type: Sequelize.STRING,
+        defaultValue: "#",
       },
       archived: {
         type: Sequelize.INTEGER,
-        default: "Sans catégorie"
+        defaultValue: 0,
       },
       archivedAt: {
         type: Sequelize.DATE,

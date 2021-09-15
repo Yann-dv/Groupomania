@@ -95,7 +95,7 @@ export default {
     };
   },
   mounted() {
-    MessageService.getAllMessages().then(
+    /*MessageService.getAllMessages().then(
       (response) => {
         this.apiAllMessages = response.data;
       },
@@ -105,8 +105,9 @@ export default {
           error.message ||
           error.toString();
       }
-    );
-    /*MessageService.getAndCountMessage(this.id).then(
+    );*/
+    /*const id = 1;
+    MessageService.getLinkedMessages(id).then(
       (response) => {
         this.msgFromApi = response.data;
       },

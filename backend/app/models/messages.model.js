@@ -23,18 +23,18 @@ module.exports = (sequelize, Sequelize) => {
       },
       archived: {
         type: Sequelize.INTEGER,
-        default: 0,
+        defaultValue: 0,
       },
       archivedAt: {
         type: Sequelize.DATE,
       },
       likes: {
         type: Sequelize.INTEGER,
-        default: 0,
+        defaultValue: 0,
       },
       dislikes:  {
         type: Sequelize.INTEGER,
-        default: 0,
+        defaultValue: 0,
       },
       createdAt: {
       type: Sequelize.DATE,

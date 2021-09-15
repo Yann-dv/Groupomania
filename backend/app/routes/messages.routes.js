@@ -21,7 +21,7 @@ module.exports = function(app) {
     messagesController.getOneMessage
   );
 
-  app.get("/api/getLinkedMessages",
+  app.put("/api/getLinkedMessages",
   [authJwt.verifyToken],
     messagesController.getLinkedMessages
   );
