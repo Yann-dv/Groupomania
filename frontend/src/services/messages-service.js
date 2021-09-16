@@ -37,7 +37,6 @@ class MessageService {
       updatedAt
     });
   }
-
 }
   export default new MessageService();
 

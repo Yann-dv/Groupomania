@@ -98,7 +98,7 @@
                     aria-expanded="false"
                     aria-controls="collapsedMessages"
                   >
-                    Commentaires
+                    {{ messageCount }} Commentaires
                   </button>
                 <Messages :apiAllMessages="apiAllMessages" />
                 </div>
@@ -246,6 +246,7 @@ export default {
     });
       return {
         postSchema,
+        messageCount: "",
         modalModifyPost: false,
         successful: false,
         loading: false,
@@ -264,7 +265,7 @@ export default {
               MessageService.getLinkedMessages(idToCheck).then(
               (response) => {
                 this.apiAllMessages = response.data;
-                console.log(this.apiAllMessages)
+                this.messageCount = response.data.count;
               })
     },
     handleSubmit(item) {

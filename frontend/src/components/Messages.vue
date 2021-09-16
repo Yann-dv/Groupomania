@@ -30,15 +30,15 @@
       </li>
       <!--Message list end-->
       <Form
-        @submit="messageSubmit"
+        @submit="messageSubmit()"
         :validation-schema="messageSchema"
-        class=""
         id="messageForm"
       >
         <div class="form-group form-floating">
           <Field
             type="text"
             class="form-control newMessage"
+            v-model="content"
             name="newMessage"
           />
           <label for="newMessage" class="text-decoration-underline"
@@ -66,7 +66,6 @@
 
 <script>
 import MessageService from "../services/messages-service";
-//import ArticleService from "../services/article-service";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 
@@ -86,11 +85,10 @@ export default {
         .max(60, "Veuillez écrire une réponse plus courte (max 60 caractères"),
     });
     return {
-      apiAllArticles: "",
       messageSchema,
       loading: false,
       msgFromApi: "",
-      //msgContentArray: [],
+      content:"",
     };
   },
   mounted() {
@@ -114,8 +112,8 @@ export default {
     messageSubmit() {
       if (this.content) {
         MessageService.createMessage({
-          linkedArticle: this.linkedArticle,
-          content: this.newMessage,
+          linkedArticle: this.linkedId,
+          content: this.content,
         })
         .then(() => {
           setTimeout(function(){
@@ -123,6 +121,7 @@ export default {
           }, 300);
         })
       }
+
     },
     messageDelete(messageToDelete) {
       if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {

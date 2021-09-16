@@ -110,7 +110,7 @@
               ></span>
               Modifier mon profil
             </button>
-            <button id="refresh-inscription" class="mx-3 btn btn-secondary btn-block"
+            <button id="cancel-btn" class="mx-3 btn btn-secondary btn-block"
             v-on:click="modifyProfile= false"
             aria-label="Effacer ma saisie" value="Effacer ma saisie">Annuler</button>
           </div>
@@ -138,20 +138,26 @@ import * as yup from "yup";
 
 export default {
   name: "Profile",
+  components: {
+    Footer,
+    Form,
+    Field,
+    ErrorMessage,
+  },
   data() {
     const schema = yup.object().shape({
       gender:yup
-      .string()
-      .required("Veuillez choisir une option"),
+      .string(),
+      //.required("Veuillez choisir une option"),
       firstname:yup
         .string()
-        .required("Veuillez entrer votre Nom")
+        //.required("Veuillez entrer votre Nom")
         .max(50, "Le nom ne doit pas dépasser 50 caractères!")
         .matches(/^[aA-zZ\s]+$/, 
         "Veuillez n'utiliser que des lettres."),
       lastname:yup
         .string()
-        .required("Veuillez entrer votre Prénom")
+        //.required("Veuillez entrer votre Prénom")
         .max(50, "Le nom ne doit pas dépasser 50 caractères!")
         .matches(/^[aA-zZ\s]+$/, 
         "Veuillez n'utiliser que des lettres."),
@@ -185,12 +191,6 @@ export default {
       message: "",
       schema,
     }
-  },
-  components: {
-    Footer,
-    Form,
-    Field,
-    ErrorMessage,
   },
   computed: {
     currentUser() {

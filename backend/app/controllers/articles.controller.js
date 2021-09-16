@@ -89,4 +89,4 @@ exports.updateArticle = (req, res, next) => {
         res.status(500).send(new Error('Database error!'));
       }
     )
-}git 
+}

@@ -196,7 +196,7 @@ function initialize() {
         linkedArticle: 1,
         authorId: 4,
         authorName: "usertest",
-        content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiate !",
+        content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiative !",
         archived: 0,
         archivedAt: null,
         likes: 0,
