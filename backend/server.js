@@ -146,7 +146,7 @@ function initialize() {
     likes: 1,
     dislikes: 5,
     createdAt: "2021-08-10",
-    updatedAt: "2021-08-10",
+    updatedAt: "2021-09-10",
     });
 
     Article.create({

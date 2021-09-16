@@ -328,15 +328,19 @@ export default {
       getNumberOfDays(start, end) {
       const date1 = new Date(start);
       const date2 = new Date(end);
-      const time1 = date1.getHours();
+      const hours = date1.getHours();
+      const mins = date1.getMinutes();
       // One day in milliseconds
       const oneDay = 1000 * 60 * 60 * 24;
       // Calculating the time difference between two dates
       const diffInTime = date2.getTime() - date1.getTime();
       // Calculating the no. of days between two dates
       const diffInDays = Math.round(diffInTime / oneDay);
-      if (diffInDays < 1) {
-        return "Publié aujourd'hui à " + time1 + "h" + date1.getMinutes();
+      if (diffInDays < 1 && mins > 10) {
+        return "Publié aujourd'hui à " + hours + "h" + mins;
+      }
+      else if (diffInDays < 1 && mins < 10) {
+        return "Publié aujourd'hui à " + hours + "h0" + mins;
       }
       return "Publié il y a " + diffInDays + " jours";
     },
