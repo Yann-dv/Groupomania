@@ -55,16 +55,16 @@
               />
             </div>
             <div class="form-group form-floating">
-              <Field
-                type="text-area"
+              <textarea
+                type="textarea"
                 class="form-control rounded my-3"
                 name="newContent"
                 v-model="content"
                 required
-              ></Field>
+              >
               <label for="newContent" class="text-decoration-underline"
                 >Contenu de mon post :</label
-              >
+              ></textarea>
               <ErrorMessage
                 name="newContent"
                 class="error-feedback ms-3"
