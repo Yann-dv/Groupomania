@@ -42,6 +42,7 @@ db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production :
 const Role = db.role;
 const User = db.user;
 const Article_messages = db.article_messages;
+const User_roles = db.user_roles;
 const Article = db.article;
 const Message = db.message;
 

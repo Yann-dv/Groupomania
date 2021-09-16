@@ -3,7 +3,7 @@
   <div class="linkedMessageContainer">
     <ul class="collapse mx-auto" id="collapsedMessages">
       <li
-        v-for="message in apiAllMessages"
+        v-for="message in apiAllMessages.rows"
         :key="message"
         v-bind:id="message.id"
         class="collapsed-item my-2"
@@ -77,7 +77,7 @@ export default {
     Field,
     ErrorMessage,
   },
-
+  props: ['apiAllMessages'],
   data() {
     const messageSchema = yup.object().shape({
       newMessage: yup
@@ -86,7 +86,6 @@ export default {
         .max(60, "Veuillez écrire une réponse plus courte (max 60 caractères"),
     });
     return {
-      apiAllMessages: "",
       apiAllArticles: "",
       messageSchema,
       loading: false,
@@ -95,29 +94,6 @@ export default {
     };
   },
   mounted() {
-    /*MessageService.getAllMessages().then(
-      (response) => {
-        this.apiAllMessages = response.data;
-      },
-      (error) => {
-        this.apiAllMessages =
-          (error.res && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );*/
-    /*const id = 1;
-    MessageService.getLinkedMessages(id).then(
-      (response) => {
-        this.msgFromApi = response.data;
-      },
-      (error) => {
-        this.msgFromApi =
-          (error.res && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );*/
   },
   computed: {
     currentUser() {

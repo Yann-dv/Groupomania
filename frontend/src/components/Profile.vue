@@ -219,7 +219,6 @@ export default {
           this.message = data.message;
           this.successful = true;
           this.loading = false;
-          this.$store.dispatch("auth/login", user)
         },
         (error) => {
           this.message =
@@ -232,11 +231,13 @@ export default {
           this.loading = false;
         })
       .then(() => {
-          setTimeout(function(){
-            window.location.reload(1);
-          }, 400);
-          
+        this.$store.dispatch("auth/login", user)      
         })
+      .then(() => {
+            setTimeout(function(){
+            window.location.reload(1);
+          }, 400); 
+      })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
         this.successful = false;

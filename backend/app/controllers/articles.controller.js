@@ -79,7 +79,8 @@ exports.deleteArticle = (req, res, next) => {
 exports.updateArticle = (req, res, next) => {
   Article.update({authorId: req.body.authorId, title : req.body.title, 
     category: req.body.category, 
-    content : req.body.content, updatedAt: req.body.updatedAt}, 
+    content : req.body.content, 
+    updatedAt: new Date()}, 
     {where:{ id: req.body.id }})
     .then(
     res.status(200).json({message: `Article n°${req.body.id} modifié dans la db`})
