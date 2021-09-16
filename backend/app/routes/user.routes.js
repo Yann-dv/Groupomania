@@ -33,6 +33,11 @@ module.exports = function(app) {
     userController.adminBoard
   );
 
+  app.put("/api/updateUser",
+  [authJwt.verifyToken],
+    userController.updateUser
+  ); 
+
   app.put("/api/deleteUser",
   [authJwt.verifyToken],
     userController.deleteUser

@@ -62,7 +62,7 @@
   <div class="col-md-12"
   v-if="modifyProfile">
     <div class="card card-container border-light">
-      <Form @submit="handleRegister" :validation-schema="schema" id="register-form">
+      <Form @submit="handleModif" :validation-schema="schema" id="register-form">
         <div v-if="!successful">
         <div class="my-2 form-group gender-radios">
           <Field name="gender" type="radio" value="Homme"></Field>
@@ -208,16 +208,18 @@ export default {
       }
     },
 
-    handleRegister(user) {
+    handleModif(user) {
       this.message = "";
       this.successful = false;
       this.loading = true;
 
-      this.$store.dispatch("auth/register", user).then(
-        (data) => {
+      if (confirm("Souhaitez-vous vraiment modifier vos informations de profil ?")) {
+        UserService.updateUser(user)
+        .then((data) => { 
           this.message = data.message;
           this.successful = true;
           this.loading = false;
+          this.$store.dispatch("auth/login", user)
         },
         (error) => {
           this.message =
@@ -228,8 +230,18 @@ export default {
             error.toString();
           this.successful = false;
           this.loading = false;
-        }
-      );
+        })
+      .then(() => {
+          setTimeout(function(){
+            window.location.reload(1);
+          }, 400);
+          
+        })
+      } else {
+        // Code à éxécuter si l'utilisateur clique sur "Annuler"
+        this.successful = false;
+        this.loading = false;
+      }
     },
 
   },
