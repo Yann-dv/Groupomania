@@ -65,15 +65,18 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import Footer from "../components/Footer";
 
 export default {
   name: "Register",
   components: {
+    Footer,
     Form,
     Field,
     ErrorMessage,
@@ -113,9 +116,9 @@ export default {
         .string()
         .required("Un mot de passe est requis !")
         .min(6, "Le mot de passe doit contenir au moins 6 caractères !")
-        .max(40, "L'email ne doit pas dépasser 50 caractères !")
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Le mot de passe doit contenir au moins 8 caractères, 1 lettre majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"),
+        .max(40, "L'email ne doit pas dépasser 50 caractères !"),
+        //.matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      //"Le mot de passe doit contenir au moins 8 caractères, 1 lettre majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"),
     });
 
     return {

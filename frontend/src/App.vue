@@ -1,11 +1,15 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark">
-      <a href="/home">
+      <router-link to="/home" class="nav-link fs-4" v-if="!currentUser">
       <img src="./assets/banner_logo_w.png" alt="Logo Groupomania" class="px-2">
-      </a>
+      </router-link>
+      <router-link to="/forum" class="nav-link fs-4" v-if="currentUser">
+      <img src="./assets/banner_logo_w.png" alt="Logo Groupomania" class="px-2">
+      </router-link>
+      
       <div class="navbar-nav me-auto">
-        <li class="nav-item">
+        <li class="nav-item" v-if="!this.$store.state.auth.status.loggedIn">
           <router-link to="/home" class="nav-link fs-4">
             <font-awesome-icon icon="home" />Accueil
           </router-link>
@@ -17,7 +21,7 @@
           <router-link to="/mod" class="nav-link fs-4">Moderateur</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link fs-4">Utilisateur</router-link>
+          <router-link v-if="currentUser" to="/forum" class="nav-link fs-4 ps-1">Forum de discussion</router-link>
         </li>
       </div>
 
@@ -37,11 +41,12 @@
       <div v-if="currentUser" class="navbar-nav ms-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link fs-4">
-            <font-awesome-icon icon="user" />
+            <font-awesome-icon icon="user"/>
+
             {{ currentUser.username }}
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item pe-1">
           <a class="nav-link fs-4" @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" /> Déconnection
           </a>
@@ -50,19 +55,22 @@
     </nav>
     <div class="container-fluid">
       <router-view />
-      <Footer />
+      
     </div> 
   </div>
 </template>
 
 <script>
-import Footer from "./components/Footer";
+
 import EventBus from "./common/EventBus";
 
 
 export default {
-  components: {
-    Footer
+  data() {
+    return {
+    mainColor: "#122442",
+    modifyProfile: "false",
+    }
   },
   computed: {
     currentUser() {
@@ -86,7 +94,7 @@ export default {
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      this.$router.push('/home');
     }
   },
   mounted() {
@@ -96,12 +104,20 @@ export default {
   },
   beforeUnmount() {
     EventBus.remove("logout");
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+body {
+  overflow-anchor: none;
+} 
+
+a {
+  cursor: pointer;
+}
 
 .container {
   width: 100%;
@@ -109,6 +125,6 @@ export default {
   height: 100vh;
 }
  .navbar {
-    background-color: #122442;
+    background-color: v-bind(mainColor);
 }
 </style>

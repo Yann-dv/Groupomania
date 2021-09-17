@@ -16,7 +16,9 @@ exports.signup = (req, res) => {
     lastname: req.body.lastname,
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    archived: 0,
+    archivedAt: null,
   })
     .then(user => {
       if (req.body.roles) {
@@ -46,9 +48,25 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
   User.findOne({
     where: {
-      username: req.body.username
+      username: req.body.username,
+      archived: 0
     }
   })
+    /*where: {
+      //username: req.body.username
+      [Op.and]: [{
+        username: {
+            [Op.like]: `%${req.body.username}%`,
+        }
+      },
+        {
+          archived: {
+            [Op.eq]: 0,
+        }
+      }
+      ]
+    }//where end
+  })*/
     .then(async (user) => {
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
@@ -80,6 +98,10 @@ exports.signin = (req, res) => {
 
         res.status(200).send({
           id: user.id,
+          gender: user.genrer,
+          birthday: user.birthday,
+          lastname: user.lastname,
+          firstname: user.firstname,
           username: user.username,
           email: user.email,
           roles: authorities,

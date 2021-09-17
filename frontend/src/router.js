@@ -2,13 +2,12 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import TokenService from "./services/token.service";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
-
-
 
 const routes = [
   {
@@ -47,8 +46,8 @@ const routes = [
     component: BoardModerator,
   },
   {
-    path: "/user",
-    name: "user",
+    path: "/forum",
+    name: "forum",
     // lazy-loaded
     component: BoardUser,
   },
@@ -67,8 +66,11 @@ router.beforeEach((to, from, next) => {
     // trying to access a restricted page + not logged in
     // redirect to login page
     if (authRequired && !loggedIn) {
-      next('/login');
-    } else {
+      TokenService.removeUser();
+      next('/home');
+    }
+     else {
+      TokenService.getLocalRefreshToken();
       next();
     }
   });

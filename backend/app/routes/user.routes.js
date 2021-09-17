@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/user.controller");
+const userController = require("../controllers/user.controller");
+
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -10,20 +11,35 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
+  app.get("/api/public", userController.publicContent);
 
-  app.get("/api/test/user",
+  app.get("/api/user",
     [authJwt.verifyToken],
-    controller.userBoard
+    userController.userBoard
   );
 
-  app.get("/api/test/mod",
+  app.get("/api/profile",
+  [authJwt.verifyToken],
+  userController.getUserProfile
+  );
+
+  app.get("/api/mod",
     [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
+    userController.moderatorBoard
   );
 
-  app.get("/api/test/admin",
+  app.get("/api/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+    userController.adminBoard
   );
+
+  app.put("/api/updateUser",
+  [authJwt.verifyToken],
+    userController.updateUser
+  ); 
+
+  app.put("/api/deleteUser",
+  [authJwt.verifyToken],
+    userController.deleteUser
+  ); 
 };

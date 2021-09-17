@@ -20,12 +20,19 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-        isEmail: true, 
+        isEmail: true,
         }
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      archived: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      archivedAt: {
+        type: Sequelize.DATE,
       },
     });
   
