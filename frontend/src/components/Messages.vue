@@ -114,7 +114,7 @@ export default {
     messageSubmit() {
       if (this.content) {
         MessageService.createMessage({
-          linkedArticle: this.linkedArticle,
+          linkedArticle: event.target.parentElement.linkedArticle,
           content: this.content,
         })
         .then(() => {
