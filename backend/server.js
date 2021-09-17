@@ -22,13 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/articles.routes')(app);
+require('./app/routes/messages.routes')(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Groupomania API" });
-});
-
-app.get("/testingApi", (req, res, next) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.status(200).send(`${ User }`);
 });
 
 // set port, listen for requests
@@ -37,20 +33,42 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initial, just setting db.sequelize.sync()
+db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initialize, just setting db.sequelize.sync()
   console.log('Drop and Resync Db');
-  initial();
+  initialize();
+  //deleteOldArchived();
 });
 
 const Role = db.role;
 const User = db.user;
-const UserRoles = db.user_roles;
-const Media = db.media;
+const Article_messages = db.article_messages;
+const User_roles = db.user_roles;
 const Article = db.article;
+const Message = db.message;
 
 if (process.env.NODE_ENV == "development") {
+  
+  /*function deleteOldArchived() {
+    const archivedAt = new Date(archivedAt);
+    const today = new Date();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const diffInTime = today.getTime() - archivedAt.getTime();
+    const diffInDays = Math.round(diffInTime / oneDay);
+    const toDestroy= Article.findAll({where: {archived : 1}});
+        if(diffInDays >= 30) {
+          toDestroy.destroy()/.then(
+            (article) => {
+              if (!article) {
+                return res.status(404).send(new Error('article not found!'));
+              }
+              res.status(200).json({message: "Article définitivement supprimé de la db"});
+            }
+          )
+        }
+  };*/
+    
 
-function initial() {
+function initialize() {
 
   Role.create({
     id: 1,
@@ -104,14 +122,6 @@ function initial() {
     roles: ["user"]
   });
 
-  Media.create({
-    id: 1,
-    author: 3,
-    content: "https://pixabay.com/get/g2dfffed41e8b9072c09402301d43f10c4b4f0f73e811c7580756b590cdf0182983298493cad0abe667c904024b1b3432_640.jpg",
-    category: "hollidays",
-    archived: 0
-  });
-
   Article.create({
     id: 1,
     authorId: 2,
@@ -130,13 +140,13 @@ function initial() {
     id: 2,
     authorId: 4,
     authorName: "usertest",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus. Nam consequat quam eros, eu consequat lacus varius ac. In venenatis, nulla in sagittis bibendum, nulla purus aliquam tellus, et aliquam massa elit at lacus. Fusce nec porta mauris. Etiam eget aliquam enim, et porttitor velit. Nam dapibus felis vel risus tempus imperdiet. Maecenas malesuada velit eu elit tincidunt, a viverra dui molestie. Ut in tincidunt mi. Nulla tincidunt erat ipsum, at sagittis odio pharetra quis. Duis elementum odio hendrerit, porta odio vel, volutpat metus. Duis aliquam nec leo vel tristique. Fusce sodales feugiat hendrerit. Praesent vitae tortor a arcu dictum dapibus.",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus.",
     category: "Le lorem ipsum",
     archived: 0,
     likes: 1,
     dislikes: 5,
     createdAt: "2021-08-10",
-    updatedAt: "2021-08-10",
+    updatedAt: "2021-09-10",
     });
 
     Article.create({
@@ -158,13 +168,70 @@ function initial() {
         authorId: 1,
         authorName: "administrator",
         content: "Article au contenu archivé",
-        category: "Artiché",
+        category: "Archivé",
         archived: 1,
+        archivedAt: "2021-10-01",
         likes: 0,
         dislikes: 0,
         createdAt: "2021-07-15",
-        updatedAt: "2021-09-16",
+        updatedAt: "2021-07-29",
         });
+
+      Message.create({
+        id: 1,
+        linkedArticle: 1,
+        authorId: 2,
+        authorName: "johndoe",
+        content: "Super idée ! :D",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-07-03",
+        updatedAt: new Date(),
+      });
+
+      Message.create({
+        id: 2,
+        linkedArticle: 1,
+        authorId: 4,
+        authorName: "usertest",
+        content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiative !",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      Message.create({
+        id: 3,
+        linkedArticle: 1,
+        authorId: 4,
+        authorName: "usertest",
+        content: "Contenu indésirable, faute de frappe, message supprimé/archivé !",
+        archived: 1,
+        archivedAt: new Date(),
+        likes: 0,
+        dislikes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      Message.create({
+        id: 4,
+        linkedArticle: 2,
+        authorId: 2,
+        authorName: "johndoe",
+        content: "Vraiment long ces textes en latin... surtout quand on ne le lit pas !",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
     
-  }//initial end
+  }//initialize end
 } // if end

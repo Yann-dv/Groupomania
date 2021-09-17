@@ -1,9 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
-    const Article = sequelize.define("articles", {
+    const Message = sequelize.define("messages", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+      },
+      linkedArticle: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       authorId: {
         type: Sequelize.INTEGER,
@@ -13,17 +17,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      category: {
         type: Sequelize.STRING,
-        defaultValue: "#",
+        allowNull: false,
       },
       archived: {
         type: Sequelize.INTEGER,
@@ -34,11 +30,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       likes: {
         type: Sequelize.INTEGER,
-        default: 0,
+        defaultValue: 0,
       },
       dislikes:  {
         type: Sequelize.INTEGER,
-        default: 0,
+        defaultValue: 0,
       },
       createdAt: {
       type: Sequelize.DATE,
@@ -50,5 +46,5 @@ module.exports = (sequelize, Sequelize) => {
       },
     });
   
-    return Article;
+    return Message;
   };

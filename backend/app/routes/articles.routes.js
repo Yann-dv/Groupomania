@@ -27,6 +27,11 @@ module.exports = function(app) {
     articlesController.createArticle
   );
 
+  app.put("/api/updateArticle",
+  [authJwt.verifyToken],
+    articlesController.updateArticle
+  );
+
   app.put("/api/deleteArticle",
   [authJwt.verifyToken],
     articlesController.deleteArticle

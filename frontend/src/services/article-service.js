@@ -6,11 +6,17 @@ class ArticleService {
   }
 
   getOneArticles() {
-    return api.get('/getOneArticle'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+    return api.get('/getOneArticle');
   }
 
-  deleteArticle() {
-    return api.put('/deleteArticle'); // retourne le contenu renvoyé par l'API -> user.controller allAccess
+  deleteArticle(id) {
+    return api.put('/deleteArticle', 
+    { id });
+  }
+
+  updateArticle(id, authorId, title, category, content, updatedAt ) {
+    return api.put('/updateArticle', 
+    { id, authorId, title, category, content, updatedAt }); 
   }
 
   createArticle({ id, authorId, authorName,
@@ -30,8 +36,6 @@ class ArticleService {
       updatedAt
     });
   }
-  
-
   
 
 }//ArticleService
