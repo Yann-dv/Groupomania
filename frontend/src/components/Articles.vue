@@ -245,6 +245,7 @@ export default {
         .max(800, "L'article ne peut dépasser 800 caractères"),
     });
       return {
+        
         postSchema,
         messageCount: "",
         modalModifyPost: false,

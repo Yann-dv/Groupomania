@@ -5,7 +5,7 @@
       <li
         v-for="message in apiAllMessages.rows"
         :key="message"
-        v-bind:id="message.linkedId"
+        v-bind:id="message.id"
         class="collapsed-item my-2"
       >
         <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
@@ -51,7 +51,8 @@
           />
         </div>
         <div class="send-btn form-group">
-          <button class="btn btn-primary rounded my-1" type="submit">
+          <button class="btn btn-primary rounded my-1" type="submit"
+          >
             <span
               v-show="loading"
               class="spinner-border spinner-border-sm"
@@ -89,6 +90,7 @@ export default {
       loading: false,
       msgFromApi: "",
       content:"",
+      linkedArticle: "",
     };
   },
   mounted() {
@@ -112,7 +114,7 @@ export default {
     messageSubmit() {
       if (this.content) {
         MessageService.createMessage({
-          linkedArticle: this.linkedId,
+          linkedArticle: this.linkedArticle,
           content: this.content,
         })
         .then(() => {
