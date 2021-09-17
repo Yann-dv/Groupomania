@@ -5,7 +5,7 @@
       <li
         v-for="message in apiAllMessages.rows"
         :key="message"
-        v-bind:id="message.id"
+        v-bind:id="message.linkedId"
         class="collapsed-item my-2"
       >
         <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
