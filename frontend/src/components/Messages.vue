@@ -17,7 +17,7 @@
               type="button"
               class="btn-close"
               aria-label="Close"
-              v-if="currentUser.id === message.authorId"
+              v-if="currentUser.id === message.authorId || isModerator"
               v-on:click="messageDelete(message.id)"
             ></button>
             <div>
@@ -55,6 +55,12 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    isModerator() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_MODERATOR');
+      }
+      return false;
+    },
   },
   methods: {
     dateMinify(messageDate) {
@@ -71,7 +77,7 @@ export default {
       if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {
         MessageService.deleteMessage(messageToDelete)
         .then(() => {
-          setTimeout(function(){window.location.reload(1);}, 400)
+          //setTimeout(function(){window.location.reload(1);}, 400)
         })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
