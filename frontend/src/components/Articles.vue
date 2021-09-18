@@ -305,10 +305,11 @@ export default {
         }).then(() => {
           setTimeout(function() {
             //window.location.reload(1);
-             MessageService.getLinkedMessages(linkedId).then((response) => {
+            this.$forceUpdate(); 
+             /*MessageService.getLinkedMessages(linkedId).then((response) => {
         this.apiAllMessages = response.data;
         this.messageCount = response.data.count;
-      });
+      });*/
           }, 300);
         });
       }
@@ -364,7 +365,7 @@ export default {
         )
       ) {
         ArticleService.deleteArticle(idToDelete).then(() => {
-          setTimeout(function() {
+          /*setTimeout(function() {
             window.location.reload(1);
           }, 300);
         });

@@ -193,9 +193,9 @@ methods: {
           content: this.content,
         })
         .then(() => {
-          setTimeout(function(){
+          /*setTimeout(function(){
             window.location.reload(1);
-          }, 300);
+          }, 300);*/
         })
       }
     },
