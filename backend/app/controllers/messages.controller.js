@@ -12,7 +12,7 @@ exports.getAllMessages = (req, res, next) => {
           id: message.id,
           linkedArticle: message.linkedArticle,
           authorId: message.authorId,
-          authorName: message.authorName,
+          authorName: message.username,
           content: message.content,
           archived: message.archived,
           likes: message.likes,
