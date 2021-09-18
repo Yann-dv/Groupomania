@@ -280,6 +280,7 @@ export default {
       successful: false,
       loading: false,
       message: "",
+      content:"",
       modifyingPost: "",
       apiAllMessages: [],
     };

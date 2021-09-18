@@ -18,9 +18,9 @@
           <router-link to="/admin" class="nav-link fs-4">Administrateur</router-link>
         </li>
         <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link fs-4">Moderateur</router-link>
+          <router-link to="/forum" class="nav-link fs-4">Moderateur- Forum</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="!showModeratorBoard">
           <router-link v-if="currentUser" to="/forum" class="nav-link fs-4 ps-1">Forum de discussion</router-link>
         </li>
       </div>

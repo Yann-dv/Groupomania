@@ -47,8 +47,6 @@ export default {
     return {
       loading: false,
       msgFromApi: "",
-      content:"",
-      linkedArticle:"",
     };
   },
   mounted() {
