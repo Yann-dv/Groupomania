@@ -21,15 +21,16 @@ exports.signup = (req, res) => {
     archivedAt: null,
   })
     .then(user => {
-      if (req.body.roles) {
+      if (req.body.username) {
         Role.findAll({
           where: {
             name: {
-              [Op.or]: req.body.roles
+              //[Op.or]: req.body.roles
+              [Op.like]: req.body.username
             }
           }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
+        }).then((username) => {
+          user.setRoles(username).then(() => {
             res.send({ message: "User was registered successfully!" });
           });
         });
@@ -52,21 +53,7 @@ exports.signin = (req, res) => {
       archived: 0
     }
   })
-    /*where: {
-      //username: req.body.username
-      [Op.and]: [{
-        username: {
-            [Op.like]: `%${req.body.username}%`,
-        }
-      },
-        {
-          archived: {
-            [Op.eq]: 0,
-        }
-      }
-      ]
-    }//where end
-  })*/
+
     .then(async (user) => {
       if (!user) {
         return res.status(404).send({ message: "User Not found." });

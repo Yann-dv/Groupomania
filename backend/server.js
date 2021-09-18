@@ -108,14 +108,6 @@ function initialize() {
 
   User.create({
     id: 3,
-    username: "moderator",
-    email: "modo@groupo.fr",
-    password: bcrypt.hashSync("moderator", 8),
-    roles: ["moderator", "user"]
-  });
-
-  User.create({
-    id: 4,
     username: "usertest",
     email: "test@test.com",
     password: bcrypt.hashSync("testing", 8),
@@ -138,7 +130,7 @@ function initialize() {
 
   Article.create({
     id: 2,
-    authorId: 4,
+    authorId: 3,
     authorName: "usertest",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus.",
     category: "Le lorem ipsum",
@@ -194,7 +186,7 @@ function initialize() {
       Message.create({
         id: 2,
         linkedArticle: 1,
-        authorId: 4,
+        authorId: 3,
         authorName: "usertest",
         content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiative !",
         archived: 0,
@@ -208,7 +200,7 @@ function initialize() {
       Message.create({
         id: 3,
         linkedArticle: 1,
-        authorId: 4,
+        authorId: 3,
         authorName: "usertest",
         content: "Contenu indésirable, faute de frappe, message supprimé/archivé !",
         archived: 1,

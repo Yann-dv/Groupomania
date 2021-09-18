@@ -13,7 +13,7 @@ var bcrypt = require("bcryptjs");
   
 
   exports.userBoard = (req, res, next) => {
-    User.findAll().then(
+    User.findAll({order: [['username', 'ASC']]}).then(
       (users) => {
         const mappedUsers = users.map((user) => {
           return user;

@@ -35,7 +35,7 @@
               >
               <div class="btn-group btn-resize" role="group">
                 <button
-                  v-if="currentUser.id === item.authorId"
+                  v-if="currentUser.id === item.authorId || isModerator"
                   type="button"
                   class="btn py-1 btn-secondary dropdown-toggle my-2"
                   data-bs-toggle="dropdown"
@@ -82,7 +82,7 @@
               <!--Import messages from messages component-->
               <button
                 v-on:click="getThisMessages(item.id)"
-                class="btn btn-primary"
+                class="btn btn-primary commentaires"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-auto-close="false"
@@ -90,7 +90,7 @@
                 aria-expanded="false"
                 aria-controls="collapsedMessages"
               >
-                {{ messageCount }} Commentaire(s)
+                Commentaire(s)
               </button>
               <Messages :apiAllMessages="apiAllMessages" />
             </div>
@@ -106,6 +106,7 @@
                   class="form-control newMessage"
                   v-model="content"
                   name="newMessage"
+                  id="newMessage"
                 />
                 <label for="newMessage" class="text-decoration-underline"
                   >Répondre:</label
@@ -131,10 +132,7 @@
           <!--Body end-->
         </div>
         <!--Card end-->
-      </li>
-      <!--List end-->
-    </ul>
-    <!--Modal content for modify user's articles-->
+        <!--Modal content for modify user's articles-->
     <teleport to="#modifyArticles">
       <!--<transition name="fade">-->
       <div v-if="modalModifyPost" class="modal">
@@ -170,7 +168,7 @@
                       type="text"
                       class="form-control newTitle"
                       name="newTitle"
-                      v-model="modifyingPost.title"
+                      v-model="newTitle"
                     />
                     <label for="newTitle" class="text-decoration-underline"
                       >Titre (facultatif):</label
@@ -186,7 +184,7 @@
                       type="text"
                       class="form-control newCategory my-3"
                       name="newCategory"
-                      v-model="modifyingPost.category"
+                      v-model="newCategory"
                     />
                     <label for="newCategory" class="text-decoration-underline"
                       >Catégorie (facultatif):</label
@@ -201,7 +199,7 @@
                     <Field
                       class="form-control rounded"
                       name="newContent"
-                      v-model="modifyingPost.content"
+                      v-model="newContent"
                       required
                     ></Field>
                     <label for="newContent" class="text-decoration-underline"
@@ -234,6 +232,10 @@
       <!--</transition>-->
     </teleport>
     <!--Modal end-->
+      </li>
+      <!--List end-->
+    </ul>
+    
   </div>
   <!--Grid row end-->
 </template>
@@ -280,6 +282,10 @@ export default {
       successful: false,
       loading: false,
       message: "",
+      content:"",
+      newContent:"",
+      newCategory:"",
+      newTitle:"",
       modifyingPost: "",
       apiAllMessages: [],
     };
@@ -288,6 +294,12 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    isModerator() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_MODERATOR');
+      }
+      return false;
+    }
   },
   methods: {
     getThisMessages(idToCheck) {
@@ -305,7 +317,6 @@ export default {
         }).then(() => {
           setTimeout(function() {
             //window.location.reload(1);
-            this.$forceUpdate(); 
              /*MessageService.getLinkedMessages(linkedId).then((response) => {
         this.apiAllMessages = response.data;
         this.messageCount = response.data.count;
@@ -314,13 +325,18 @@ export default {
         });
       }
     },
-    handleSubmit(item) {
+    handleSubmit() {
       this.message = "";
       this.successful = false;
       this.loading = true;
 
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
-        ArticleService.updateArticle(item)
+        ArticleService.updateArticle({
+          authorId: this.currentUser.id,
+          title: this.newTitle,
+          category: this.newCategory,
+          content: this.newContent
+          })
           .then(
             (data) => {
               this.message = data.message;
@@ -394,3 +410,20 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+</style>

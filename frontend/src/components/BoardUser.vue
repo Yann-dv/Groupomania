@@ -21,11 +21,12 @@
             id="createArticleForm"
           >
             <h4>Partagez avec la communauté :</h4>
-            <!--v-model="article"-->
             <div class="form-group form-floating">
               <Field
                 type="text"
+                arial-label="Titre"
                 class="form-control newCategory my-3"
+                id="newTitle"
                 name="newTitle"
                 v-model="title"
               />
@@ -41,8 +42,10 @@
             <div class="form-group form-floating">
               <Field
                 type="text"
+                arial-label="Catégorie"
                 class="form-control newTitle my-3"
                 name="newCategory"
+                id="newCategory"
                 v-model="category"
               />
               <label for="newCategory" class="text-decoration-underline"
@@ -57,8 +60,10 @@
             <div class="form-group form-floating">
               <textarea
                 type="textarea"
+                arial-label="Contenu"
                 class="form-control rounded my-3"
                 name="newContent"
+                id="newContent"
                 v-model="content"
                 required
               >
@@ -193,6 +198,7 @@ methods: {
           content: this.content,
         })
         .then(() => {
+          
           /*setTimeout(function(){
             window.location.reload(1);
           }, 300);*/
@@ -230,18 +236,5 @@ li {
 
 .mainColored {
   background-color: v-bind(mainColor);
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 </style>
