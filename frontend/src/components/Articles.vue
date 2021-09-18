@@ -90,7 +90,7 @@
                 aria-expanded="false"
                 aria-controls="collapsedMessages"
               >
-                {{ messageCount }} Commentaires
+                {{ messageCount }} Commentaire(s)
               </button>
               <Messages :apiAllMessages="apiAllMessages" />
             </div>
@@ -367,7 +367,7 @@ export default {
         ArticleService.deleteArticle(idToDelete).then(() => {
           /*setTimeout(function() {
             window.location.reload(1);
-          }, 300);
+          }, 300);*/
         });
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"

@@ -12,5 +12,15 @@ et un partage de gifs avec commentaires possibles.
 > Aspects techniques : fonctionnalités simple d'utilisation, création/suppression de compte simple, 1 forum avec contenu textuel et
 1 autre avec contenu multimédia, dernières publications mises en avant, droits admin et user de la DB.
 
-> Technologies utilisées : Vue.js, MySQL, nodeJS + express
+> Technologies utilisées : Vue.js, MySQL (orm : sequelize), nodeJS + express
+
+
+*Setup : 
+
+- Back : npm install --save sequelize mysql2 nodemon jsonwebtoken helmet express dotenv
+	cors body-parser bcryptjs async
+
+- Front : npm install -g @vue/cli(babel, eslint, router, vuex)
+	npm install --save axios  bcryptjs bootstrap core-js dotenv jquery popper.js 
+	vee-validate vue vue-router vuex yup
 
