@@ -2,10 +2,10 @@
   <div class="container">
     <header class="jumbotron">
       <div class="text-center">
-        <h2 class="fw-bold py-5">
+        <h1 class="fw-bold py-5">
           Bienvenue sur le forum de discussion de Groupomania,
           {{ this.currentUser.username }} !
-        </h2>
+        </h1>
         <ul class="list-group"></ul>
       </div>
     </header>
@@ -20,7 +20,7 @@
             class="mx-auto col-12 col-md-8"
             id="createArticleForm"
           >
-            <h4>Partagez avec la communauté :</h4>
+            <h2>Partagez avec la communauté :</h2>
             <div class="form-group form-floating">
               <Field
                 type="text"

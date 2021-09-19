@@ -124,8 +124,8 @@ function initialize() {
     archived: 0,
     likes: 1,
     dislikes: 0,
-    createdAt: "2021-06-22",
-    updatedAt: "2021-06-22"
+    createdAt: "2021-08-22",
+    updatedAt: "2021-08-22"
     });
 
   Article.create({
@@ -137,8 +137,8 @@ function initialize() {
     archived: 0,
     likes: 1,
     dislikes: 5,
-    createdAt: "2021-08-10",
-    updatedAt: "2021-09-10",
+    createdAt: "2021-09-10",
+    updatedAt: "2021-10-10",
     });
 
     Article.create({
@@ -165,8 +165,8 @@ function initialize() {
         archivedAt: "2021-10-01",
         likes: 0,
         dislikes: 0,
-        createdAt: "2021-07-15",
-        updatedAt: "2021-07-29",
+        createdAt: "2021-08-15",
+        updatedAt: "2021-08-29",
         });
 
       Message.create({
@@ -179,7 +179,7 @@ function initialize() {
         archivedAt: null,
         likes: 0,
         dislikes: 0,
-        createdAt: "2021-07-03",
+        createdAt: "2021-09-03",
         updatedAt: new Date(),
       });
 
