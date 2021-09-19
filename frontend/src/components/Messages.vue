@@ -1,7 +1,9 @@
 <template>
   <!--Messages list-->
   <div class="linkedMessageContainer">
-    <ul class="collapse mx-auto" id="collapsedMessages">
+    <ul class="collapse mx-auto" 
+    v-click-outside="onClickOutside"
+    v-bind:id="'collapsedMessages'+ id">
       <li
         v-for="message in apiAllMessages.rows"
         :key="message"
@@ -11,7 +13,8 @@
 
       >
         <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
-        <div class="collapsed-card card card-body">
+        <div class="collapsed-card card card-body"
+        v-if="id === message.linkedArticle">
           <div class="card-header d-flex justify-content-between">
             <button
               type="button"
@@ -39,18 +42,20 @@
 
 <script>
 import MessageService from "../services/messages-service";
+import vClickOutside from 'click-outside-vue3'
 
 export default {
   name: "Messages",
-  props: ['apiAllMessages'],
+  props: ['apiAllMessages', 'id'],
   data() {
     return {
       loading: false,
       msgFromApi: "",
     };
   },
-  mounted() {
-  },
+  directives: {
+      clickOutside: vClickOutside.directive
+    },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -63,7 +68,10 @@ export default {
     },
   },
   methods: {
-    dateMinify(messageDate) {
+    onClickOutside (event) {
+        console.log('Clicked outside. Event: ', event)
+      },
+  dateMinify(messageDate) {
       let current_datetime = new Date(messageDate);
       let formatted_date =
         current_datetime.getDate() +

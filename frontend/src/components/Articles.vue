@@ -85,14 +85,14 @@
                 class="btn btn-primary commentaires"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-auto-close="false"
-                data-bs-target="#collapsedMessages"
+                data-bs-auto-close="true"
+                v-bind:data-bs-target="'#collapsedMessages' + item.id" 
                 aria-expanded="false"
-                aria-controls="collapsedMessages"
+                v-bind:aria-controls="'#collapsedMessages' + item.id" 
               >
                 Commentaire(s)
               </button>
-              <Messages :apiAllMessages="apiAllMessages" />
+              <Messages :apiAllMessages="apiAllMessages" :id="item.id" />
             </div>
             <!--Message create form-->
             <Form
@@ -302,6 +302,11 @@ export default {
     }
   },
   methods: {
+
+    onClickOutside() {
+      
+    },
+
     getThisMessages(idToCheck) {
       MessageService.getLinkedMessages(idToCheck).then((response) => {
         this.articleId = idToCheck;

@@ -15,7 +15,7 @@ class ArticleService {
   }
 
   updateArticle(
-    id, 
+    id,
     authorId, 
     title, 
     category, 
