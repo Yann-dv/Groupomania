@@ -47,6 +47,6 @@ li {
   font-size: .85rem;
 }
 a {
-  color: #D1515A;
+  color: white;
 }
 </style>
