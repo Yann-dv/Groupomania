@@ -80,7 +80,7 @@ export default {
       if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {
         MessageService.deleteMessage(messageToDelete)
         .then(() => {
-          //setTimeout(function(){window.location.reload(1);}, 400)
+          setTimeout(function(){window.location.reload(1);}, 400)
         })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"

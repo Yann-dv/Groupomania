@@ -4,7 +4,8 @@
     <ul class="items-list col-md-8 mx-auto col-12">
       <li
         v-for="item in apiAllArticles"
-        :key="item"
+        :item="item"
+        :key="item.id"
         v-bind:id="item.id"
         class="py-3"
       >
@@ -235,7 +236,6 @@
       </li>
       <!--List end-->
     </ul>
-    
   </div>
   <!--Grid row end-->
 </template>
@@ -291,6 +291,9 @@ export default {
     };
   },
   computed: {
+    filteredArticles() {
+      return this.apiAllArticles.slice(0, this.maxArticlesShowed);
+    },
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -317,11 +320,7 @@ export default {
         }).then(() => {
          
           setTimeout(function() {
-            //window.location.reload(1);
-             /*MessageService.getLinkedMessages(linkedId).then((response) => {
-        this.apiAllMessages = response.data;
-        this.messageCount = response.data.count;
-      });*/
+            window.location.reload(1);
           }, 300);
         });
       }
@@ -361,13 +360,9 @@ export default {
             }
           )
           .then(() => {
-             ArticleService.getAllArticles().then(
-          (response) => {
-            this.message = response.data;
-          });
-            /*setTimeout(function(){
+            setTimeout(function(){
             window.location.reload(1);
-          }, 400); */
+          }, 400); 
           });
         }
       } else {
@@ -392,9 +387,9 @@ export default {
         )
       ) {
         ArticleService.deleteArticle(idToDelete).then(() => {
-          /*setTimeout(function() {
+          setTimeout(function() {
             window.location.reload(1);
-          }, 300);*/
+          }, 300);
         });
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
