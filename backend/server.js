@@ -46,27 +46,7 @@ const User_roles = db.user_roles;
 const Article = db.article;
 const Message = db.message;
 
-if (process.env.NODE_ENV == "development") {
-  
-  /*function deleteOldArchived() {
-    const archivedAt = new Date(archivedAt);
-    const today = new Date();
-    const oneDay = 1000 * 60 * 60 * 24;
-    const diffInTime = today.getTime() - archivedAt.getTime();
-    const diffInDays = Math.round(diffInTime / oneDay);
-    const toDestroy= Article.findAll({where: {archived : 1}});
-        if(diffInDays >= 30) {
-          toDestroy.destroy()/.then(
-            (article) => {
-              if (!article) {
-                return res.status(404).send(new Error('article not found!'));
-              }
-              res.status(200).json({message: "Article définitivement supprimé de la db"});
-            }
-          )
-        }
-  };*/
-    
+if (process.env.NODE_ENV == "development") {  
 
 function initialize() {
 
@@ -88,10 +68,16 @@ function initialize() {
 
   User.create({
     id: 1,
-    username: "administrator",
+    gender: "H",
+    birthday: "2021-09-18",
+    firstname: "administrator",
+    lastname: "admin",
+    username: "admin",
     email: "admin@groupo.fr",
     password: bcrypt.hashSync("administrator", 8),
-    roles: ["admin"]
+    roles: ["admin"],
+    archived: 0,
+    archivedAt: null
   });
 
   User.create({
@@ -103,27 +89,37 @@ function initialize() {
     username: "johndoe",
     email: "john@groupo.fr",
     password: bcrypt.hashSync("johndoe99", 8),
-    roles: ["user"]
+    roles: ["user"],
+    archived: 0,
+    archivedAt: null
   });
 
   User.create({
     id: 3,
+    gender: "F",
+    birthday: "1976-07-10",
+    firstname: "test",
+    lastname: "user",
     username: "usertest",
     email: "test@test.com",
     password: bcrypt.hashSync("testing", 8),
-    roles: ["user"]
+    roles: ["user"],
+    archived: 0,
+    archivedAt: null
   });
 
   User.create({
     id: 4,
     gender: "F",
-    birthday: "1989-20-10",
+    birthday: "1989-10-10",
     firstname: "Jane",
     lastname: "Dohey",
     username: "janeD",
     email: "janeDh@groupo.fr",
     password: bcrypt.hashSync("janedoe", 8),
-    roles: ["user"]
+    roles: ["user"],
+    archived: 0,
+    archivedAt: null
   });
 
   Article.create({
@@ -203,7 +199,7 @@ function initialize() {
         content: "Bonjour à tous et à toutes. Comme je sais que nous sommes nombreux à venir au travail en voiture quotidiennement et que nous sommes plusieurs à habiter proche les uns des autres, je souhaite proposer un système de covoiturage pour se rendre au travail. Qui serait partant ??",
         category: "transports",
         archived: 0,
-        archivedAt: "2021-10-01",
+        archivedAt: null,
         likes: 0,
         dislikes: 0,
         createdAt: "2021-09-19",

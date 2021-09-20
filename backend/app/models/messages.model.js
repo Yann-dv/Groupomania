@@ -27,6 +27,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       archivedAt: {
         type: Sequelize.DATE,
+        allowNull: true,
       },
       likes: {
         type: Sequelize.INTEGER,
