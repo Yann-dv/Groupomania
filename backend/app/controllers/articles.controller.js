@@ -2,6 +2,7 @@
 const db = require("../models");
 
 const Article = db.article;
+const Message = db.message;
 
   exports.getAllArticles = (req, res, next) => {
     Article.findAll({where: {archived : 0}, order: [['createdAt', 'DESC']]}).then(
@@ -69,7 +70,20 @@ exports.deleteArticle = (req, res, next) => {
     where:{ id: req.body.id}})
     .then(
     res.status(200).json({message: `Article n°${req.body.id} archivé dans la db`})
-    ).catch(
+    )
+    .then(() => {
+      Message.update({ archived: 1}, { // Archivage des articles liés
+        where:{ linkedArticle: req.body.id}})
+        .then(
+        res.status(200).json({message: `Messages liés archivés dans la db`})
+        )
+        .catch(
+          () => {
+            res.status(500).send(new Error('Database error!'));
+          }
+        )
+    })
+    .catch(
       () => {
         res.status(500).send(new Error('Database error!'));
       }
@@ -77,7 +91,10 @@ exports.deleteArticle = (req, res, next) => {
 }
 
 exports.updateArticle = (req, res, next) => {
-  Article.update({authorId: req.body.authorId, title : req.body.title, 
+  Article.update({
+    id: req.body.id,
+    authorId: req.body.authorId,
+    title : req.body.title,
     category: req.body.category, 
     content : req.body.content, 
     updatedAt: new Date()}, 

@@ -108,17 +108,21 @@ function initialize() {
 
   User.create({
     id: 3,
-    username: "moderator",
-    email: "modo@groupo.fr",
-    password: bcrypt.hashSync("moderator", 8),
-    roles: ["moderator", "user"]
+    username: "usertest",
+    email: "test@test.com",
+    password: bcrypt.hashSync("testing", 8),
+    roles: ["user"]
   });
 
   User.create({
     id: 4,
-    username: "usertest",
-    email: "test@test.com",
-    password: bcrypt.hashSync("testing", 8),
+    gender: "F",
+    birthday: "1989-20-10",
+    firstname: "Jane",
+    lastname: "Dohey",
+    username: "janeD",
+    email: "janeDh@groupo.fr",
+    password: bcrypt.hashSync("janedoe", 8),
     roles: ["user"]
   });
 
@@ -132,21 +136,21 @@ function initialize() {
     archived: 0,
     likes: 1,
     dislikes: 0,
-    createdAt: "2021-06-22",
-    updatedAt: "2021-06-22"
+    createdAt: "2021-08-22",
+    updatedAt: "2021-08-22"
     });
 
   Article.create({
     id: 2,
-    authorId: 4,
+    authorId: 3,
     authorName: "usertest",
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet quam non augue gravida aliquam. In eleifend est ut ipsum dapibus, ut porta dui venenatis. Cras scelerisque eu leo eleifend rutrum. Suspendisse ipsum est, pharetra non est et, porta semper neque. Vestibulum vulputate lacus ut tincidunt sollicitudin. Pellentesque vel felis eros. Nullam eu tellus porta, molestie ipsum eget, pharetra metus. Vivamus ullamcorper sed est nec gravida. Integer vitae mollis orci. Suspendisse et ex metus. Curabitur cursus porttitor lorem in elementum. Cras feugiat augue a neque maximus viverra. Pellentesque venenatis semper nibh. Donec aliquet est vel tortor interdum scelerisque. Nulla id ipsum risus.",
     category: "Le lorem ipsum",
     archived: 0,
     likes: 1,
     dislikes: 5,
-    createdAt: "2021-08-10",
-    updatedAt: "2021-09-10",
+    createdAt: "2021-09-10",
+    updatedAt: "2021-10-10",
     });
 
     Article.create({
@@ -173,9 +177,38 @@ function initialize() {
         archivedAt: "2021-10-01",
         likes: 0,
         dislikes: 0,
-        createdAt: "2021-07-15",
-        updatedAt: "2021-07-29",
+        createdAt: "2021-08-15",
+        updatedAt: "2021-08-29",
         });
+
+        Article.create({
+        id: 4,
+        authorId: 1,
+        authorName: "administrator",
+        content: "Article au contenu archivé",
+        category: "Archivé",
+        archived: 1,
+        archivedAt: "2021-10-01",
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-08-15",
+        updatedAt: "2021-08-29",
+        });
+
+      Article.create({
+        id: 5,
+        authorId: 4,
+        title: "Covoiturage",
+        authorName: "janeD",
+        content: "Bonjour à tous et à toutes. Comme je sais que nous sommes nombreux à venir au travail en voiture quotidiennement et que nous sommes plusieurs à habiter proche les uns des autres, je souhaite proposer un système de covoiturage pour se rendre au travail. Qui serait partant ??",
+        category: "transports",
+        archived: 0,
+        archivedAt: "2021-10-01",
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-09-19",
+        updatedAt: "2021-09-19",
+      });
 
       Message.create({
         id: 1,
@@ -187,14 +220,14 @@ function initialize() {
         archivedAt: null,
         likes: 0,
         dislikes: 0,
-        createdAt: "2021-07-03",
+        createdAt: "2021-09-03",
         updatedAt: new Date(),
       });
 
       Message.create({
         id: 2,
         linkedArticle: 1,
-        authorId: 4,
+        authorId: 3,
         authorName: "usertest",
         content: "Pourquoi pas, c'est une idée intéressante, d'autant que tout le monde ne se connait pas dans cette boite ! Bravo john belle initiative !",
         archived: 0,
@@ -208,7 +241,7 @@ function initialize() {
       Message.create({
         id: 3,
         linkedArticle: 1,
-        authorId: 4,
+        authorId: 3,
         authorName: "usertest",
         content: "Contenu indésirable, faute de frappe, message supprimé/archivé !",
         archived: 1,
@@ -233,5 +266,18 @@ function initialize() {
         updatedAt: new Date(),
       });
     
+      Message.create({
+        id: 5,
+        linkedArticle: 3,
+        authorId: 4,
+        authorName: "janeD",
+        content: "Extra, j'y serais !!",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
   }//initialize end
 } // if end

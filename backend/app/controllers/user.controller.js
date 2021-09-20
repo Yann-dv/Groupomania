@@ -1,6 +1,8 @@
 const db = require("../models");
 
 const User = db.user;
+const Article = db.article;
+const Message = db.message;
 
 var bcrypt = require("bcryptjs");
 
@@ -11,7 +13,7 @@ var bcrypt = require("bcryptjs");
   
 
   exports.userBoard = (req, res, next) => {
-    User.findAll().then(
+    User.findAll({order: [['username', 'ASC']]}).then(
       (users) => {
         const mappedUsers = users.map((user) => {
           return user;
@@ -57,6 +59,20 @@ var bcrypt = require("bcryptjs");
       updatedAt: new Date(),
       }, 
       {where:{ id: req.userId}})
+      .then(
+        Article.update({
+          authorName: req.body.username // Articles username update
+        },
+        {where:{ authorId: req.userId }
+      })
+      )
+      .then(
+        Message.update({
+          authorName: req.body.username // Messages username update
+        },
+        {where:{ authorId: req.userId }
+      })
+      )
       .then(
       res.status(200).json({message: `Données de l'utilisateur n°${req.userId} modifié dans la db`})
       ).catch(
