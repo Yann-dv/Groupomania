@@ -181,6 +181,35 @@ function initialize() {
         updatedAt: "2021-08-29",
         });
 
+        Article.create({
+        id: 4,
+        authorId: 1,
+        authorName: "administrator",
+        content: "Article au contenu archivé",
+        category: "Archivé",
+        archived: 1,
+        archivedAt: "2021-10-01",
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-08-15",
+        updatedAt: "2021-08-29",
+        });
+
+      Article.create({
+        id: 5,
+        authorId: 4,
+        title: "Covoiturage",
+        authorName: "janeD",
+        content: "Bonjour à tous et à toutes. Comme je sais que nous sommes nombreux à venir au travail en voiture quotidiennement et que nous sommes plusieurs à habiter proche les uns des autres, je souhaite proposer un système de covoiturage pour se rendre au travail. Qui serait partant ??",
+        category: "transports",
+        archived: 0,
+        archivedAt: "2021-10-01",
+        likes: 0,
+        dislikes: 0,
+        createdAt: "2021-09-19",
+        updatedAt: "2021-09-19",
+      });
+
       Message.create({
         id: 1,
         linkedArticle: 1,

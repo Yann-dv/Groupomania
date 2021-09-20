@@ -156,7 +156,7 @@
               <div v-if="!successful">
                 <Form
                   @submit="
-                    handleSubmit(item.id);
+                    handleSubmit();
                     modalModifyPost = false;
                   "
                   :validation-schema="postSchema"
@@ -302,11 +302,6 @@ export default {
     }
   },
   methods: {
-
-    onClickOutside() {
-      
-    },
-
     getThisMessages(idToCheck) {
       MessageService.getLinkedMessages(idToCheck).then((response) => {
         this.articleId = idToCheck;
@@ -320,6 +315,7 @@ export default {
           linkedArticle: linkedId,
           content: this.content,
         }).then(() => {
+         
           setTimeout(function() {
             //window.location.reload(1);
              /*MessageService.getLinkedMessages(linkedId).then((response) => {
@@ -330,14 +326,16 @@ export default {
         });
       }
     },
-    handleSubmit(id) {
+    handleSubmit() {
       this.message = "";
       this.successful = false;
       this.loading = true;
+      const modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
 
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
+        if(modifyingPost) {
         ArticleService.updateArticle({
-          id: id,
+          id: this.modifyingPost.id,
           authorId: this.currentUser.id,
           title: this.newTitle,
           category: this.newCategory,
@@ -348,6 +346,8 @@ export default {
               this.message = data.message;
               this.successful = true;
               this.loading = false;
+              this.modifyingPost="";
+              localStorage.removeItem("modifyingPost");
             },
             (error) => {
               this.message =
@@ -361,10 +361,15 @@ export default {
             }
           )
           .then(() => {
+             ArticleService.getAllArticles().then(
+          (response) => {
+            this.message = response.data;
+          });
             /*setTimeout(function(){
             window.location.reload(1);
           }, 400); */
           });
+        }
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
         this.successful = false;

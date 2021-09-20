@@ -2,7 +2,6 @@
   <!--Messages list-->
   <div class="linkedMessageContainer">
     <ul class="collapse mx-auto" 
-    v-click-outside="onClickOutside"
     v-bind:id="'collapsedMessages'+ id">
       <li
         v-for="message in apiAllMessages.rows"
@@ -12,7 +11,6 @@
         class="collapsed-item my-2"
 
       >
-        <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
         <div class="collapsed-card card card-body"
         v-if="id === message.linkedArticle">
           <div class="card-header d-flex justify-content-between">
@@ -68,9 +66,6 @@ export default {
     },
   },
   methods: {
-    onClickOutside (event) {
-        console.log('Clicked outside. Event: ', event)
-      },
   dateMinify(messageDate) {
       let current_datetime = new Date(messageDate);
       let formatted_date =
