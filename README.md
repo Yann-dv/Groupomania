@@ -22,5 +22,7 @@ et un partage de gifs avec commentaires possibles.
 
 - Front : npm install -g @vue/cli(babel, eslint, router, vuex)
 	npm install --save axios  bcryptjs bootstrap core-js dotenv jquery popper.js 
-	vee-validate vue vue-router vuex yup
-
+	vee-validate vue vue-router vuex yup click-outside-vue3
+* Run : 
+	- cd frontend - npm run serve
+	- cd backend - nodemon (.env file required for development mode)

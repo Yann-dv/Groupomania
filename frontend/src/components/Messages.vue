@@ -1,7 +1,8 @@
 <template>
   <!--Messages list-->
   <div class="linkedMessageContainer">
-    <ul class="collapse mx-auto" id="collapsedMessages">
+    <ul class="collapse mx-auto" 
+    v-bind:id="'collapsedMessages'+ id">
       <li
         v-for="message in apiAllMessages.rows"
         :key="message"
@@ -10,8 +11,8 @@
         class="collapsed-item my-2"
 
       >
-        <!--<div v-if="ArticleService.getOneArticle(message.linkedArticle) === message.linked"-->
-        <div class="collapsed-card card card-body">
+        <div class="collapsed-card card card-body"
+        v-if="id === message.linkedArticle">
           <div class="card-header d-flex justify-content-between">
             <button
               type="button"
@@ -39,18 +40,20 @@
 
 <script>
 import MessageService from "../services/messages-service";
+import vClickOutside from 'click-outside-vue3'
 
 export default {
   name: "Messages",
-  props: ['apiAllMessages'],
+  props: ['apiAllMessages', 'id'],
   data() {
     return {
       loading: false,
       msgFromApi: "",
     };
   },
-  mounted() {
-  },
+  directives: {
+      clickOutside: vClickOutside.directive
+    },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -63,7 +66,7 @@ export default {
     },
   },
   methods: {
-    dateMinify(messageDate) {
+  dateMinify(messageDate) {
       let current_datetime = new Date(messageDate);
       let formatted_date =
         current_datetime.getDate() +
@@ -77,7 +80,7 @@ export default {
       if (confirm("Souhaitez-vous vraiment supprimer ce message ?")) {
         MessageService.deleteMessage(messageToDelete)
         .then(() => {
-          //setTimeout(function(){window.location.reload(1);}, 400)
+          setTimeout(function(){window.location.reload(1);}, 400)
         })
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"

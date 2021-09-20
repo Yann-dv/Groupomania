@@ -92,8 +92,9 @@ exports.deleteArticle = (req, res, next) => {
 
 exports.updateArticle = (req, res, next) => {
   Article.update({
-    authorId: req.body.authorId, 
-    title : req.body.title, 
+    id: req.body.id,
+    authorId: req.body.authorId,
+    title : req.body.title,
     category: req.body.category, 
     content : req.body.content, 
     updatedAt: new Date()}, 

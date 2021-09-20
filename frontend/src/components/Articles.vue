@@ -4,7 +4,8 @@
     <ul class="items-list col-md-8 mx-auto col-12">
       <li
         v-for="item in apiAllArticles"
-        :key="item"
+        :item="item"
+        :key="item.id"
         v-bind:id="item.id"
         class="py-3"
       >
@@ -85,14 +86,14 @@
                 class="btn btn-primary commentaires"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-auto-close="false"
-                data-bs-target="#collapsedMessages"
+                data-bs-auto-close="true"
+                v-bind:data-bs-target="'#collapsedMessages' + item.id" 
                 aria-expanded="false"
-                aria-controls="collapsedMessages"
+                v-bind:aria-controls="'#collapsedMessages' + item.id" 
               >
                 Commentaire(s)
               </button>
-              <Messages :apiAllMessages="apiAllMessages" />
+              <Messages :apiAllMessages="apiAllMessages" :id="item.id" />
             </div>
             <!--Message create form-->
             <Form
@@ -235,7 +236,6 @@
       </li>
       <!--List end-->
     </ul>
-    
   </div>
   <!--Grid row end-->
 </template>
@@ -291,6 +291,9 @@ export default {
     };
   },
   computed: {
+    filteredArticles() {
+      return this.apiAllArticles.slice(0, this.maxArticlesShowed);
+    },
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -315,12 +318,9 @@ export default {
           linkedArticle: linkedId,
           content: this.content,
         }).then(() => {
+         
           setTimeout(function() {
-            //window.location.reload(1);
-             /*MessageService.getLinkedMessages(linkedId).then((response) => {
-        this.apiAllMessages = response.data;
-        this.messageCount = response.data.count;
-      });*/
+            window.location.reload(1);
           }, 300);
         });
       }
@@ -329,9 +329,12 @@ export default {
       this.message = "";
       this.successful = false;
       this.loading = true;
+      const modifyingPost = JSON.parse(localStorage.getItem("modifyingPost"));
 
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
+        if(modifyingPost) {
         ArticleService.updateArticle({
+          id: this.modifyingPost.id,
           authorId: this.currentUser.id,
           title: this.newTitle,
           category: this.newCategory,
@@ -342,6 +345,8 @@ export default {
               this.message = data.message;
               this.successful = true;
               this.loading = false;
+              this.modifyingPost="";
+              localStorage.removeItem("modifyingPost");
             },
             (error) => {
               this.message =
@@ -355,10 +360,11 @@ export default {
             }
           )
           .then(() => {
-            /*setTimeout(function(){
+            setTimeout(function(){
             window.location.reload(1);
-          }, 400); */
+          }, 400); 
           });
+        }
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
         this.successful = false;
@@ -381,9 +387,9 @@ export default {
         )
       ) {
         ArticleService.deleteArticle(idToDelete).then(() => {
-          /*setTimeout(function() {
+          setTimeout(function() {
             window.location.reload(1);
-          }, 300);*/
+          }, 300);
         });
       } else {
         // Code à éxécuter si l'utilisateur clique sur "Annuler"
