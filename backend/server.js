@@ -114,6 +114,18 @@ function initialize() {
     roles: ["user"]
   });
 
+  User.create({
+    id: 4,
+    gender: "F",
+    birthday: "1989-20-10",
+    firstname: "Jane",
+    lastname: "Dohey",
+    username: "janeD",
+    email: "janeDh@groupo.fr",
+    password: bcrypt.hashSync("janedoe", 8),
+    roles: ["user"]
+  });
+
   Article.create({
     id: 1,
     authorId: 2,
@@ -225,5 +237,18 @@ function initialize() {
         updatedAt: new Date(),
       });
     
+      Message.create({
+        id: 5,
+        linkedArticle: 3,
+        authorId: 4,
+        authorName: "janeD",
+        content: "Extra, j'y serais !!",
+        archived: 0,
+        archivedAt: null,
+        likes: 0,
+        dislikes: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
   }//initialize end
 } // if end

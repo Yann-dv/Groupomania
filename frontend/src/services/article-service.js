@@ -14,13 +14,15 @@ class ArticleService {
     { id });
   }
 
-  updateArticle(
+  updateArticle({
     id,
     authorId, 
     title, 
     category, 
     content, 
-    updatedAt ) {
+    updatedAt}) {
+
+      
     return api.put('/updateArticle', 
     { id, 
       authorId, 

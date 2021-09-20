@@ -156,7 +156,7 @@
               <div v-if="!successful">
                 <Form
                   @submit="
-                    handleSubmit();
+                    handleSubmit(item.id);
                     modalModifyPost = false;
                   "
                   :validation-schema="postSchema"
@@ -330,13 +330,14 @@ export default {
         });
       }
     },
-    handleSubmit() {
+    handleSubmit(id) {
       this.message = "";
       this.successful = false;
       this.loading = true;
 
       if (confirm("Souhaitez-vous vraiment modifier votre publication ?")) {
         ArticleService.updateArticle({
+          id: id,
           authorId: this.currentUser.id,
           title: this.newTitle,
           category: this.newCategory,
