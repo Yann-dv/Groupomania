@@ -169,7 +169,7 @@
                       type="text"
                       class="form-control newTitle"
                       name="newTitle"
-                      v-model="newTitle"
+                      v-model="modifyingPost.title"
                     />
                     <label for="newTitle" class="text-decoration-underline"
                       >Titre (facultatif):</label
@@ -185,7 +185,7 @@
                       type="text"
                       class="form-control newCategory my-3"
                       name="newCategory"
-                      v-model="newCategory"
+                      v-model="modifyingPost.category"
                     />
                     <label for="newCategory" class="text-decoration-underline"
                       >Catégorie (facultatif):</label
@@ -200,7 +200,7 @@
                     <Field
                       class="form-control rounded"
                       name="newContent"
-                      v-model="newContent"
+                      v-model="modifyingPost.content"
                       required
                     ></Field>
                     <label for="newContent" class="text-decoration-underline"
@@ -336,9 +336,9 @@ export default {
         ArticleService.updateArticle({
           id: this.modifyingPost.id,
           authorId: this.currentUser.id,
-          title: this.newTitle,
-          category: this.newCategory,
-          content: this.newContent
+          title: this.modifyingPost.title,
+          category: this.modifyingPost.category,
+          content: this.modifyingPost.content,
           })
           .then(
             (data) => {
