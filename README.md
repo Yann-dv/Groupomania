@@ -14,12 +14,14 @@ et un partage de gifs avec commentaires possibles.
 
 	- Fonctionnalités simples d'utilisation
 	- Création/suppression de compte simple
-	- Développement d'un forum avec contenu textuel
+	- Développement d'un forum avec contenu textuel -> forum d'articles avec commentaires
 	- Dernières publications mises en avant
 	- Droits admin et user de l'interface.
+	- Utilisable depuis toute machine (smartphone, tablette, etc)
 	
 * Spécifications techniques : 
 	- Technologies utilisées : Vue.js, MySQL (orm : sequelize), nodeJS + express
+	- Responsive
 	- Opérations CRUD avec la base de données
 	- API sécurisé
 
