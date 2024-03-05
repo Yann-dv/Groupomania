@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./app/models");
+const config = require("./config/db.config"); // Importez la configuration de la base de données
 
 const app = express();
 
@@ -33,11 +34,16 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-db.sequelize.sync({force: true, match: /adb$/}).then(() => { // For production : delete force:true, console.log and initialize, just setting db.sequelize.sync()
-  console.log('Drop and Resync Db');
-  initialize();
-  //deleteOldArchived();
-});
+// Assurez-vous que config.DB est défini avant de synchroniser la base de données
+if (config.DB) {
+  db.sequelize.sync({ force: true, match: /adb$/ }).then(() => {
+    console.log('Drop and Resync Db');
+    initialize();
+  });
+} else {
+  console.error("Erreur: La variable config.DB n'est pas définie correctement.");
+  process.exit(1); // Terminer le processus avec un code d'erreur
+}
 
 const Role = db.role;
 const User = db.user;
