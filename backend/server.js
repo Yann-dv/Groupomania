@@ -41,8 +41,8 @@ if (config.DB) {
     initialize();
   });
 } else {
-  console.error("Erreur: La variable config.DB n'est pas définie correctement.");
-  process.exit(1); // Terminer le processus avec un code d'erreur
+  console.error("Erreur: Config.DB is not well defined");
+  process.exit(1);
 }
 
 const Role = db.role;
