@@ -29,7 +29,8 @@ jobs:
       run: |
         cd backend
         npm install --save nodemon sequelize mysql2 jsonwebtoken helmet express dotenv cors body-parser bcryptjs async
-
+        npm install --save-dev sqlite3
+        
     - name: Install Nodemon Globally
       run: npm install -g nodemon
 
