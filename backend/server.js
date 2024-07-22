@@ -35,15 +35,15 @@ app.listen(PORT, () => {
 });
 
 // Assurez-vous que config.DB est défini avant de synchroniser la base de données
-if (config.DB) {
+//if (config.DB) {
   db.sequelize.sync({ force: true, match: /adb$/ }).then(() => {
     console.log('Drop and Resync Db');
     initialize();
   });
-} else {
-  console.error("Erreur: Config.DB is not well defined");
-  process.exit(1);
-}
+//} else {
+  //console.error("Erreur: Config.DB is not well defined");
+  //process.exit(1);
+//}
 
 const Role = db.role;
 const User = db.user;

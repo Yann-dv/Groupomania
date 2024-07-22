@@ -28,15 +28,18 @@ and sharing gifs with possible comments.
 
 * Installation & use :
 
-- Back: npm install --save nodemon sequelize mysql2 nodemon jsonwebtoken helmet express dotenv
-cors body-parser bcryptjs async
+- NPM : use v14.0.0
+- MySQL : create a DB named groupomaniadb (user: root, pwd: root) > change this default values if you want
 
-- Front: npm install -g @vue/cli(babel, eslint, router, vuex)
-npm install --save axios bcryptjs bootstrap core-js dotenv jquery popper.js
-vee-validate vue vue-router vuex yup click-outside-vue3
-*Run:
-- cd frontend - npm run serve
-- cd backend - nodemon (.env file required for development mode)
+- Back:
+   > cd backend 
+   > npm install
+   > npm start
+
+- Front: 
+   > cd fronted 
+   > npm install -g @vue/cli(babel, eslint, router, vuex)
+   > npm run serve
 
 * Groupomania:
 
